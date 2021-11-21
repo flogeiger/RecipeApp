@@ -1,0 +1,69 @@
+{
+  "project_info": {
+    "project_number": "699130171062",
+    "firebase_url": "https://flutter-recipes-38d12-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "flutter-recipes-38d12",
+    "storage_bucket": "flutter-recipes-38d12.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:699130171062:android:3aaf7c54b0070437d6e017",
+        "android_client_info": {
+          "package_name": "com.example.database_connector"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "699130171062-mh4vrlbpji7i8qqidtm5g5sio1nb08m8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDtUJgBIyMnRgyRH24I9u2A-FY50KSTiFY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "699130171062-mh4vrlbpji7i8qqidtm5g5sio1nb08m8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:699130171062:android:d210476caad4ff4cd6e017",
+        "android_client_info": {
+          "package_name": "com.example.sample"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "699130171062-mh4vrlbpji7i8qqidtm5g5sio1nb08m8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDtUJgBIyMnRgyRH24I9u2A-FY50KSTiFY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "699130171062-mh4vrlbpji7i8qqidtm5g5sio1nb08m8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
