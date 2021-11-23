@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:sample/models/FileManager.dart';
 import 'package:sample/models/Recipe.dart';
 import 'package:sample/models/DatabaseBox.dart';
 import 'package:sample/models/DatabaseRecipe.dart';
@@ -15,44 +16,12 @@ class FavoriteIconButton extends StatefulWidget {
 
 class _FavoriteIconButtonState extends State<FavoriteIconButton> {
   Color internalSave = Colors.white;
-  bool _correct = false;
-  bool _wrong = false;
-
   @override
   void initState() {
     super.initState();
-    getGreen();
-    getRed();
   }
 
-  Future<bool> saveGreen(bool value) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setBool('answerGreen', value);
-  }
-
-  Future<bool> getGreen() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    _correct = prefs.getBool("answerGreen");
-    if (_correct == null) {
-      _correct = false;
-    }
-    setState(() {});
-  }
-
-  Future<bool> saveRed(bool value) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setBool('answerRed', value);
-  }
-
-  Future<bool> getRed() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    _wrong = prefs.getBool("answerRed");
-    if (_wrong == null) {
-      _wrong = false;
-    }
-    setState(() {});
-  }
-
+  DatabaseRecipe recipe;
   Future addRecipe(
       String recipeName,
       String description,
@@ -66,7 +35,7 @@ class _FavoriteIconButtonState extends State<FavoriteIconButton> {
       String recipestep6,
       int duration,
       int kcal) {
-    final recipe = DatabaseRecipe()
+    recipe = DatabaseRecipe()
       ..recipeName = recipeName
       ..description = description
       ..duration = duration
@@ -80,9 +49,13 @@ class _FavoriteIconButtonState extends State<FavoriteIconButton> {
       ..recipestep5 = recipestep5
       ..recipestep6 = recipestep6;
 
-    Hive.openBox<DatabaseRecipe>('Recipes');
     final box = Boxes.getRecipe();
+    Hive.openBox<DatabaseRecipe>('Recipes');
     box.add(recipe);
+  }
+
+  void deleteRecipeFromFavorites(DatabaseRecipe recip) {
+    recipe.delete();
   }
 
   @override
@@ -94,6 +67,8 @@ class _FavoriteIconButtonState extends State<FavoriteIconButton> {
                 setState(() {
                   internalSave = Colors.red;
                 });
+                FavoriteRecipeStorage test;
+                test.writejson(widget.recipe);
                 addRecipe(
                     widget.recipe.name,
                     widget.recipe.description,
@@ -111,9 +86,7 @@ class _FavoriteIconButtonState extends State<FavoriteIconButton> {
                 setState(() {
                   internalSave = Colors.white;
                 });
-                // final box = Hive.box<DatabaseRecipe>('Recipes');
-                //box.delete(key)
-                //setState(() => {listEmployees.removeAt(position)});
+                deleteRecipeFromFavorites(recipe);
               }
             },
             child: Container(
