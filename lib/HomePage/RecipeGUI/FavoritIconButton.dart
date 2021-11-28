@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:provider/src/provider.dart';
+import 'package:sample/Controller/file_controller.dart';
 import 'package:sample/models/FileManager.dart';
 import 'package:sample/models/Recipe.dart';
 import 'package:sample/models/DatabaseBox.dart';
-import 'package:sample/models/DatabaseRecipe.dart';
+import 'package:sample/models/DatabaseRecipes.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:hive/hive.dart';
 
@@ -15,84 +18,96 @@ class FavoriteIconButton extends StatefulWidget {
 }
 
 class _FavoriteIconButtonState extends State<FavoriteIconButton> {
-  Color internalSave = Colors.white;
+  DatabaseRecipes _databaseRecipe;
   @override
   void initState() {
     super.initState();
+    Box<DatabaseRecipes> recipes = hiveInput();
+    List<DatabaseRecipes> test;
+    test = recipes.values.toList();
+    for (var item in test) {
+      if (item.recipeName == widget.recipe.name &&
+          item.picUrl == widget.recipe.picUrl) {
+        isalreadysaved = item.kfav;
+        _databaseRecipe = item;
+        break;
+      } else {
+        isalreadysaved = false;
+      }
+    }
   }
 
-  DatabaseRecipe recipe;
+  DatabaseRecipes recipe;
   Future addRecipe(
       String recipeName,
       String description,
       String recipeTyp,
       String picUrl,
-      String recipestep1,
-      String recipestep2,
-      String recipestep3,
-      String recipestep4,
-      String recipestep5,
-      String recipestep6,
       int duration,
-      int kcal) {
-    recipe = DatabaseRecipe()
+      int kcal,
+      bool fav,
+      List<dynamic> preparation) {
+    recipe = DatabaseRecipes()
       ..recipeName = recipeName
       ..description = description
       ..duration = duration
       ..kilocal = kcal
       ..picUrl = picUrl
       ..recipeTyp = recipeTyp
-      ..recipestep1 = recipestep1
-      ..recipestep2 = recipestep2
-      ..recipestep3 = recipestep3
-      ..recipestep4 = recipestep4
-      ..recipestep5 = recipestep5
-      ..recipestep6 = recipestep6;
+      ..kfav = isalreadysaved
+      ..preparationList = preparation;
 
     final box = Boxes.getRecipe();
-    Hive.openBox<DatabaseRecipe>('Recipes');
     box.add(recipe);
+    _databaseRecipe = recipe;
   }
 
-  void deleteRecipeFromFavorites(DatabaseRecipe recip) {
-    recipe.delete();
+  void deleteRecipeFromFavorites() {
+    _databaseRecipe.delete();
   }
 
+  Box<DatabaseRecipes> hiveInput() {
+    Box<DatabaseRecipes> test = Boxes.getRecipe();
+    return test;
+  }
+
+  bool isalreadysaved = false;
+  bool issaving;
   @override
   Widget build(BuildContext context) {
     return widget.recipe.giftedRecipe == true
         ? GestureDetector(
             onTap: () {
-              if (internalSave == Colors.white) {
-                setState(() {
-                  internalSave = Colors.red;
-                });
-                FavoriteRecipeStorage test;
-                test.writejson(widget.recipe);
+              if (isalreadysaved == false) {
+                isalreadysaved = true;
                 addRecipe(
-                    widget.recipe.name,
-                    widget.recipe.description,
-                    widget.recipe.recipeTyp,
-                    widget.recipe.picUrl,
-                    widget.recipe.recipestep1,
-                    widget.recipe.recipestep2,
-                    widget.recipe.recipestep3,
-                    widget.recipe.recipestep4,
-                    widget.recipe.recipestep5,
-                    widget.recipe.recipestep6,
-                    widget.recipe.duration,
-                    widget.recipe.kilocal);
-              } else {
+                  widget.recipe.name,
+                  widget.recipe.description,
+                  widget.recipe.recipeTyp,
+                  widget.recipe.picUrl,
+                  widget.recipe.duration,
+                  widget.recipe.kilocal,
+                  isalreadysaved,
+                  widget.recipe.preparationsteps,
+                );
                 setState(() {
-                  internalSave = Colors.white;
+                  issaving = isalreadysaved;
                 });
-                deleteRecipeFromFavorites(recipe);
+              } else {
+                isalreadysaved = false;
+                setState(() {
+                  issaving = isalreadysaved;
+                });
+
+                deleteRecipeFromFavorites();
               }
             },
             child: Container(
               child: Icon(
                 Icons.favorite,
-                color: internalSave,
+                color: isalreadysaved == true || issaving == true
+                    ? Colors.red
+                    : Colors.white,
                 size: 40,
               ),
             ),

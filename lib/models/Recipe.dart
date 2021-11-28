@@ -1,30 +1,26 @@
 class Recipe {
   Recipe();
-  String name,
-      description,
-      recipeTyp,
-      picUrl,
-      recipestep1,
-      recipestep2,
-      recipestep3,
-      recipestep4,
-      recipestep5,
-      recipestep6;
+  String name, description, recipeTyp, picUrl;
+  List<dynamic> preparationsteps;
   int duration, kilocal;
   bool giftedRecipe;
-  //Reihnfolge der attribute niemals verändern!!!!!!!!
   Recipe.fromJson(Map<String, dynamic> parsedJSON)
       : picUrl = parsedJSON['picUrl'],
-        recipestep1 = parsedJSON['Zubereitungsschritt 1'],
-        description = parsedJSON['Beschreibung'],
-        duration = parsedJSON['Dauer'],
-        recipestep6 = parsedJSON['Zubereitungsschritt 6'],
-        kilocal = parsedJSON['Kalorienzahl'],
+        description = parsedJSON['description'],
+        duration = parsedJSON['duration'],
+        kilocal = parsedJSON['kcal'],
         name = parsedJSON['title'],
-        recipestep3 = parsedJSON['Zubereitungsschritt 3'],
-        recipeTyp = parsedJSON['Ernährungsart'],
-        recipestep2 = parsedJSON['Zubereitungsschritt 2'],
-        recipestep5 = parsedJSON['Zubereitungsschritt 5'],
-        recipestep4 = parsedJSON['Zubereitungsschritt 4'],
-        giftedRecipe = parsedJSON['giftedrecipe'];
+        recipeTyp = parsedJSON['recipeTyp'],
+        giftedRecipe = parsedJSON['giftedrecipe'],
+        preparationsteps = parsedJSON['preparationsteps'];
+
+  Map<String, dynamic> toJson() => {
+        'title': name,
+        'picUrl': picUrl,
+        'description': description,
+        'duration': duration,
+        'recipeType': recipeTyp,
+        'kilocal': kilocal,
+        'preparaitonsteps': preparationsteps
+      };
 }

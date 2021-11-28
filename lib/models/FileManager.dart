@@ -14,7 +14,7 @@ class FileManager {
   factory FileManager() => _instance ?? FileManager._intervall();
 
   Future<String> get _localPath async {
-    Directory directory = await getExternalStorageDirectory();
+    Directory directory = await getApplicationDocumentsDirectory();
     // für Ios getApplicationDocumentsDirectory();
     return directory.path;
   }
@@ -24,15 +24,21 @@ class FileManager {
     return File('$path/favorits.json');
   }
 
-  Future<Map<String, dynamic>> readJsonFile() async {
-    String fileContent = 'Cheetah Coding';
+  Future<List<Map<String, dynamic>>> readJsonFile() async {
+    List<String> fileContent;
+    List<Map<String, dynamic>> list;
 
     File file = await _jsonFile;
 
     if (await file.exists()) {
       try {
-        fileContent = await file.readAsString();
-        return json.decode(fileContent);
+        fileContent = await file.readAsLines();
+        for (var item in fileContent) {
+          var input = json.decode(item);
+          list.add(input);
+        }
+
+        return list;
       } catch (e) {
         print(e);
       }

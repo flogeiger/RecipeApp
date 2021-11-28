@@ -11,7 +11,6 @@ class AfterCategoryFilterItem extends StatefulWidget {
 
 class _AfterCategoryFilterItemState extends State<AfterCategoryFilterItem> {
   List<AfterFilternCategory> filterList = AfterFilternCategory.getFilternName();
-  bool _onChangeCol = true;
   @override
   Widget build(BuildContext context) {
     return SafeArea(

@@ -1,9 +1,9 @@
 import 'package:hive/hive.dart';
 
-part 'DatabaseRecipe.g.dart';
+part 'DatabaseRecipes.g.dart';
 
 @HiveType(typeId: 0)
-class DatabaseRecipe extends HiveObject {
+class DatabaseRecipes extends HiveObject {
   @HiveField(0)
   String recipeName;
 
@@ -23,22 +23,11 @@ class DatabaseRecipe extends HiveObject {
   int kilocal;
 
   @HiveField(6)
-  String recipestep1;
+  bool giftedrecipe;
 
   @HiveField(7)
-  String recipestep2;
+  bool kfav;
 
   @HiveField(8)
-  String recipestep3;
-
-  @HiveField(9)
-  String recipestep4;
-
-  @HiveField(10)
-  String recipestep5;
-
-  @HiveField(11)
-  String recipestep6;
-  @HiveField(12)
-  bool giftedrecipe;
+  List<dynamic> preparationList;
 }

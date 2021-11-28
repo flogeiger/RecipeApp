@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:sample/HomePage/RecipeGUI/LookedRecipeDetails/RecipeDetailslooked.dart';
-import 'package:sample/HomePage/RecipeGUI/UnlookedRecipeDetails/RecipeDetailsunlooked.dart';
-import 'package:sample/models/DatabaseRecipe.dart';
-import 'package:sample/models/Recipe.dart';
+import 'package:sample/models/DatabaseRecipes.dart';
 
 class FavoriteRecipeSmall extends StatefulWidget {
-  DatabaseRecipe recipe;
+  DatabaseRecipes recipe;
   FavoriteRecipeSmall(this.recipe);
   @override
   _FavoritRecipeInfoSmallState createState() => _FavoritRecipeInfoSmallState();

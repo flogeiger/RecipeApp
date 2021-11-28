@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:sample/models/DatabaseRecipe.dart';
+import 'package:sample/models/DatabaseRecipes.dart';
 
 class TransactionDialog extends StatefulWidget {
-  final DatabaseRecipe recipe;
+  final DatabaseRecipes recipe;
   //final Function(String name, double amount, bool isExpense) onClickedDone;
 
   const TransactionDialog({

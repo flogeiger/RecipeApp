@@ -1,25 +1,40 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:sample/LoginPages/login_screen.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:hive/hive.dart';
 import 'package:firebase_core/firebase_core.dart' as _firebasecore;
-import 'package:sample/models/DatabaseRecipe.dart';
+import 'models/DatabaseRecipes.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:provider/provider.dart';
+import 'package:sample/models/FileManager.dart';
+
+import 'Controller/file_controller.dart';
+import 'models/DatabaseBox.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await _firebasecore.Firebase.initializeApp();
   final addDocumentDirectory = await getApplicationDocumentsDirectory();
   await Hive.initFlutter(addDocumentDirectory.path);
-  Hive.registerAdapter(DatabaseRecipeAdapter());
-  final recipeBox = await Hive.openBox<DatabaseRecipe>('Recipes');
-
-  runApp(MyApp());
+  Hive.registerAdapter(DatabaseRecipesAdapter());
+  await Hive.openBox<DatabaseRecipes>('Recipe');
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (_) => FileController(),
+        ),
+      ],
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    //context.read<FileController>().readRecipe();
     return MaterialApp(
       home: Pages(),
       debugShowCheckedModeBanner: false,

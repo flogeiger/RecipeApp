@@ -4,7 +4,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:sample/FavoritePage/FavoriteRecipeInfo.dart';
 import 'package:sample/FavoritePage/testtestRecipe.dart';
 import 'package:sample/models/DatabaseBox.dart';
-import 'package:sample/models/DatabaseRecipe.dart';
+import 'package:sample/models/DatabaseRecipes.dart';
 
 class FavoriteItem extends StatefulWidget {
   @override
@@ -18,7 +18,7 @@ class _FavoriteItemState extends State<FavoriteItem> {
     super.dispose();
   }
 
-  Widget buildContent(List<DatabaseRecipe> transactions) {
+  Widget buildContent(List<DatabaseRecipes> transactions) {
     if (transactions.isEmpty) {
       return Center(
         child: Text(
@@ -65,8 +65,8 @@ class _FavoriteItemState extends State<FavoriteItem> {
 
   Widget buildRecipes(
     BuildContext context,
-    DatabaseRecipe transaction,
-    List<DatabaseRecipe> transactions,
+    DatabaseRecipes transaction,
+    List<DatabaseRecipes> transactions,
     int index,
   ) {
     return Padding(
@@ -101,7 +101,7 @@ class _FavoriteItemState extends State<FavoriteItem> {
     );
   }
 
-  Widget buildButtons(BuildContext context, DatabaseRecipe recipe) => Row(
+  Widget buildButtons(BuildContext context, DatabaseRecipes recipe) => Row(
         children: [
           Expanded(
             child: TextButton.icon(
@@ -143,7 +143,7 @@ class _FavoriteItemState extends State<FavoriteItem> {
     transaction.save();
   }
 */
-  void deleteTransaction(DatabaseRecipe transaction) {
+  void deleteTransaction(DatabaseRecipes transaction) {
     transaction.delete();
   }
 
@@ -151,10 +151,10 @@ class _FavoriteItemState extends State<FavoriteItem> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: ValueListenableBuilder<Box<DatabaseRecipe>>(
+        body: ValueListenableBuilder<Box<DatabaseRecipes>>(
           valueListenable: Boxes.getRecipe().listenable(),
           builder: (cxt, box, _) {
-            final favRecipes = box.values.toList().cast<DatabaseRecipe>();
+            final favRecipes = box.values.toList().cast<DatabaseRecipes>();
             return buildContent(favRecipes);
           },
         ),

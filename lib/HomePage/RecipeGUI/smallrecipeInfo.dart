@@ -12,7 +12,6 @@ class RecipeInfoSmall extends StatefulWidget {
 }
 
 class _RecipeInfoSmallState extends State<RecipeInfoSmall> {
-  String corpNamefromRecipe(String input) {}
   Row test;
   @override
   Widget build(BuildContext context) {

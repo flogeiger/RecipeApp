@@ -1,7 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:sample/HomePage/RecipeGUI/FavoritIconButton.dart';
+import 'package:sample/HomePage/RecipeGUI/LookedRecipeDetails/UnlookRecipeUI/unlookRecipe.dart';
 import 'package:sample/models/Recipe.dart';
 
 class RecipeDetailslooked extends StatefulWidget {
@@ -213,22 +213,7 @@ class _RecipeDetailslookedState extends State<RecipeDetailslooked> {
                   ),
                   Padding(
                     padding: const EdgeInsets.only(left: 20, right: 20),
-                    child: Container(
-                      child: Center(
-                        child: Text(
-                          'Inhalte Freischalten'.toUpperCase(),
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 24,
-                          ),
-                        ),
-                      ),
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).secondaryHeaderColor,
-                      ),
-                      height: 40,
-                      width: MediaQuery.of(context).size.width,
-                    ),
+                    child: UnlookRecipeModalBar(),
                   )
                 ],
               ),

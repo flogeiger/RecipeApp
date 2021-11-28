@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'FavoriteItems.dart';
 import 'package:hive/hive.dart';
-import 'package:sample/models/DatabaseRecipe.dart';
+import 'package:sample/models/DatabaseRecipes.dart';
 
 class FavoritPage extends StatelessWidget {
   @override
@@ -9,7 +9,7 @@ class FavoritPage extends StatelessWidget {
     return Container(
       child: Center(
         child: FutureBuilder(
-          future: Hive.openBox<DatabaseRecipe>('Recipes'),
+          future: Hive.openBox<DatabaseRecipes>('Recipe'),
           builder: (BuildContext ctx, AsyncSnapshot snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
               if (snapshot.hasError)
