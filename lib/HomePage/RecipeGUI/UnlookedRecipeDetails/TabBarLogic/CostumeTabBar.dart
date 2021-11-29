@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:sample/HomePage/RecipeGUI/UnlookedRecipeDetails/TabBarLogic/CostumeStepper.dart';
+import 'package:sample/models/Recipe.dart';
 
 class CostumeTabBar extends StatefulWidget {
+  Recipe recipe;
+  CostumeTabBar(this.recipe);
   @override
   _CostumeTabBarState createState() => _CostumeTabBarState();
 }
@@ -86,7 +90,7 @@ class _CostumeTabBarState extends State<CostumeTabBar>
               ),
             ]),
         SizedBox(
-          height: 200,
+          height: MediaQuery.of(context).size.height,
           child: TabBarView(
             controller: _tabController,
             children: [
@@ -96,9 +100,7 @@ class _CostumeTabBarState extends State<CostumeTabBar>
               Container(
                 color: Colors.blue,
               ),
-              Container(
-                color: Colors.yellow,
-              ),
+              CostumeStepper(widget.recipe),
             ],
           ),
         )

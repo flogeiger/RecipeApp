@@ -1,7 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:sample/HomePage/RecipeGUI/FavoritIconButton.dart';
-import 'package:sample/HomePage/RecipeGUI/LookedRecipeDetails/UnlookRecipeUI/unlookRecipe.dart';
+import 'package:sample/HomePage/RecipeGUI/LockedRecipeDetails/UnlockRecipeUI/unlockRecipe.dart';
 import 'package:sample/models/Recipe.dart';
 
 class RecipeDetailslooked extends StatefulWidget {
@@ -213,7 +213,7 @@ class _RecipeDetailslookedState extends State<RecipeDetailslooked> {
                   ),
                   Padding(
                     padding: const EdgeInsets.only(left: 20, right: 20),
-                    child: UnlookRecipeModalBar(),
+                    child: UnlockRecipeModalBar(),
                   )
                 ],
               ),

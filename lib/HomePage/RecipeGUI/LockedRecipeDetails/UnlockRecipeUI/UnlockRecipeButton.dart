@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-class UnlookRecipeButton extends StatelessWidget {
+class UnlockRecipeButton extends StatelessWidget {
   String input;
-  UnlookRecipeButton(this.input);
+  UnlockRecipeButton(this.input);
   @override
   Widget build(BuildContext context) {
     return input == '4,49 € / Monat'
