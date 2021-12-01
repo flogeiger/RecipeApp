@@ -25,13 +25,14 @@ class DatabaseRecipesAdapter extends TypeAdapter<DatabaseRecipes> {
       ..kilocal = fields[5] as int
       ..giftedrecipe = fields[6] as bool
       ..kfav = fields[7] as bool
-      ..preparationList = (fields[8] as List)?.cast<dynamic>();
+      ..preparationList = (fields[8] as List)?.cast<dynamic>()
+      ..ingredientslist = (fields[9] as List)?.cast<dynamic>();
   }
 
   @override
   void write(BinaryWriter writer, DatabaseRecipes obj) {
     writer
-      ..writeByte(9)
+      ..writeByte(10)
       ..writeByte(0)
       ..write(obj.recipeName)
       ..writeByte(1)
@@ -49,7 +50,9 @@ class DatabaseRecipesAdapter extends TypeAdapter<DatabaseRecipes> {
       ..writeByte(7)
       ..write(obj.kfav)
       ..writeByte(8)
-      ..write(obj.preparationList);
+      ..write(obj.preparationList)
+      ..writeByte(9)
+      ..write(obj.ingredientslist);
   }
 
   @override

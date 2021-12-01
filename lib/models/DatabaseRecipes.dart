@@ -30,4 +30,7 @@ class DatabaseRecipes extends HiveObject {
 
   @HiveField(8)
   List<dynamic> preparationList;
+
+  @HiveField(9)
+  List<dynamic> ingredientslist;
 }

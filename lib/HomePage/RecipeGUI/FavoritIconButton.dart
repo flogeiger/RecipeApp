@@ -46,7 +46,8 @@ class _FavoriteIconButtonState extends State<FavoriteIconButton> {
       int duration,
       int kcal,
       bool fav,
-      List<dynamic> preparation) {
+      List<dynamic> preparation,
+      List<dynamic> ingredients) {
     recipe = DatabaseRecipes()
       ..recipeName = recipeName
       ..description = description
@@ -55,7 +56,8 @@ class _FavoriteIconButtonState extends State<FavoriteIconButton> {
       ..picUrl = picUrl
       ..recipeTyp = recipeTyp
       ..kfav = isalreadysaved
-      ..preparationList = preparation;
+      ..preparationList = preparation
+      ..ingredientslist = ingredients;
 
     final box = Boxes.getRecipe();
     box.add(recipe);
@@ -89,6 +91,7 @@ class _FavoriteIconButtonState extends State<FavoriteIconButton> {
                   widget.recipe.kilocal,
                   isalreadysaved,
                   widget.recipe.preparationsteps,
+                  widget.recipe.ingredientslist,
                 );
                 setState(() {
                   issaving = isalreadysaved;
