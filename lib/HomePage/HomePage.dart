@@ -4,25 +4,18 @@ import 'package:sample/HomePage/Filtern/FilterButton.dart';
 import 'package:sample/HomePage/RecipeGUI/smallrecipeInfo.dart';
 import 'package:flutter/material.dart';
 import 'package:sample/models/Recipe.dart';
+import 'package:sample/models/RecipeList.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
+  bool filtern;
+  Future<List<Recipe>> recipeList;
+  HomePage(this.filtern, this.recipeList);
   @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: Center(
-        child: AnimatedSearchBar(),
-      ),
-    );
-  }
+  State<HomePage> createState() => _HomePageState();
 }
 
-class AnimatedSearchBar extends StatefulWidget {
-  @override
-  _AnimatedSearchBarState createState() => _AnimatedSearchBarState();
-}
-
-class _AnimatedSearchBarState extends State<AnimatedSearchBar> {
-  Future<List<Recipe>> getData() async {
+class _HomePageState extends State<HomePage> {
+  Future<List<Recipe>> getDatafromFirebase() async {
     CollectionReference _collectionRef =
         FirebaseFirestore.instance.collection('Recipes');
 
@@ -37,6 +30,7 @@ class _AnimatedSearchBarState extends State<AnimatedSearchBar> {
       recipeclass = Recipe.fromJson(tst);
       listtRecipe.add(recipeclass);
     }
+    RecipeList.getRecipeList = listtRecipe;
     return listtRecipe;
   }
 
@@ -53,7 +47,7 @@ class _AnimatedSearchBarState extends State<AnimatedSearchBar> {
   @override
   initState() {
     super.initState();
-    getData();
+    getDatafromFirebase();
   }
 
   bool isSearching = false;
@@ -124,7 +118,9 @@ class _AnimatedSearchBarState extends State<AnimatedSearchBar> {
                 Container(
                   height: MediaQuery.of(context).size.height * 0.68,
                   child: FutureBuilder(
-                      future: getData(),
+                      future: widget.filtern == false
+                          ? getDatafromFirebase()
+                          : widget.recipeList,
                       builder: (BuildContext ctx, AsyncSnapshot snapshot) {
                         final recipe = snapshot.data;
                         switch (snapshot.connectionState) {

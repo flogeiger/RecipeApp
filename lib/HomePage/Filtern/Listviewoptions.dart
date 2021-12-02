@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'FilternCategoryItem.dart';
+import 'package:sample/HomePage/Filtern/FiternCategoryUI.dart';
 import 'ButtonFiltern.dart';
 import 'TopMenuBar.dart';
 import 'package:sample/HomePage/Filtern/AfterFilternOption/AfterFilterCategoryPage.dart';
@@ -22,7 +22,7 @@ class _FilternState extends State<Filtern> {
               SizedBox(
                 height: 20,
               ),
-              FilterCategoryItem(),
+              FilterCategoryItemUI(),
               Container(
                 child: Row(
                   children: <Widget>[

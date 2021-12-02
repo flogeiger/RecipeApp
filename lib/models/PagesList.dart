@@ -10,7 +10,10 @@ import '../ProfilePage/ProfilePage.dart';
 class PageList {
   PageList();
   List<Widget> _pages = <Widget>[
-    HomePage(),
+    HomePage(
+      false,
+      null,
+    ),
     RecipesPage(),
     FavoritPage(),
     ChallengePage(),
