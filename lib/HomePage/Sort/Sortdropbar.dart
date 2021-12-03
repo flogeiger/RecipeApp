@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:sample/models/Recipe.dart';
 import 'SortItem.dart';
 
 class SortDropBar extends StatefulWidget {
+  List<Recipe> reciplist;
+  SortDropBar(this.reciplist);
   @override
   _SortDropBarState createState() => _SortDropBarState();
 }
@@ -100,7 +103,16 @@ class _SortDropBarState extends State<SortDropBar> {
                       )
                     ],
                   ),
-                  FilterItem(),
+                  FilterItem(widget.reciplist),
+                  //if (sortName.sorttxt == 'Schnellsten'.toUpperCase()) {
+                  // Navigator.push(context, MaterialPageRoute(builder: (cont) {
+                  //return HomePage(
+                  //true,
+                  //FilterMethods.quickSort(
+                  //widget.recip, 0, widget.recip.length - 1),
+                  //);
+                  //}));
+                  //}
                 ],
               ),
             ),

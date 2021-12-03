@@ -1,20 +1,24 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:sample/HomePage/Sort/Sortdropbar.dart';
 import 'package:sample/HomePage/Filtern/FilterButton.dart';
 import 'package:sample/HomePage/RecipeGUI/smallrecipeInfo.dart';
 import 'package:flutter/material.dart';
+import 'package:sample/models/FilterMethods.dart';
 import 'package:sample/models/Recipe.dart';
 import 'package:sample/models/RecipeList.dart';
 
 class HomePage extends StatefulWidget {
   bool filtern;
-  Future<List<Recipe>> recipeList;
+  List<Recipe> recipeList;
   HomePage(this.filtern, this.recipeList);
   @override
   State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
+  List<Recipe> getRecipeList = [];
+
   Future<List<Recipe>> getDatafromFirebase() async {
     CollectionReference _collectionRef =
         FirebaseFirestore.instance.collection('Recipes');
@@ -25,12 +29,15 @@ class _HomePageState extends State<HomePage> {
     // Get data from docs and convert map to List
     final allData = querySnapshot.docs.map((doc) => doc.data()).toList();
     List<Recipe> listtRecipe = [];
+
+    Recipe recipeclass;
+    getRecipeList.clear();
     for (var item in allData) {
       Map<String, dynamic> tst = Map<String, dynamic>.from(item);
       recipeclass = Recipe.fromJson(tst);
       listtRecipe.add(recipeclass);
+      getRecipeList.add(recipeclass);
     }
-    RecipeList.getRecipeList = listtRecipe;
     return listtRecipe;
   }
 
@@ -43,7 +50,6 @@ class _HomePageState extends State<HomePage> {
         },
       );
 
-  Recipe recipeclass;
   @override
   initState() {
     super.initState();
@@ -110,31 +116,33 @@ class _HomePageState extends State<HomePage> {
                         child: FilterButton(),
                       ),
                       Expanded(
-                        child: SortDropBar(),
+                        child: SortDropBar(getRecipeList),
                       ),
                     ],
                   ),
                 ),
                 Container(
                   height: MediaQuery.of(context).size.height * 0.68,
-                  child: FutureBuilder(
-                      future: widget.filtern == false
-                          ? getDatafromFirebase()
-                          : widget.recipeList,
-                      builder: (BuildContext ctx, AsyncSnapshot snapshot) {
-                        final recipe = snapshot.data;
-                        switch (snapshot.connectionState) {
-                          case ConnectionState.waiting:
-                            return Center(child: CircularProgressIndicator());
-                          default:
-                            if (snapshot.hasError) {
-                              return Center(
-                                  child: Text('Could not load the data!'));
-                            } else {
-                              return buildRecipes(recipe);
+                  child: widget.filtern == false
+                      ? FutureBuilder(
+                          future: getDatafromFirebase(),
+                          builder: (BuildContext ctx, AsyncSnapshot snapshot) {
+                            final recipe = snapshot.data;
+                            switch (snapshot.connectionState) {
+                              case ConnectionState.waiting:
+                                return Center(
+                                    child: CircularProgressIndicator());
+                              default:
+                                if (snapshot.hasError) {
+                                  return Center(
+                                      child: Text('Could not load the data!'));
+                                } else {
+                                  return buildRecipes(recipe);
+                                }
                             }
-                        }
-                      }),
+                          },
+                        )
+                      : buildRecipes(widget.recipeList),
                 ),
               ],
             ),

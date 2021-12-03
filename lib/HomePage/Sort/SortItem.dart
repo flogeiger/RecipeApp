@@ -1,13 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:sample/HomePage/HomePage.dart';
+import 'package:sample/models/FilterMethods.dart';
+import 'package:sample/models/Recipe.dart';
 import 'Sort.dart';
 
 class FilterItem extends StatefulWidget {
+  List<Recipe> recip;
+  FilterItem(this.recip);
   @override
   _FilterItemState createState() => _FilterItemState();
 }
 
 class _FilterItemState extends State<FilterItem> {
   int selectedRadio;
+
+  String currentFilteroptiontxt;
   Sort selectedSort;
   List<Sort> listsort;
   @override
@@ -39,6 +46,9 @@ class _FilterItemState extends State<FilterItem> {
           groupValue: selectedSort,
           onChanged: (currentUser) {
             setSelcetedUser(currentUser);
+            if (sortName.sorttxt == 'Schnellsten'.toUpperCase()) {
+              currentFilteroptiontxt = sortName.sorttxt;
+            }
           },
           selected: selectedSort == sortName,
           title: Text(
@@ -50,6 +60,25 @@ class _FilterItemState extends State<FilterItem> {
         ),
       );
     }
+    widgets.add(
+      InkWell(
+        onTap: () {
+          if (currentFilteroptiontxt == 'Schnellsten'.toUpperCase()) {
+            Navigator.push(context, MaterialPageRoute(builder: (cont) {
+              return HomePage(
+                true,
+                FilterMethods.quickSort(
+                    widget.recip, 0, widget.recip.length - 1),
+              );
+            }));
+          }
+        },
+        child: Container(
+          color: Colors.red,
+          height: 5,
+        ),
+      ),
+    );
     return widgets;
   }
 
@@ -57,7 +86,11 @@ class _FilterItemState extends State<FilterItem> {
   Widget build(BuildContext context) {
     return Container(
       child: Column(
-        children: createRadioListSort(),
+        children: [
+          Column(
+            children: createRadioListSort(),
+          ),
+        ],
       ),
     );
   }
