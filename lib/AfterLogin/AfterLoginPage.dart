@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
+import 'package:sample/models/DatabaseRecipes.dart';
 import 'package:sample/models/PagesList.dart';
 import 'package:outline_material_icons/outline_material_icons.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -28,6 +30,9 @@ class _AfterLoginPageState extends State<AfterLoginPage> {
           onPageChanged: (newPage) {
             setState(() {
               this._selectedItem = newPage;
+              if (this._selectedItem == 0) {
+                Hive.openBox<DatabaseRecipes>('Recipe');
+              }
             });
           },
         ),

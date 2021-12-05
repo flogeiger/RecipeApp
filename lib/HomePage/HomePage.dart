@@ -1,12 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:sample/HomePage/Sort/Sortdropbar.dart';
 import 'package:sample/HomePage/Filtern/FilterButton.dart';
 import 'package:sample/HomePage/RecipeGUI/smallrecipeInfo.dart';
 import 'package:flutter/material.dart';
-import 'package:sample/models/FilterMethods.dart';
 import 'package:sample/models/Recipe.dart';
-import 'package:sample/models/RecipeList.dart';
 
 class HomePage extends StatefulWidget {
   bool filtern;
