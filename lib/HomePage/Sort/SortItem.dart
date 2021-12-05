@@ -49,6 +49,12 @@ class _FilterItemState extends State<FilterItem> {
             if (sortName.sorttxt == 'Schnellsten'.toUpperCase()) {
               currentFilteroptiontxt = sortName.sorttxt;
             }
+            if (sortName.sorttxt == 'Neustes'.toUpperCase()) {
+              currentFilteroptiontxt = sortName.sorttxt;
+            }
+            if (sortName.sorttxt == 'Einfachsten'.toUpperCase()) {
+              currentFilteroptiontxt = sortName.sorttxt;
+            }
           },
           selected: selectedSort == sortName,
           title: Text(
@@ -64,6 +70,7 @@ class _FilterItemState extends State<FilterItem> {
       InkWell(
         onTap: () {
           if (currentFilteroptiontxt == 'Schnellsten'.toUpperCase()) {
+            Navigator.pop(context);
             Navigator.push(context, MaterialPageRoute(builder: (cont) {
               return HomePage(
                 true,
@@ -72,10 +79,28 @@ class _FilterItemState extends State<FilterItem> {
               );
             }));
           }
+          if (currentFilteroptiontxt == 'Neustes'.toUpperCase()) {
+            Navigator.pop(context);
+            Navigator.push(context, MaterialPageRoute(builder: (cont) {
+              return HomePage(
+                true,
+                FilterMethods.getnewestRecipes(widget.recip),
+              );
+            }));
+          }
+          if (currentFilteroptiontxt == 'Einfachsten'.toUpperCase()) {
+            Navigator.pop(context);
+            Navigator.push(context, MaterialPageRoute(builder: (cont) {
+              return HomePage(
+                true,
+                FilterMethods.insertionSortforEinfachsten(widget.recip),
+              );
+            }));
+          }
         },
         child: Container(
           color: Colors.red,
-          height: 5,
+          height: 50,
         ),
       ),
     );

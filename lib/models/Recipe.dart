@@ -1,6 +1,6 @@
 class Recipe {
   Recipe();
-  String name, description, recipeTyp, picUrl;
+  String name, description, recipeTyp, picUrl, savingTimerecipe;
   List<dynamic> preparationsteps, ingredientslist;
   int duration, kilocal;
   bool giftedRecipe;
@@ -13,7 +13,8 @@ class Recipe {
         recipeTyp = parsedJSON['recipeTyp'],
         giftedRecipe = parsedJSON['giftedrecipe'],
         preparationsteps = parsedJSON['preparationsteps'],
-        ingredientslist = parsedJSON['ingredientslist'];
+        ingredientslist = parsedJSON['ingredientslist'],
+        savingTimerecipe = parsedJSON['recipesavingtime'];
 
   Map<String, dynamic> toJson() => {
         'title': name,
@@ -21,6 +22,7 @@ class Recipe {
         'description': description,
         'duration': duration,
         'recipeType': recipeTyp,
+        'recipesavingtime': savingTimerecipe,
         'kilocal': kilocal,
         'preparaitonsteps': preparationsteps,
         'ingredientslist': ingredientslist,

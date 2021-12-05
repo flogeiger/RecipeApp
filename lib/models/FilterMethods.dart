@@ -30,4 +30,25 @@ class FilterMethods {
     }
     return listrecip;
   }
+
+  static List<Recipe> getnewestRecipes(List<Recipe> list) {
+    return list.reversed.toList();
+  }
+
+  static List<Recipe> insertionSortforEinfachsten(List<Recipe> listrecip) {
+    for (var i = 0; i < listrecip.length; i++) {
+      var currentVal = listrecip[i];
+      var j = i - 1;
+      for (j;
+          j >= 0 &&
+              listrecip[j].preparationsteps.length >
+                  currentVal.preparationsteps.length;
+          j--) {
+        listrecip[j + 1] = listrecip[j];
+      }
+      listrecip[j + 1] = currentVal;
+      //print(listrecip);
+    }
+    return listrecip;
+  }
 }

@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:sample/models/DatabaseRecipes.dart';
 
@@ -13,13 +14,12 @@ class _FavoritRecipeInfoSmallState extends State<FavoriteRecipeSmall> {
   @override
   Widget build(BuildContext context) {
     return
-
-        //child: InkWell(
+        //InkWell(
         //onTap: () {
-        //if (widget.recipe.giftedrecipe == true) {
+//if (widget.recipe.giftedRecipe == true) {
         //Navigator.of(context).push(MaterialPageRoute(
         //builder: (_) => RecipeDetailsunlooked(widget.recipe)));
-        //} else if (widget.recipe.giftedrecipe== false) {
+        //} else if (widget.recipe.giftedRecipe == false) {
         //Navigator.of(context).push(MaterialPageRoute(
         //builder: (_) => RecipeDetailslooked(widget.recipe)));
         //}
@@ -30,9 +30,8 @@ class _FavoritRecipeInfoSmallState extends State<FavoriteRecipeSmall> {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Container(
-              decoration: BoxDecoration(
-                color: Colors.white,
-              ),
+              width: MediaQuery.of(context).size.width * 0.30,
+              height: MediaQuery.of(context).size.width * 0.30,
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(20),
                 child: Image.network(
@@ -52,7 +51,6 @@ class _FavoritRecipeInfoSmallState extends State<FavoriteRecipeSmall> {
                   },
                 ),
               ),
-              width: 160,
             ),
           ),
           Column(
@@ -60,11 +58,13 @@ class _FavoritRecipeInfoSmallState extends State<FavoriteRecipeSmall> {
             children: [
               Padding(
                 padding: EdgeInsets.only(top: 20),
-                child: FittedBox(
-                  fit: BoxFit.cover,
-                  child: Text(
+                child: SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.5,
+                  child: AutoSizeText(
                     (widget.recipe.recipeName),
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                    textAlign: TextAlign.start,
+                    maxLines: 1,
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                   ),
                 ),
               ),
@@ -137,7 +137,8 @@ class _FavoritRecipeInfoSmallState extends State<FavoriteRecipeSmall> {
           )
         ],
       ),
-      height: 140,
+      height: MediaQuery.of(context).size.height * 0.20,
+      width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(30),
@@ -150,8 +151,6 @@ class _FavoritRecipeInfoSmallState extends State<FavoriteRecipeSmall> {
           )
         ],
       ),
-
-      // ),
     );
   }
 }

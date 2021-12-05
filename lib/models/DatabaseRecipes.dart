@@ -33,4 +33,6 @@ class DatabaseRecipes extends HiveObject {
 
   @HiveField(9)
   List<dynamic> ingredientslist;
+  @HiveField(10)
+  String savingTimerecipe;
 }

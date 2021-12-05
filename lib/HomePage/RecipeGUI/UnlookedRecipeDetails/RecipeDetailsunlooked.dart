@@ -103,16 +103,14 @@ class _RecipeDetailsunlookedState extends State<RecipeDetailsunlooked> {
                             SizedBox(
                               width: 20,
                             ),
-                            Container(
-                              alignment: Alignment.centerLeft,
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width * 0.90,
                               child: AutoSizeText(
                                 (widget.recipe.name),
                                 textAlign: TextAlign.start,
                                 maxLines: 1,
                                 style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 30,
-                                ),
+                                    fontWeight: FontWeight.bold, fontSize: 20),
                               ),
                             ),
                           ],
@@ -179,10 +177,11 @@ class _RecipeDetailsunlookedState extends State<RecipeDetailsunlooked> {
                                         SizedBox(
                                           width: 10,
                                         ),
-                                        Text(
-                                          '${widget.recipe.recipeTyp}',
+                                        AutoSizeText(
+                                          (widget.recipe.recipeTyp),
+                                          textAlign: TextAlign.start,
+                                          maxLines: 1,
                                           style: TextStyle(
-                                            fontSize: 20,
                                             fontWeight: FontWeight.w500,
                                           ),
                                         ),
