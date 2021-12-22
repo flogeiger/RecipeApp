@@ -1,4 +1,6 @@
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:sample/AfterLogin/AfterLoginPage.dart';
+import 'package:sample/Controller/Authentification.dart';
 import 'package:sample/LoginPages/registration_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -114,8 +116,24 @@ class _LoginScreenState extends State<LoginScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
-                    SizedBox(
-                      height: 200,
+                    ElevatedButton.icon(
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.white,
+                        onPrimary: Theme.of(context).primaryColor,
+                        minimumSize: Size(double.infinity, 50),
+                      ),
+                      icon: FaIcon(
+                        FontAwesomeIcons.google,
+                        color: Colors.red,
+                      ),
+                      label: Text('Mit Google verbinden'),
+                      onPressed: () => googleSignIn().whenComplete(
+                        () => Navigator.of(context).pushReplacement(
+                          MaterialPageRoute(
+                            builder: (context) => AfterLoginPage(),
+                          ),
+                        ),
+                      ),
                     ),
                     SizedBox(height: 45),
                     emailField,

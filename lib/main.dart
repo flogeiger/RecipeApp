@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:sample/LoginPages/login_screen.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -8,12 +7,13 @@ import 'models/DatabaseRecipes.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:sample/models/FileManager.dart';
-
+import 'utils/Preference.dart';
 import 'Controller/file_controller.dart';
 import 'models/DatabaseBox.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Preference().instance();
   await _firebasecore.Firebase.initializeApp();
   final addDocumentDirectory = await getApplicationDocumentsDirectory();
   await Hive.initFlutter(addDocumentDirectory.path);
@@ -25,6 +25,9 @@ Future<void> main() async {
         ChangeNotifierProvider(
           create: (_) => FileController(),
         ),
+        //ChangeNotifierProvider(
+        //create: (_) => GoogleSignInProvider(),
+        //),
       ],
       child: MyApp(),
     ),

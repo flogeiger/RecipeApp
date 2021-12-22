@@ -1,5 +1,8 @@
+import 'dart:io';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:sample/ChallengePage/ChallengePage.dart';
 import 'package:sample/models/DatabaseRecipes.dart';
 import 'package:sample/models/PagesList.dart';
 import 'package:outline_material_icons/outline_material_icons.dart';
@@ -32,6 +35,9 @@ class _AfterLoginPageState extends State<AfterLoginPage> {
               this._selectedItem = newPage;
               if (this._selectedItem == 0) {
                 Hive.openBox<DatabaseRecipes>('Recipe');
+              }
+              if (this._selectedItem == 3) {
+                _checkPermission();
               }
             });
           },
@@ -83,6 +89,54 @@ class _AfterLoginPageState extends State<AfterLoginPage> {
         ),
       ),
     );
-    ;
+  }
+
+  Future<void> _checkPermission() async {
+    if (Platform.isAndroid) {
+      var status = await Permission.activityRecognition.status;
+      if (status.isDenied) {
+        var status2 = await Permission.activityRecognition.request();
+        if (!status2.isGranted) stepsPermissionDialog();
+        return;
+      }
+
+      // Navigator.push(
+      //context, MaterialPageRoute(builder: (context) => ChallengePage()));
+    } else {
+      // Navigator.push(
+      //    context, MaterialPageRoute(builder: (context) => ChallengePage()));
+    }
+  }
+
+  void stepsPermissionDialog() {
+    showDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text(
+                "Bitte geben Sie uns Zugriff, um Ihre Aktivitäten für Schritte zu erkennen"),
+            actions: [
+              TextButton(
+                child: Text(
+                  "ABBRECHEN".toUpperCase(),
+                  style: TextStyle(fontSize: 16),
+                ),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+              TextButton(
+                child: Text(
+                  "Gehe zu den Einstellungen".toUpperCase(),
+                  style: TextStyle(fontSize: 16),
+                ),
+                onPressed: () async {
+                  openAppSettings();
+                },
+              ),
+            ],
+          );
+        });
   }
 }

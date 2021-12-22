@@ -1,5 +1,4 @@
 class Recipe {
-  Recipe();
   String name, description, recipeTyp, picUrl, savingTimerecipe;
   List<dynamic> preparationsteps, ingredientslist;
   int duration, kilocal;
