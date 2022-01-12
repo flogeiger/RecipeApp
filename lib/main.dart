@@ -1,43 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:sample/Database/Datamodel/FavoriteData.dart';
+import 'package:sample/Database/Helper.dart';
 import 'package:sample/LoginPages/login_screen.dart';
-import 'package:hive_flutter/hive_flutter.dart';
-import 'package:hive/hive.dart';
 import 'package:firebase_core/firebase_core.dart' as _firebasecore;
-import 'models/DatabaseRecipes.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:sample/models/FileManager.dart';
 import 'utils/Preference.dart';
 import 'Controller/file_controller.dart';
-import 'models/DatabaseBox.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Preference().instance();
   await _firebasecore.Firebase.initializeApp();
   final addDocumentDirectory = await getApplicationDocumentsDirectory();
-  await Hive.initFlutter(addDocumentDirectory.path);
-  Hive.registerAdapter(DatabaseRecipesAdapter());
-  await Hive.openBox<DatabaseRecipes>('Recipe');
+  await Helper().initialize();
+  List<FavoriteRecip> test = await Helper.selectAllDataFromFavtable();
+  print(test.length);
   runApp(
-    MultiProvider(
-      providers: [
-        ChangeNotifierProvider(
-          create: (_) => FileController(),
-        ),
-        //ChangeNotifierProvider(
-        //create: (_) => GoogleSignInProvider(),
-        //),
-      ],
-      child: MyApp(),
-    ),
+    MyApp(),
   );
 }
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    //context.read<FileController>().readRecipe();
     return MaterialApp(
       home: Pages(),
       debugShowCheckedModeBanner: false,

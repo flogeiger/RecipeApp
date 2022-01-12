@@ -25,27 +25,26 @@ class ChallengePage extends StatefulWidget {
 class _ChallengePageState extends State<ChallengePage> {
   bool isPause = true;
 
-  int targetSteps;
+  int? targetSteps;
   TextEditingController targetStepController = TextEditingController();
 
   int totalSteps = 0;
-  int currentStepCount;
-  int oldStepCount;
+  int? currentStepCount;
+  int? oldStepCount;
 
-  double distance;
+  double? distance;
+  String? duration;
+  int? time;
+  int? oldTime;
 
-  String duration;
-  int time;
-  int oldTime;
-
-  double calories;
-  int height;
-  int weight;
+  double? calories;
+  int? height;
+  int? weight;
   bool _isBannerAdReady = false;
 
-  bool isKmSelected;
+  bool? isKmSelected;
   // ignore: cancel_subscriptions
-  StreamSubscription<StepCount> _stepCountStream;
+  StreamSubscription<StepCount>? _stepCountStream;
 
   final StopWatchTimer _stopWatchTimer = StopWatchTimer(
     mode: StopWatchMode.countUp,
@@ -53,7 +52,7 @@ class _ChallengePageState extends State<ChallengePage> {
 
   List<String> weekDates = [];
 
-  int last7DaysSteps;
+  int? last7DaysSteps;
 //getLocale().languageCode kommt in EEEE() variable
 // ist im orginal projekt unter diesem Pfad zu finden
 //import 'package:run_tracker/localization/locale_constant.dart';
@@ -76,8 +75,8 @@ class _ChallengePageState extends State<ChallengePage> {
     isPause = Preference.shared.getBool(Preference.IS_PAUSE) ?? true;
 
     if (isPause == true) {
-      if (currentStepCount > 0) {
-        currentStepCount = currentStepCount - 1;
+      if (currentStepCount! > 0) {
+        currentStepCount = currentStepCount! - 1;
       } else {
         currentStepCount = 0;
       }
@@ -254,20 +253,20 @@ class _ChallengePageState extends State<ChallengePage> {
               StreamBuilder<int>(
                   stream: _stopWatchTimer.rawTime,
                   builder: (context, snapshot) {
-                    time = snapshot.hasData ? snapshot.data + oldTime : 0;
-                    Preference.shared.setInt(Preference.OLD_TIME, time);
+                    time = snapshot.hasData ? snapshot.data! + oldTime! : 0;
+                    Preference.shared.setInt(Preference.OLD_TIME, time!);
 
                     duration = StopWatchTimer.getDisplayTime(
-                      time,
+                      time!,
                       hours: true,
                       minute: true,
                       second: false,
                       milliSecond: false,
                       hoursRightBreak: "h ",
                     );
-                    Preference.shared.setString(Preference.DURATION, duration);
+                    Preference.shared.setString(Preference.DURATION, duration!);
                     return Text(
-                      duration + "m",
+                      duration! + "m",
                       style: TextStyle(
                           fontSize: 32,
                           fontWeight: FontWeight.w500,
@@ -286,7 +285,7 @@ class _ChallengePageState extends State<ChallengePage> {
           Column(
             children: [
               Text(
-                calories.toStringAsFixed(0),
+                calories!.toStringAsFixed(0),
                 style: TextStyle(
                     fontSize: 32,
                     fontWeight: FontWeight.w500,
@@ -304,14 +303,14 @@ class _ChallengePageState extends State<ChallengePage> {
           Column(
             children: [
               Text(
-                distance.toStringAsFixed(2),
+                distance!.toStringAsFixed(2),
                 style: TextStyle(
                     fontSize: 32,
                     fontWeight: FontWeight.w500,
                     color: Color(0xffFFFFFF)),
               ),
               Text(
-                isKmSelected ? "Km" : "Mile",
+                isKmSelected! ? "Km" : "Mile",
                 style: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w500,
@@ -366,8 +365,8 @@ class _ChallengePageState extends State<ChallengePage> {
 
               Future.delayed(Duration(milliseconds: 100), () {
                 if (isPause == true) {
-                  if (currentStepCount > 0) {
-                    currentStepCount = currentStepCount - 1;
+                  if (currentStepCount! > 0) {
+                    currentStepCount = currentStepCount! - 1;
                   } else {
                     currentStepCount = 0;
                   }
@@ -375,7 +374,7 @@ class _ChallengePageState extends State<ChallengePage> {
                   countStep();
                 } else {
                   _stopWatchTimer.onExecute.add(StopWatchExecute.stop);
-                  _stepCountStream.cancel();
+                  _stepCountStream!.cancel();
                 }
               });
             },
@@ -625,9 +624,10 @@ class _ChallengePageState extends State<ChallengePage> {
                                       targetSteps =
                                           int.parse(targetStepController.text);
                                     });
-                                    if (targetSteps > 50) {
+                                    if (targetSteps! > 50) {
                                       Preference.shared.setInt(
-                                          Preference.TARGET_STEPS, targetSteps);
+                                          Preference.TARGET_STEPS,
+                                          targetSteps!);
                                       FocusScope.of(context).unfocus();
                                       Navigator.pop(context);
                                     } else {
@@ -667,7 +667,7 @@ class _ChallengePageState extends State<ChallengePage> {
           showTicks: false,
           showLabels: false,
           minimum: 0,
-          maximum: targetSteps == null ? 6000 : targetSteps.toDouble(),
+          maximum: targetSteps == null ? 6000 : targetSteps!.toDouble(),
           axisLineStyle: AxisLineStyle(
             thickness: 0.19,
             cornerStyle: CornerStyle.bothCurve,
@@ -676,7 +676,8 @@ class _ChallengePageState extends State<ChallengePage> {
           ),
           pointers: <GaugePointer>[
             RangePointer(
-              value: currentStepCount != null ? currentStepCount.toDouble() : 0,
+              value:
+                  currentStepCount != null ? currentStepCount!.toDouble() : 0,
               gradient:
                   SweepGradient(colors: [Color(0xff21BE10), Color(0xff7BDE56)]),
               cornerStyle: CornerStyle.bothCurve,
@@ -719,15 +720,15 @@ class _ChallengePageState extends State<ChallengePage> {
         totalSteps = value.steps;
         Preference.shared.setInt(Preference.TOTAL_STEPS, totalSteps);
 
-        currentStepCount = currentStepCount + 1;
-        Preference.shared.setInt(Preference.CURRENT_STEPS, currentStepCount);
+        currentStepCount = currentStepCount! + 1;
+        Preference.shared.setInt(Preference.CURRENT_STEPS, currentStepCount!);
       } else {
         setState(() {
           totalSteps = value.steps;
           Preference.shared.setInt(Preference.TOTAL_STEPS, totalSteps);
 
-          currentStepCount = currentStepCount + 1;
-          Preference.shared.setInt(Preference.CURRENT_STEPS, currentStepCount);
+          currentStepCount = currentStepCount! + 1;
+          Preference.shared.setInt(Preference.CURRENT_STEPS, currentStepCount!);
         });
       }
       calculateDistance();
@@ -747,7 +748,7 @@ class _ChallengePageState extends State<ChallengePage> {
     for (int i = 0; i < weekDates.length; i++) {
       if (todayDate == weekDates[i]) {
         if (!mounted) {
-          double value = currentStepCount.toDouble() / targetSteps.toDouble();
+          double value = currentStepCount!.toDouble() / targetSteps!.toDouble();
           if (value <= 1.0) {
             if (stepsPercentValue.isNotEmpty) {
               stepsPercentValue[i] = value;
@@ -757,7 +758,8 @@ class _ChallengePageState extends State<ChallengePage> {
           }
         } else {
           setState(() {
-            double value = currentStepCount.toDouble() / targetSteps.toDouble();
+            double value =
+                currentStepCount!.toDouble() / targetSteps!.toDouble();
             if (value <= 1.0) {
               if (stepsPercentValue.isNotEmpty) {
                 stepsPercentValue[i] = value;
@@ -817,20 +819,20 @@ class _ChallengePageState extends State<ChallengePage> {
 
   resetData() {
     setState(() {
-      totalSteps = Preference.shared.getInt(Preference.TOTAL_STEPS);
+      totalSteps = Preference.shared.getInt(Preference.TOTAL_STEPS)!;
       oldStepCount = Preference.shared.getInt(Preference.TOTAL_STEPS);
       if (totalSteps != null) {
-        currentStepCount = totalSteps - oldStepCount;
+        currentStepCount = totalSteps - oldStepCount!;
       } else {
         currentStepCount = 0;
       }
-      Preference.shared.setInt(Preference.CURRENT_STEPS, currentStepCount);
+      Preference.shared.setInt(Preference.CURRENT_STEPS, currentStepCount!);
 
       distance = 0;
-      Preference.shared.setDouble(Preference.OLD_DISTANCE, distance);
+      Preference.shared.setDouble(Preference.OLD_DISTANCE, distance!);
 
       calories = 0;
-      Preference.shared.setDouble(Preference.OLD_CALORIES, calories);
+      Preference.shared.setDouble(Preference.OLD_CALORIES, calories!);
 
       oldTime = 0;
       _stopWatchTimer.onExecute.add(StopWatchExecute.reset);
@@ -849,21 +851,21 @@ class _ChallengePageState extends State<ChallengePage> {
 
   calculateDistance() {
     if (!mounted) {
-      if (isKmSelected) {
-        distance = currentStepCount * 0.0008;
-        Preference.shared.setDouble(Preference.OLD_DISTANCE, distance);
+      if (isKmSelected!) {
+        distance = currentStepCount! * 0.0008;
+        Preference.shared.setDouble(Preference.OLD_DISTANCE, distance!);
       } else {
-        distance = currentStepCount * 0.0008 * 0.6214;
-        Preference.shared.setDouble(Preference.OLD_DISTANCE, distance);
+        distance = currentStepCount! * 0.0008 * 0.6214;
+        Preference.shared.setDouble(Preference.OLD_DISTANCE, distance!);
       }
     } else {
       setState(() {
-        if (isKmSelected) {
-          distance = currentStepCount * 0.0008;
-          Preference.shared.setDouble(Preference.OLD_DISTANCE, distance);
+        if (isKmSelected!) {
+          distance = currentStepCount! * 0.0008;
+          Preference.shared.setDouble(Preference.OLD_DISTANCE, distance!);
         } else {
-          distance = currentStepCount * 0.0008 * 0.6214;
-          Preference.shared.setDouble(Preference.OLD_DISTANCE, distance);
+          distance = currentStepCount! * 0.0008 * 0.6214;
+          Preference.shared.setDouble(Preference.OLD_DISTANCE, distance!);
         }
       });
     }
@@ -871,18 +873,18 @@ class _ChallengePageState extends State<ChallengePage> {
 
   calculateCalories() {
     if (!mounted) {
-      calories = currentStepCount * 0.04;
-      Preference.shared.setDouble(Preference.OLD_CALORIES, calories);
+      calories = currentStepCount! * 0.04;
+      Preference.shared.setDouble(Preference.OLD_CALORIES, calories!);
     } else {
       setState(() {
-        calories = currentStepCount * 0.04;
-        Preference.shared.setDouble(Preference.OLD_CALORIES, calories);
+        calories = currentStepCount! * 0.04;
+        Preference.shared.setDouble(Preference.OLD_CALORIES, calories!);
       });
     }
   }
 
   setTime() {
-    DateTime oldDate;
+    DateTime? oldDate;
     var date = Preference.shared.getString(Preference.DATE);
     if (date != null) {
       oldDate = DateTime.parse(date);
@@ -944,16 +946,4 @@ class _ChallengePageState extends State<ChallengePage> {
     // last7DaysSteps = await DataBaseHelper().getTotalStepsForLast7Days();
     setState(() {});
   }
-
-  //@override
-  //void onTopBarClick(String name, {bool value = true}) {
-  //if (name == "Back") {
-  //Navigator.of(context).pop();
-  //}
-
-  //if (name == "OPTIONS") {
-  //openPopUpMenu(MediaQuery.of(context).size.height,
-  //MediaQuery.of(context).size.width);
-  //}
-  //}
 }

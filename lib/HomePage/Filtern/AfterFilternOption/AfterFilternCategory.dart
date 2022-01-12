@@ -1,7 +1,7 @@
 class AfterFilternCategory {
-  int userId;
-  String filterCategorytxt;
-  bool isChecked;
+  int? userId;
+  String? filterCategorytxt;
+  bool? isChecked;
   AfterFilternCategory({this.userId, this.filterCategorytxt, this.isChecked});
   static List<AfterFilternCategory> getFilternName() {
     return <AfterFilternCategory>[

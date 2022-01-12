@@ -12,11 +12,11 @@ class FilterItem extends StatefulWidget {
 }
 
 class _FilterItemState extends State<FilterItem> {
-  int selectedRadio;
+  int? selectedRadio;
 
-  String currentFilteroptiontxt;
-  Sort selectedSort;
-  List<Sort> listsort;
+  String? currentFilteroptiontxt;
+  Sort? selectedSort;
+  List<Sort>? listsort;
   @override
   void initState() {
     super.initState();
@@ -38,14 +38,14 @@ class _FilterItemState extends State<FilterItem> {
 
   List<Widget> createRadioListSort() {
     List<Widget> widgets = [];
-    for (Sort sortName in listsort) {
+    for (Sort sortName in listsort!) {
       widgets.add(
         RadioListTile(
           activeColor: Theme.of(context).secondaryHeaderColor,
           value: sortName,
           groupValue: selectedSort,
-          onChanged: (currentUser) {
-            setSelcetedUser(currentUser);
+          onChanged: (Sort? currentUser) {
+            setSelcetedUser(currentUser!);
             if (sortName.sorttxt == 'Schnellsten'.toUpperCase()) {
               currentFilteroptiontxt = sortName.sorttxt;
             }
@@ -58,7 +58,7 @@ class _FilterItemState extends State<FilterItem> {
           },
           selected: selectedSort == sortName,
           title: Text(
-            sortName.sorttxt,
+            sortName.sorttxt!,
             style: TextStyle(
               fontSize: 25,
             ),

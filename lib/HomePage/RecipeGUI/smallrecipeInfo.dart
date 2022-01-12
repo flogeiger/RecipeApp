@@ -12,7 +12,6 @@ class RecipeInfoSmall extends StatefulWidget {
 }
 
 class _RecipeInfoSmallState extends State<RecipeInfoSmall> {
-  Row test;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -46,13 +45,13 @@ class _RecipeInfoSmallState extends State<RecipeInfoSmall> {
                       widget.recipe.picUrl,
                       fit: BoxFit.fill,
                       loadingBuilder: (BuildContext context, Widget child,
-                          ImageChunkEvent loadingProgress) {
+                          ImageChunkEvent? loadingProgress) {
                         if (loadingProgress == null) return child;
                         return Center(
                           child: CircularProgressIndicator(
                             value: loadingProgress.expectedTotalBytes != null
                                 ? loadingProgress.cumulativeBytesLoaded /
-                                    loadingProgress.expectedTotalBytes
+                                    loadingProgress.expectedTotalBytes!
                                 : null,
                           ),
                         );

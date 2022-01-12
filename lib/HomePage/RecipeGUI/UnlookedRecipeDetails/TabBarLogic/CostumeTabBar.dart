@@ -12,17 +12,17 @@ class CostumeTabBar extends StatefulWidget {
 
 class _CostumeTabBarState extends State<CostumeTabBar>
     with TickerProviderStateMixin {
-  TabController _tabController;
+  TabController? _tabController;
   @override
   void initState() {
     super.initState();
     _tabController = new TabController(vsync: this, length: 3);
-    _tabController.addListener(_handleTabSelection);
+    _tabController!.addListener(_handleTabSelection);
   }
 
   @override
   void dispose() {
-    _tabController.dispose();
+    _tabController!.dispose();
     super.dispose();
   }
 
@@ -66,7 +66,7 @@ class _CostumeTabBarState extends State<CostumeTabBar>
                 'Zutaten',
                 style: TextStyle(
                   fontSize: 20,
-                  color: _tabController.index == 0
+                  color: _tabController!.index == 0
                       ? Theme.of(context).secondaryHeaderColor
                       : Colors.black,
                 ),
@@ -75,7 +75,7 @@ class _CostumeTabBarState extends State<CostumeTabBar>
                 'Nährwerte',
                 style: TextStyle(
                   fontSize: 20,
-                  color: _tabController.index == 1
+                  color: _tabController!.index == 1
                       ? Theme.of(context).secondaryHeaderColor
                       : Colors.black,
                 ),
@@ -84,7 +84,7 @@ class _CostumeTabBarState extends State<CostumeTabBar>
                 'Schritte',
                 style: TextStyle(
                   fontSize: 20,
-                  color: _tabController.index == 2
+                  color: _tabController!.index == 2
                       ? Theme.of(context).secondaryHeaderColor
                       : Colors.black,
                 ),

@@ -32,18 +32,18 @@ class _AfterCategoryFilterItemState extends State<AfterCategoryFilterItem> {
                                   activeColor:
                                       Theme.of(context).secondaryHeaderColor,
                                   dense: true,
-                                  selected: filterList[index].isChecked,
+                                  selected: filterList[index].isChecked!,
                                   value: filterList[index].isChecked,
                                   title: new Text(
-                                    filterList[index].filterCategorytxt,
+                                    filterList[index].filterCategorytxt!,
                                     style: TextStyle(
                                       fontSize: 20,
                                     ),
                                   ),
                                   controlAffinity:
                                       ListTileControlAffinity.leading,
-                                  onChanged: (bool val) {
-                                    itemChange(val, index);
+                                  onChanged: (bool? val) {
+                                    itemChange(val!, index);
                                   })
                             ],
                           ),

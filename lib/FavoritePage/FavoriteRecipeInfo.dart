@@ -1,16 +1,15 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:sample/models/DatabaseRecipes.dart';
+import 'package:sample/models/Recipe.dart';
 
 class FavoriteRecipeSmall extends StatefulWidget {
-  DatabaseRecipes recipe;
+  Recipe recipe;
   FavoriteRecipeSmall(this.recipe);
   @override
   _FavoritRecipeInfoSmallState createState() => _FavoritRecipeInfoSmallState();
 }
 
 class _FavoritRecipeInfoSmallState extends State<FavoriteRecipeSmall> {
-  Row test;
   @override
   Widget build(BuildContext context) {
     return
@@ -38,13 +37,13 @@ class _FavoritRecipeInfoSmallState extends State<FavoriteRecipeSmall> {
                   widget.recipe.picUrl,
                   fit: BoxFit.fill,
                   loadingBuilder: (BuildContext context, Widget child,
-                      ImageChunkEvent loadingProgress) {
+                      ImageChunkEvent? loadingProgress) {
                     if (loadingProgress == null) return child;
                     return Center(
                       child: CircularProgressIndicator(
                         value: loadingProgress.expectedTotalBytes != null
                             ? loadingProgress.cumulativeBytesLoaded /
-                                loadingProgress.expectedTotalBytes
+                                loadingProgress.expectedTotalBytes!
                             : null,
                       ),
                     );
@@ -61,7 +60,7 @@ class _FavoritRecipeInfoSmallState extends State<FavoriteRecipeSmall> {
                 child: SizedBox(
                   width: MediaQuery.of(context).size.width * 0.5,
                   child: AutoSizeText(
-                    (widget.recipe.recipeName),
+                    (widget.recipe.name),
                     textAlign: TextAlign.start,
                     maxLines: 1,
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
@@ -114,7 +113,7 @@ class _FavoritRecipeInfoSmallState extends State<FavoriteRecipeSmall> {
                         ),
                       ],
                     ),
-                    widget.recipe.giftedrecipe == false
+                    widget.recipe.giftedRecipe == false
                         ? Padding(
                             padding: EdgeInsets.only(left: 25, top: 10),
                             child: Container(

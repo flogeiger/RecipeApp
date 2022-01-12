@@ -1,6 +1,6 @@
 class Sort {
-  int userId;
-  String sorttxt;
+  int? userId;
+  String? sorttxt;
   Sort({this.userId, this.sorttxt});
   static List<Sort> getSortName() {
     return <Sort>[

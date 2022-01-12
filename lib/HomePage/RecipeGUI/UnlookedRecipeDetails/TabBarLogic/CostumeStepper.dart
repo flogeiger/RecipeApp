@@ -9,8 +9,8 @@ class CostumeStepper extends StatefulWidget {
 }
 
 class _CostumeStepperState extends State<CostumeStepper> {
-  List<Step> _steps;
-  int _current;
+  List<Step>? _steps;
+  int _current = 0;
 
   @override
   // ignore: must_call_super
@@ -19,7 +19,7 @@ class _CostumeStepperState extends State<CostumeStepper> {
     stepList();
   }
 
-  List<Step> stepList() {
+  List<Step>? stepList() {
     _steps = <Step>[];
     for (var i = 0; i < widget.recipe.preparationsteps.length; i++) {
       Step step = new Step(
@@ -28,14 +28,14 @@ class _CostumeStepperState extends State<CostumeStepper> {
           isActive: i <= _current ? true : false,
           state: StepState.complete);
 
-      _steps.add(step);
+      _steps!.add(step);
     }
   }
 
   void _stepContinue() {
     setState(() {
       _current++;
-      if (_current >= _steps.length) _current = _steps.length - 1;
+      if (_current >= _steps!.length) _current = _steps!.length - 1;
 
       stepList();
     });
@@ -60,7 +60,7 @@ class _CostumeStepperState extends State<CostumeStepper> {
     return Container(
       child: Stepper(
         physics: ClampingScrollPhysics(),
-        steps: _steps,
+        steps: _steps!,
         type: StepperType.vertical,
         currentStep: this._current,
         onStepCancel: _stepCancel,

@@ -7,7 +7,7 @@ import 'package:sample/models/Recipe.dart';
 
 class HomePage extends StatefulWidget {
   bool filtern;
-  List<Recipe> recipeList;
+  List<Recipe>? recipeList;
   HomePage(this.filtern, this.recipeList);
   @override
   State<HomePage> createState() => _HomePageState();
@@ -24,16 +24,14 @@ class _HomePageState extends State<HomePage> {
     QuerySnapshot querySnapshot = await _collectionRef.get();
 
     // Get data from docs and convert map to List
-    final allData = querySnapshot.docs.map((doc) => doc.data()).toList();
-    List<Recipe> listtRecipe = [];
+    final allData = querySnapshot.docs
+        .map((doc) => Recipe.fromJson(doc.data() as Map<String, dynamic>));
 
-    Recipe recipeclass;
+    List<Recipe> listtRecipe = [];
     getRecipeList.clear();
     for (var item in allData) {
-      Map<String, dynamic> tst = Map<String, dynamic>.from(item);
-      recipeclass = Recipe.fromJson(tst);
-      listtRecipe.add(recipeclass);
-      getRecipeList.add(recipeclass);
+      listtRecipe.add(item);
+      getRecipeList.add(item);
     }
     return listtRecipe;
   }
@@ -139,7 +137,7 @@ class _HomePageState extends State<HomePage> {
                             }
                           },
                         )
-                      : buildRecipes(widget.recipeList),
+                      : buildRecipes(widget.recipeList!),
                 ),
               ],
             ),

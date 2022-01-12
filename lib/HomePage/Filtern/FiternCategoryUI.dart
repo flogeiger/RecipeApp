@@ -7,8 +7,8 @@ class FilterCategoryItemUI extends StatefulWidget {
 }
 
 class _FilterCategoryItemStateUI extends State<FilterCategoryItemUI> {
-  FilternCategory selectedFiltern;
-  List<String> listFiltern;
+  FilternCategory? selectedFiltern;
+  List<String>? listFiltern;
   @override
   void initState() {
     super.initState();
@@ -20,7 +20,7 @@ class _FilterCategoryItemStateUI extends State<FilterCategoryItemUI> {
   Widget build(BuildContext context) {
     return Expanded(
       child: ListView.builder(
-          itemCount: listFiltern.length,
+          itemCount: listFiltern!.length,
           itemBuilder: (context, index) {
             return Card(
               child: ListTile(
@@ -31,7 +31,7 @@ class _FilterCategoryItemStateUI extends State<FilterCategoryItemUI> {
                 selected: selectedIndex == index ? true : false,
                 selectedTileColor: Theme.of(context).secondaryHeaderColor,
                 title: Text(
-                  listFiltern[index],
+                  listFiltern![index],
                   style: TextStyle(
                     fontSize: MediaQuery.of(context).size.height * 0.03,
                   ),

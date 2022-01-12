@@ -12,7 +12,7 @@ class RegistrationScreen extends StatefulWidget {
 
 class _RegistrationScreenState extends State<RegistrationScreen> {
   final _auth = FirebaseAuth.instance;
-  String errorMessage;
+  String? errorMessage;
   // our form key
   final _formKey = GlobalKey<FormState>();
   // editing Controller
@@ -31,7 +31,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         keyboardType: TextInputType.name,
         validator: (value) {
           RegExp regex = new RegExp(r'^.{3,}$');
-          if (value.isEmpty) {
+          if (value!.isEmpty) {
             return ("First Name cannot be Empty");
           }
           if (!regex.hasMatch(value)) {
@@ -40,7 +40,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           return null;
         },
         onSaved: (value) {
-          firstNameEditingController.text = value;
+          firstNameEditingController.text = value!;
         },
         textInputAction: TextInputAction.next,
         decoration: InputDecoration(
@@ -58,13 +58,13 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         controller: secondNameEditingController,
         keyboardType: TextInputType.name,
         validator: (value) {
-          if (value.isEmpty) {
+          if (value!.isEmpty) {
             return ("Second Name cannot be Empty");
           }
           return null;
         },
         onSaved: (value) {
-          secondNameEditingController.text = value;
+          secondNameEditingController.text = value!;
         },
         textInputAction: TextInputAction.next,
         decoration: InputDecoration(
@@ -82,7 +82,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         controller: emailEditingController,
         keyboardType: TextInputType.emailAddress,
         validator: (value) {
-          if (value.isEmpty) {
+          if (value!.isEmpty) {
             return ("Please Enter Your Email");
           }
           // reg expression for email validation
@@ -93,7 +93,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           return null;
         },
         onSaved: (value) {
-          firstNameEditingController.text = value;
+          firstNameEditingController.text = value!;
         },
         textInputAction: TextInputAction.next,
         decoration: InputDecoration(
@@ -113,7 +113,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         // ignore: missing_return
         validator: (value) {
           RegExp regex = new RegExp(r'^.{6,}$');
-          if (value.isEmpty) {
+          if (value!.isEmpty) {
             return ("Password is required for login");
           }
           if (!regex.hasMatch(value)) {
@@ -121,7 +121,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           }
         },
         onSaved: (value) {
-          firstNameEditingController.text = value;
+          firstNameEditingController.text = value!;
         },
         textInputAction: TextInputAction.next,
         decoration: InputDecoration(
@@ -146,7 +146,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           return null;
         },
         onSaved: (value) {
-          confirmPasswordEditingController.text = value;
+          confirmPasswordEditingController.text = value!;
         },
         textInputAction: TextInputAction.done,
         decoration: InputDecoration(
@@ -229,7 +229,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   }
 
   void signUp(String email, String password) async {
-    if (_formKey.currentState.validate()) {
+    if (_formKey.currentState!.validate()) {
       try {
         await _auth
             .createUserWithEmailAndPassword(email: email, password: password)
@@ -260,7 +260,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           default:
             errorMessage = "An undefined Error happened.";
         }
-        Fluttertoast.showToast(msg: errorMessage);
+        Fluttertoast.showToast(msg: errorMessage!);
         print(error.code);
       }
     }
@@ -272,7 +272,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     // sedning these values
 
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
-    User user = _auth.currentUser;
+    User user = _auth.currentUser!;
 
     UserModel userModel = UserModel();
 

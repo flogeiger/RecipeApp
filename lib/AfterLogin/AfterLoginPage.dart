@@ -1,11 +1,7 @@
 import 'dart:io';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
-import 'package:sample/ChallengePage/ChallengePage.dart';
-import 'package:sample/models/DatabaseRecipes.dart';
 import 'package:sample/models/PagesList.dart';
-import 'package:outline_material_icons/outline_material_icons.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class AfterLoginPage extends StatefulWidget {
@@ -15,7 +11,7 @@ class AfterLoginPage extends StatefulWidget {
 
 class _AfterLoginPageState extends State<AfterLoginPage> {
   int _selectedItem = 0;
-  PageController _pageController;
+  PageController? _pageController;
   PageList _pagesList = new PageList();
   @override
   void initState() {
@@ -34,7 +30,7 @@ class _AfterLoginPageState extends State<AfterLoginPage> {
             setState(() {
               this._selectedItem = newPage;
               if (this._selectedItem == 0) {
-                Hive.openBox<DatabaseRecipes>('Recipe');
+                //Hive.openBox<DatabaseRecipes>('Recipe');
               }
               if (this._selectedItem == 3) {
                 _checkPermission();
@@ -60,9 +56,7 @@ class _AfterLoginPageState extends State<AfterLoginPage> {
                   ),
                 ),
                 BottomNavigationBarItem(
-                  icon: Icon(
-                    OMIcons.restaurantMenu,
-                  ),
+                  icon: FaIcon(FontAwesomeIcons.heart),
                   title: Text('Rezepte'),
                 ),
                 BottomNavigationBarItem(
@@ -80,7 +74,7 @@ class _AfterLoginPageState extends State<AfterLoginPage> {
               ],
               currentIndex: _selectedItem,
               onTap: (int index) {
-                this._pageController.jumpToPage(index);
+                this._pageController!.jumpToPage(index);
               },
               type: BottomNavigationBarType.fixed,
               selectedItemColor: Theme.of(context).secondaryHeaderColor,

@@ -53,9 +53,9 @@ class Preference {
 
   static Preference get shared => _preference;
 
-  static SharedPreferences _pref;
+  static SharedPreferences? _pref;
 
-  Future<SharedPreferences> instance() async {
+  Future<SharedPreferences?> instance() async {
     if (_pref != null) return _pref;
     await SharedPreferences.getInstance().then((onValue) {
       _pref = onValue;
@@ -66,73 +66,73 @@ class Preference {
     return _pref;
   }
 
-  String getString(String key) {
-    return _pref.getString(key);
+  String? getString(String key) {
+    return _pref!.getString(key);
   }
 
   Future<bool> setString(String key, String value) {
-    return _pref.setString(key, value);
+    return _pref!.setString(key, value);
   }
 
-  int getInt(String key) {
-    return _pref.getInt(key);
+  int? getInt(String key) {
+    return _pref!.getInt(key);
   }
 
   Future<bool> setInt(String key, int value) {
-    return _pref.setInt(key, value);
+    return _pref!.setInt(key, value);
   }
 
-  bool getBool(String key) {
-    return _pref.getBool(key);
+  bool? getBool(String key) {
+    return _pref!.getBool(key);
   }
 
   Future<bool> setBool(String key, bool value) {
-    return _pref.setBool(key, value);
+    return _pref!.setBool(key, value);
   }
 
-  double getDouble(String key) {
-    return _pref.getDouble(key);
+  double? getDouble(String key) {
+    return _pref!.getDouble(key);
   }
 
   Future<bool> setDouble(String key, double value) {
-    return _pref.setDouble(key, value);
+    return _pref!.setDouble(key, value);
   }
 
   Future<bool> remove(key, [multi = false]) async {
-    SharedPreferences pref = await instance();
+    SharedPreferences? pref = await instance();
     if (multi) {
       key.forEach((f) async {
-        return await pref.remove(f);
+        return await pref!.remove(f);
       });
     } else {
-      return await pref.remove(key);
+      return await pref!.remove(key);
     }
 
     return new Future.value(true);
   }
 
   static Future<bool> clearTargetDrinkWater() async {
-    _pref.getKeys().forEach((key) async {
+    _pref!.getKeys().forEach((key) async {
       if (key == TARGET_DRINK_WATER) {
-        await _pref.remove(key);
+        await _pref!.remove(key);
       }
     });
     return Future.value(true);
   }
 
   static Future<bool> clearSelectedDrinkWaterML() async {
-    _pref.getKeys().forEach((key) async {
+    _pref!.getKeys().forEach((key) async {
       if (key == SELECTED_DRINK_WATER_ML) {
-        await _pref.remove(key);
+        await _pref!.remove(key);
       }
     });
     return Future.value(true);
   }
 
   static Future<bool> clearMetricAndImperialUnits() async {
-    _pref.getKeys().forEach((key) async {
+    _pref!.getKeys().forEach((key) async {
       if (key == METRIC_IMPERIAL_UNITS) {
-        await _pref.remove(key);
+        await _pref!.remove(key);
       }
     });
     return Future.value(true);

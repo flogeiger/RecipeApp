@@ -10,7 +10,7 @@ class SortDropBar extends StatefulWidget {
 }
 
 class _SortDropBarState extends State<SortDropBar> {
-  String _testString;
+  String? _testString;
 
   @override
   Widget build(BuildContext context) {
