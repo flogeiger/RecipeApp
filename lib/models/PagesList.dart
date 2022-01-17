@@ -1,8 +1,6 @@
-import 'package:sample/FavoritePage/FavoritePage.dart';
-
 import '../HomePage/HomePage.dart';
 import '../ChallengePage/ChallengePage.dart';
-import '../FavoritePage/FavoritePage.dart';
+import 'package:sample/FavoritePage/FavoritPage.dart';
 import '../RecipesPage/RecipesPage.dart';
 import 'package:flutter/material.dart';
 import '../ProfilePage/ProfilePage.dart';
@@ -15,7 +13,7 @@ class PageList {
       null,
     ),
     RecipesPage(),
-    FavoritPage(),
+    FavoritePage(),
     ChallengePage(),
     ProfilePage(),
   ];

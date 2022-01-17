@@ -1,3 +1,5 @@
+import 'package:sample/models/FavRecip.dart';
+
 import 'Datamodel/FavoriteData.dart';
 import 'Datamodel/StepData.dart';
 import 'package:sample/models/Recipe.dart';
@@ -20,27 +22,43 @@ class Helper {
 
   static Future<List<FavoriteRecip>> selectAllDataFromFavtable() async {
     final fav_Dao = _database!.favoriteRecipedao;
-    final sourc = await fav_Dao.getAllEntrysfromTable();
-    return sourc;
+    final src = await fav_Dao.getAllEntrysfromTable();
+    return src;
   }
 
   static Future<FavoriteRecip> selectdeleteData(Recipe recip) async {
     final fav_dao = _database!.favoriteRecipedao;
-    final source = await fav_dao.checkingifDatabaseContainRecipe(
+    final src = await fav_dao.checkingifDatabaseContainRecipe(
       recip.name,
       recip.picUrl,
     );
-    return source!;
+    return src!;
+  }
+
+  static Future<FavoriteRecip> selectdeleteDataFav(FavRecip recip) async {
+    final fav_dao = _database!.favoriteRecipedao;
+    final src = await fav_dao.checkingifDatabaseContainRecipe(
+      recip.name!,
+      recip.picUrl!,
+    );
+    return src!;
+  }
+
+  static Future<List<FavoriteRecip>> selectAllDataLikeinput(
+      String input) async {
+    final fav_dao = _database!.favoriteRecipedao;
+    final src = await fav_dao.findPersonsWithNamesLike(input);
+    return src;
   }
 
   static Future<bool> checkingifDataisSaved(Recipe recipe) async {
     final fav_dao = _database!.favoriteRecipedao;
-    final source = await fav_dao.checkingifDatabaseContainRecipe(
+    final src = await fav_dao.checkingifDatabaseContainRecipe(
       recipe.name,
       recipe.picUrl,
     );
 
-    if (source != null) {
+    if (src != null) {
       return true;
     } else {
       return false;

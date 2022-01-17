@@ -54,96 +54,96 @@ class _HomePageState extends State<HomePage> {
   bool isSearching = false;
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        FocusScope.of(context).unfocus();
-        setState(() {
-          this.isSearching = !this.isSearching;
-        });
-      },
-      child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Theme.of(context).secondaryHeaderColor,
-          title: !isSearching
-              ? Center(child: Text('Hompage'))
-              : TextField(
-                  style: TextStyle(color: Colors.white),
-                  decoration: InputDecoration(
-                      border: InputBorder.none,
-                      hintText: 'Search topic',
-                      icon: Icon(
-                        Icons.search,
-                        color: Colors.white,
-                      ),
-                      hintStyle: TextStyle(color: Colors.white)),
-                  autofocus: true,
+    return //GestureDetector(
+        //onTap: () {
+        //FocusScope.of(context).unfocus();
+        //setState(() {
+        //this.isSearching = !this.isSearching;
+        //});
+        //},
+        //child:
+        Scaffold(
+      appBar: AppBar(
+        backgroundColor: Theme.of(context).secondaryHeaderColor,
+        title: !isSearching
+            ? Center(child: Text('Hompage'))
+            : TextField(
+                style: TextStyle(color: Colors.white),
+                decoration: InputDecoration(
+                    border: InputBorder.none,
+                    hintText: 'Search topic',
+                    icon: Icon(
+                      Icons.search,
+                      color: Colors.white,
+                    ),
+                    hintStyle: TextStyle(color: Colors.white)),
+                autofocus: true,
+              ),
+        actions: [
+          isSearching
+              ? IconButton(
+                  icon: Icon(Icons.cancel),
+                  onPressed: () {
+                    setState(() {
+                      this.isSearching = !this.isSearching;
+                    });
+                  },
+                )
+              : IconButton(
+                  icon: Icon(Icons.search),
+                  onPressed: () {
+                    setState(() {
+                      this.isSearching = !this.isSearching;
+                    });
+                  },
                 ),
-          actions: [
-            isSearching
-                ? IconButton(
-                    icon: Icon(Icons.cancel),
-                    onPressed: () {
-                      setState(() {
-                        this.isSearching = !this.isSearching;
-                      });
-                    },
-                  )
-                : IconButton(
-                    icon: Icon(Icons.search),
-                    onPressed: () {
-                      setState(() {
-                        this.isSearching = !this.isSearching;
-                      });
-                    },
-                  ),
-          ],
-        ),
-        body: SingleChildScrollView(
-          child: Container(
-            color: Colors.white,
-            child: Column(
-              children: [
-                Container(
-                  height: MediaQuery.of(context).size.height * 0.08,
-                  child: Row(
-                    children: <Widget>[
-                      Expanded(
-                        child: FilterButton(),
-                      ),
-                      Expanded(
-                        child: SortDropBar(getRecipeList),
-                      ),
-                    ],
-                  ),
+        ],
+      ),
+      body: SingleChildScrollView(
+        child: Container(
+          color: Colors.white,
+          child: Column(
+            children: [
+              Container(
+                height: MediaQuery.of(context).size.height * 0.08,
+                child: Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: FilterButton(),
+                    ),
+                    Expanded(
+                      child: SortDropBar(getRecipeList),
+                    ),
+                  ],
                 ),
-                Container(
-                  height: MediaQuery.of(context).size.height * 0.68,
-                  child: widget.filtern == false
-                      ? FutureBuilder(
-                          future: getDatafromFirebase(),
-                          builder: (BuildContext ctx, AsyncSnapshot snapshot) {
-                            final recipe = snapshot.data;
-                            switch (snapshot.connectionState) {
-                              case ConnectionState.waiting:
+              ),
+              Container(
+                height: MediaQuery.of(context).size.height * 0.68,
+                child: widget.filtern == false
+                    ? FutureBuilder(
+                        future: getDatafromFirebase(),
+                        builder: (BuildContext ctx, AsyncSnapshot snapshot) {
+                          final recipe = snapshot.data;
+                          switch (snapshot.connectionState) {
+                            case ConnectionState.waiting:
+                              return Center(child: CircularProgressIndicator());
+                            default:
+                              if (snapshot.hasError) {
                                 return Center(
-                                    child: CircularProgressIndicator());
-                              default:
-                                if (snapshot.hasError) {
-                                  return Center(
-                                      child: Text('Could not load the data!'));
-                                } else {
-                                  return buildRecipes(recipe);
-                                }
-                            }
-                          },
-                        )
-                      : buildRecipes(widget.recipeList!),
-                ),
-              ],
-            ),
+                                    child: Text('Could not load the data!'));
+                              } else {
+                                return buildRecipes(recipe);
+                              }
+                          }
+                        },
+                      )
+                    : buildRecipes(widget.recipeList!),
+              ),
+            ],
           ),
         ),
       ),
+//      ),
     );
   }
 }

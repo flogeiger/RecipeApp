@@ -212,6 +212,25 @@ class _$Fav_dao extends Fav_dao {
   }
 
   @override
+  Future<List<FavoriteRecip>> findPersonsWithNamesLike(String recipName) async {
+    return _queryAdapter.queryList(
+        'SELECT * FROM fav_table WHERE recipe_Name LIKE ?1',
+        mapper: (Map<String, Object?> row) => FavoriteRecip(
+            id: row['recipe_id'] as int?,
+            recipeName: row['recipe_Name'] as String?,
+            description: row['description'] as String?,
+            picUrl: row['picUrl'] as String?,
+            ingredientslist: row['recipe_ingredients'] as String?,
+            preparationList: row['recipe_preparation'] as String?,
+            kilocal: row['kilocal'] as int?,
+            duration: row['duration'] as int?,
+            recipeTyp: row['recipeTyp'] as String?,
+            savingTimerecipe: row['Time_Recipe_save'] as String?,
+            savingFlag: row['Saving_Flag'] as int?),
+        arguments: [recipName]);
+  }
+
+  @override
   Future<void> insertRecipe(FavoriteRecip recip) async {
     await _favoriteRecipInsertionAdapter.insert(
         recip, OnConflictStrategy.abort);

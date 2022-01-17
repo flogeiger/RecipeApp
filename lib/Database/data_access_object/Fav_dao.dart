@@ -11,6 +11,9 @@ abstract class Fav_dao {
   Future<FavoriteRecip?> checkingifDatabaseContainRecipe(
       String recipName, String url);
 
+  @Query('SELECT * FROM fav_table WHERE recipe_Name LIKE :recipName')
+  Future<List<FavoriteRecip>> findPersonsWithNamesLike(String recipName);
+
   @delete
   Future<void> deleteRecipe(FavoriteRecip recip);
 

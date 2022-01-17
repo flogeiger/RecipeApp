@@ -1,9 +1,10 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:sample/models/FavRecip.dart';
 import 'package:sample/models/Recipe.dart';
 
 class FavoriteRecipeSmall extends StatefulWidget {
-  Recipe recipe;
+  FavRecip recipe;
   FavoriteRecipeSmall(this.recipe);
   @override
   _FavoritRecipeInfoSmallState createState() => _FavoritRecipeInfoSmallState();
@@ -34,7 +35,7 @@ class _FavoritRecipeInfoSmallState extends State<FavoriteRecipeSmall> {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(20),
                 child: Image.network(
-                  widget.recipe.picUrl,
+                  widget.recipe.picUrl!,
                   fit: BoxFit.fill,
                   loadingBuilder: (BuildContext context, Widget child,
                       ImageChunkEvent? loadingProgress) {
@@ -60,7 +61,7 @@ class _FavoritRecipeInfoSmallState extends State<FavoriteRecipeSmall> {
                 child: SizedBox(
                   width: MediaQuery.of(context).size.width * 0.5,
                   child: AutoSizeText(
-                    (widget.recipe.name),
+                    (widget.recipe.name!),
                     textAlign: TextAlign.start,
                     maxLines: 1,
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
@@ -113,22 +114,6 @@ class _FavoritRecipeInfoSmallState extends State<FavoriteRecipeSmall> {
                         ),
                       ],
                     ),
-                    widget.recipe.giftedRecipe == false
-                        ? Padding(
-                            padding: EdgeInsets.only(left: 25, top: 10),
-                            child: Container(
-                              child: Icon(
-                                Icons.lock_outline_sharp,
-                                color: Theme.of(context).canvasColor,
-                              ),
-                              decoration: BoxDecoration(
-                                  color: Theme.of(context).secondaryHeaderColor,
-                                  shape: BoxShape.circle),
-                              height: 60,
-                              width: 60,
-                            ),
-                          )
-                        : Container(),
                   ],
                 ),
               ),
