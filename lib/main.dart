@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:sample/Database/Helper.dart';
 import 'package:sample/LoginPages/login_screen.dart';
 import 'package:firebase_core/firebase_core.dart' as _firebasecore;
 import 'package:path_provider/path_provider.dart';
-import 'package:provider/provider.dart';
-import 'package:sample/models/FileManager.dart';
 import 'utils/Preference.dart';
-import 'Controller/file_controller.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -14,6 +12,7 @@ Future<void> main() async {
   await _firebasecore.Firebase.initializeApp();
   final addDocumentDirectory = await getApplicationDocumentsDirectory();
   await Helper().initialize();
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   runApp(
     MyApp(),
   );
