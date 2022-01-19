@@ -124,6 +124,19 @@ class _FavoritePageState extends State<FavoritePage> {
     getDatafromlokalDatabase(favRecipe(Helper.selectAllDataFromFavtable()));
   }
 
+  void checksifInputexist(String input) {
+    String likeString = '%' + input + '%';
+    if (input == "") {
+      getDatafromlokalDatabase(favRecipe(Helper.selectAllDataFromFavtable()));
+    } else {
+      getDatafromlokalDatabase(
+        favRecipe(
+          Helper.selectAllDataLikeinput(likeString),
+        ),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -137,18 +150,8 @@ class _FavoritePageState extends State<FavoritePage> {
               : TextField(
                   style: TextStyle(color: Colors.white),
                   onChanged: (input) {
-                    String likeString = '%' + input + '%';
                     setState(() {
-                      if (input == "") {
-                        getDatafromlokalDatabase(
-                            favRecipe(Helper.selectAllDataFromFavtable()));
-                      } else {
-                        getDatafromlokalDatabase(
-                          favRecipe(
-                            Helper.selectAllDataLikeinput(likeString),
-                          ),
-                        );
-                      }
+                      checksifInputexist(input);
                     });
                   },
                   decoration: InputDecoration(

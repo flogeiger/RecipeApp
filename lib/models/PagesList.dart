@@ -9,9 +9,9 @@ class PageList {
   PageList();
   List<Widget> _pages = <Widget>[
     HomePage(
-      false,
-      null,
-    ),
+        //false,
+        //null,
+        ),
     RecipesPage(),
     FavoritePage(),
     ChallengePage(),

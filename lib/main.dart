@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:sample/Database/Datamodel/FavoriteData.dart';
 import 'package:sample/Database/Helper.dart';
 import 'package:sample/LoginPages/login_screen.dart';
 import 'package:firebase_core/firebase_core.dart' as _firebasecore;
@@ -15,8 +14,6 @@ Future<void> main() async {
   await _firebasecore.Firebase.initializeApp();
   final addDocumentDirectory = await getApplicationDocumentsDirectory();
   await Helper().initialize();
-  List<FavoriteRecip> test = await Helper.selectAllDataFromFavtable();
-  print(test.length);
   runApp(
     MyApp(),
   );

@@ -5,8 +5,11 @@ import 'package:sample/models/Recipe.dart';
 import 'Sort.dart';
 
 class FilterItem extends StatefulWidget {
-  List<Recipe> recip;
-  FilterItem(this.recip);
+  final List<Recipe>? list;
+  final Function? callbackFunction;
+  const FilterItem(
+      {Key? key, @required this.list, @required this.callbackFunction})
+      : super(key: key);
   @override
   _FilterItemState createState() => _FilterItemState();
 }
@@ -70,32 +73,22 @@ class _FilterItemState extends State<FilterItem> {
       InkWell(
         onTap: () {
           if (currentFilteroptiontxt == 'Schnellsten'.toUpperCase()) {
+            widget.callbackFunction!(
+              FilterMethods.quickSort(widget.list!, 0, widget.list!.length - 1),
+            );
             Navigator.pop(context);
-            Navigator.push(context, MaterialPageRoute(builder: (cont) {
-              return HomePage(
-                true,
-                FilterMethods.quickSort(
-                    widget.recip, 0, widget.recip.length - 1),
-              );
-            }));
           }
           if (currentFilteroptiontxt == 'Neustes'.toUpperCase()) {
+            widget.callbackFunction!(
+              FilterMethods.getnewestRecipes(widget.list!),
+            );
             Navigator.pop(context);
-            Navigator.push(context, MaterialPageRoute(builder: (cont) {
-              return HomePage(
-                true,
-                FilterMethods.getnewestRecipes(widget.recip),
-              );
-            }));
           }
           if (currentFilteroptiontxt == 'Einfachsten'.toUpperCase()) {
+            widget.callbackFunction!(
+              FilterMethods.insertionSortforEinfachsten(widget.list!),
+            );
             Navigator.pop(context);
-            Navigator.push(context, MaterialPageRoute(builder: (cont) {
-              return HomePage(
-                true,
-                FilterMethods.insertionSortforEinfachsten(widget.recip),
-              );
-            }));
           }
         },
         child: Container(

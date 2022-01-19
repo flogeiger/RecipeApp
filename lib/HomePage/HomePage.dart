@@ -6,69 +6,83 @@ import 'package:flutter/material.dart';
 import 'package:sample/models/Recipe.dart';
 
 class HomePage extends StatefulWidget {
-  bool filtern;
-  List<Recipe>? recipeList;
-  HomePage(this.filtern, this.recipeList);
+  //bool filtern;
+  //List<Recipe>? recipeList;
+  HomePage();
+  //HomePage(this.filtern, this.recipeList);
   @override
   State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
-  List<Recipe> getRecipeList = [];
-
   Future<List<Recipe>> getDatafromFirebase() async {
-    CollectionReference _collectionRef =
-        FirebaseFirestore.instance.collection('Recipes');
+    if (getRecipeList!.isEmpty) {
+      CollectionReference _collectionRef =
+          FirebaseFirestore.instance.collection('Recipes');
 
-    // Get docs from collection reference
-    QuerySnapshot querySnapshot = await _collectionRef.get();
+      // Get docs from collection reference
+      QuerySnapshot querySnapshot = await _collectionRef.get();
 
-    // Get data from docs and convert map to List
-    final allData = querySnapshot.docs
-        .map((doc) => Recipe.fromJson(doc.data() as Map<String, dynamic>));
-
-    List<Recipe> listtRecipe = [];
-    getRecipeList.clear();
-    for (var item in allData) {
-      listtRecipe.add(item);
-      getRecipeList.add(item);
+      // Get data from docs and convert map to List
+      final allData = querySnapshot.docs
+          .map((doc) => Recipe.fromJson(doc.data() as Map<String, dynamic>));
+      getRecipeList!.clear();
+      for (var item in allData) {
+        getRecipeList!.add(item);
+      }
+      return getRecipeList!;
+    } else {
+      return getRecipeList!;
     }
-    return listtRecipe;
   }
-
-  Widget buildRecipes(List<Recipe> recipes) => ListView.builder(
-        physics: BouncingScrollPhysics(),
-        itemCount: recipes.length,
-        itemBuilder: (cxt, index) {
-          final recipe = recipes[index];
-          return RecipeInfoSmall(recipe);
-        },
-      );
 
   @override
   initState() {
     super.initState();
-    getDatafromFirebase();
   }
 
+  List<Recipe>? getRecipeList = [];
   bool isSearching = false;
+
+  void checksifinputexist(String inp) {
+    if (inp == "") {
+      getRecipeList!.clear();
+      getDatafromFirebase();
+    } else {
+      getfilterItems(inp);
+    }
+  }
+
+  void getfilterItems(String inp) {
+    List<Recipe> toRemove = [];
+    getRecipeList!.forEach((element) {
+      if (!element.name.toLowerCase().contains(inp.toLowerCase())) {
+        toRemove.add(element);
+      }
+    });
+    getRecipeList!.removeWhere((e) => toRemove.contains(e));
+  }
+
+  callback(varTopic) {
+    setState(() {
+      getRecipeList = varTopic;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return //GestureDetector(
-        //onTap: () {
-        //FocusScope.of(context).unfocus();
-        //setState(() {
-        //this.isSearching = !this.isSearching;
-        //});
-        //},
-        //child:
-        Scaffold(
+    return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).secondaryHeaderColor,
         title: !isSearching
             ? Center(child: Text('Hompage'))
             : TextField(
                 style: TextStyle(color: Colors.white),
+                onChanged: (String input) {
+                  setState(() {
+                    checksifinputexist(input);
+                  });
+                },
                 decoration: InputDecoration(
                     border: InputBorder.none,
                     hintText: 'Search topic',
@@ -86,6 +100,8 @@ class _HomePageState extends State<HomePage> {
                   onPressed: () {
                     setState(() {
                       this.isSearching = !this.isSearching;
+                      getRecipeList!.clear();
+                      getDatafromFirebase();
                     });
                   },
                 )
@@ -112,33 +128,38 @@ class _HomePageState extends State<HomePage> {
                       child: FilterButton(),
                     ),
                     Expanded(
-                      child: SortDropBar(getRecipeList),
-                    ),
+                        child: SortDropBar(
+                      list: getRecipeList,
+                      callbackFunction: callback,
+                    )),
                   ],
                 ),
               ),
               Container(
-                height: MediaQuery.of(context).size.height * 0.68,
-                child: widget.filtern == false
-                    ? FutureBuilder(
-                        future: getDatafromFirebase(),
-                        builder: (BuildContext ctx, AsyncSnapshot snapshot) {
-                          final recipe = snapshot.data;
-                          switch (snapshot.connectionState) {
-                            case ConnectionState.waiting:
-                              return Center(child: CircularProgressIndicator());
-                            default:
-                              if (snapshot.hasError) {
-                                return Center(
-                                    child: Text('Could not load the data!'));
-                              } else {
-                                return buildRecipes(recipe);
-                              }
+                  height: MediaQuery.of(context).size.height * 0.68,
+                  child: FutureBuilder(
+                    future: getDatafromFirebase(),
+                    builder: (BuildContext ctx, AsyncSnapshot snapshot) {
+                      switch (snapshot.connectionState) {
+                        case ConnectionState.waiting:
+                          return Center(child: CircularProgressIndicator());
+                        default:
+                          if (snapshot.hasError) {
+                            return Center(
+                                child: Text('Could not load the data!'));
+                          } else {
+                            return ListView.builder(
+                              physics: BouncingScrollPhysics(),
+                              itemCount: getRecipeList!.length,
+                              itemBuilder: (cxt, index) {
+                                final recipe = getRecipeList![index];
+                                return RecipeInfoSmall(recipe);
+                              },
+                            );
                           }
-                        },
-                      )
-                    : buildRecipes(widget.recipeList!),
-              ),
+                      }
+                    },
+                  )),
             ],
           ),
         ),

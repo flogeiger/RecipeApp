@@ -56,7 +56,7 @@ class _AfterLoginPageState extends State<AfterLoginPage> {
                   ),
                 ),
                 BottomNavigationBarItem(
-                  icon: FaIcon(FontAwesomeIcons.heart),
+                  icon: Icon(Icons.receipt_long_rounded),
                   title: Text('Rezepte'),
                 ),
                 BottomNavigationBarItem(
