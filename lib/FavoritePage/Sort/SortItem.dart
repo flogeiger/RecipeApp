@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:sample/HomePage/HomePage.dart';
 import 'package:sample/models/FilterMethods.dart';
+import 'package:sample/models/Recipe.dart';
 import 'Sort.dart';
 
 class FilterItem extends StatefulWidget {
+  final Future<List<Recipe>>? list;
+  final Function? callbackFunction;
+  const FilterItem(
+      {Key? key, @required this.list, @required this.callbackFunction})
+      : super(key: key);
   @override
   _FilterItemState createState() => _FilterItemState();
 }
@@ -67,25 +72,22 @@ class _FilterItemState extends State<FilterItem> {
       InkWell(
         onTap: () {
           if (currentFilteroptiontxt == 'Schnellsten'.toUpperCase()) {
+            widget.callbackFunction!(
+              filterForFastestfavRecip(),
+            );
             Navigator.pop(context);
-            Navigator.push(context, MaterialPageRoute(builder: (cont) {
-              return null!;
-              //Dao muss gebaut werden
-            }));
           }
           if (currentFilteroptiontxt == 'Neustes'.toUpperCase()) {
+            widget.callbackFunction!(
+              filterForNewestfavRecip(),
+            );
             Navigator.pop(context);
-            Navigator.push(context, MaterialPageRoute(builder: (cont) {
-              return null!;
-              //Dao muss gebaut werden
-            }));
           }
           if (currentFilteroptiontxt == 'Einfachsten'.toUpperCase()) {
+            widget.callbackFunction!(
+              filterForEasiestfavRecip(),
+            );
             Navigator.pop(context);
-            Navigator.push(context, MaterialPageRoute(builder: (cont) {
-              //Dao muss gebaut werden
-              return null!;
-            }));
           }
         },
         child: Container(
@@ -95,6 +97,21 @@ class _FilterItemState extends State<FilterItem> {
       ),
     );
     return widgets;
+  }
+
+  Future<List<Recipe>> filterForFastestfavRecip() async {
+    final list = await widget.list;
+    return FilterMethods.quickSort(list!, 0, list.length - 1);
+  }
+
+  Future<List<Recipe>> filterForNewestfavRecip() async {
+    final list = await widget.list;
+    return FilterMethods.getnewestRecipes(list!);
+  }
+
+  Future<List<Recipe>> filterForEasiestfavRecip() async {
+    final list = await widget.list;
+    return FilterMethods.insertionSortforEasiest((list!));
   }
 
   @override

@@ -3,13 +3,16 @@ import 'package:sample/models/Recipe.dart';
 import 'SortItem.dart';
 
 class SortDropBar extends StatefulWidget {
+  final Future<List<Recipe>>? list;
+  final Function? callbackFunction;
+  const SortDropBar(
+      {Key? key, @required this.list, @required this.callbackFunction})
+      : super(key: key);
   @override
   _SortDropBarState createState() => _SortDropBarState();
 }
 
 class _SortDropBarState extends State<SortDropBar> {
-  String? _testString;
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -101,27 +104,13 @@ class _SortDropBarState extends State<SortDropBar> {
                       )
                     ],
                   ),
-                  FilterItem(),
-                  //if (sortName.sorttxt == 'Schnellsten'.toUpperCase()) {
-                  // Navigator.push(context, MaterialPageRoute(builder: (cont) {
-                  //return HomePage(
-                  //true,
-                  //FilterMethods.quickSort(
-                  //widget.recip, 0, widget.recip.length - 1),
-                  //);
-                  //}));
-                  //}
+                  FilterItem(
+                      list: widget.list,
+                      callbackFunction: widget.callbackFunction)
                 ],
               ),
             ),
           );
         });
-  }
-
-  void _selectItem(String name) {
-    Navigator.pop(context);
-    setState(() {
-      _testString = name;
-    });
   }
 }

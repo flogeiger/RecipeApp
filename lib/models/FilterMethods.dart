@@ -11,7 +11,7 @@ class FilterMethods {
     var pivot = list[start].duration;
     int swapIdx = start;
     for (int i = start + 1; i < list.length; i++) {
-      if (pivot > list[i].duration) {
+      if (pivot! > list[i].duration!) {
         swapIdx++;
         swap(list, swapIdx, i);
       }
@@ -35,14 +35,14 @@ class FilterMethods {
     return list.reversed.toList();
   }
 
-  static List<Recipe> insertionSortforEinfachsten(List<Recipe> listrecip) {
+  static List<Recipe> insertionSortforEasiest(List<Recipe> listrecip) {
     for (var i = 0; i < listrecip.length; i++) {
       var currentVal = listrecip[i];
       var j = i - 1;
       for (j;
           j >= 0 &&
-              listrecip[j].preparationsteps.length >
-                  currentVal.preparationsteps.length;
+              listrecip[j].preparationsteps!.length >
+                  currentVal.preparationsteps!.length;
           j--) {
         listrecip[j + 1] = listrecip[j];
       }

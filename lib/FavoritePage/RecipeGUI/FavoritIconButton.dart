@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:provider/src/provider.dart';
-import 'package:sample/Controller/file_controller.dart';
 import 'package:sample/Database/Datamodel/FavoriteData.dart';
 import 'package:sample/Database/Helper.dart';
-import 'package:sample/models/FileManager.dart';
 import 'package:sample/models/Recipe.dart';
 
 class FavoriteIconButton extends StatefulWidget {

@@ -144,7 +144,9 @@ class _$Fav_dao extends Fav_dao {
                   'recipe_preparation': item.preparationList,
                   'recipe_ingredients': item.ingredientslist,
                   'Time_Recipe_save': item.savingTimerecipe,
-                  'Saving_Flag': item.savingFlag
+                  'Saving_Flag': item.savingFlag == null
+                      ? null
+                      : (item.savingFlag! ? 1 : 0)
                 }),
         _favoriteRecipDeletionAdapter = DeletionAdapter(
             database,
@@ -161,7 +163,9 @@ class _$Fav_dao extends Fav_dao {
                   'recipe_preparation': item.preparationList,
                   'recipe_ingredients': item.ingredientslist,
                   'Time_Recipe_save': item.savingTimerecipe,
-                  'Saving_Flag': item.savingFlag
+                  'Saving_Flag': item.savingFlag == null
+                      ? null
+                      : (item.savingFlag! ? 1 : 0)
                 });
 
   final sqflite.DatabaseExecutor database;
@@ -188,7 +192,9 @@ class _$Fav_dao extends Fav_dao {
             duration: row['duration'] as int?,
             recipeTyp: row['recipeTyp'] as String?,
             savingTimerecipe: row['Time_Recipe_save'] as String?,
-            savingFlag: row['Saving_Flag'] as int?));
+            savingFlag: row['Saving_Flag'] == null
+                ? null
+                : (row['Saving_Flag'] as int) != 0));
   }
 
   @override
@@ -207,7 +213,9 @@ class _$Fav_dao extends Fav_dao {
             duration: row['duration'] as int?,
             recipeTyp: row['recipeTyp'] as String?,
             savingTimerecipe: row['Time_Recipe_save'] as String?,
-            savingFlag: row['Saving_Flag'] as int?),
+            savingFlag: row['Saving_Flag'] == null
+                ? null
+                : (row['Saving_Flag'] as int) != 0),
         arguments: [recipName, url]);
   }
 
@@ -226,7 +234,9 @@ class _$Fav_dao extends Fav_dao {
             duration: row['duration'] as int?,
             recipeTyp: row['recipeTyp'] as String?,
             savingTimerecipe: row['Time_Recipe_save'] as String?,
-            savingFlag: row['Saving_Flag'] as int?),
+            savingFlag: row['Saving_Flag'] == null
+                ? null
+                : (row['Saving_Flag'] as int) != 0),
         arguments: [recipName]);
   }
 

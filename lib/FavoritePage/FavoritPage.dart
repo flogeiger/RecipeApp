@@ -1,21 +1,19 @@
+import 'package:floor/floor.dart';
 import 'package:flutter/material.dart';
 import 'package:sample/Database/Datamodel/FavoriteData.dart';
 import 'package:sample/Database/Helper.dart';
 import 'package:sample/FavoritePage/FavoriteRecipeInfo.dart';
 import 'package:sample/FavoritePage/Filtern/FilterButton.dart';
 import 'package:sample/FavoritePage/Sort/Sortdropbar.dart';
-import 'package:sample/models/FavRecip.dart';
 import 'package:sample/models/Recipe.dart';
 
 class FavoritePage extends StatefulWidget {
-  //AsyncSnapshot snapshot;
-  //FavoriteItem(this.snapshot);
   @override
   _FavoritePageState createState() => _FavoritePageState();
 }
 
 class _FavoritePageState extends State<FavoritePage> {
-  Widget buildContent(List<FavRecip> transactions) {
+  Widget buildContent(List<Recipe> transactions) {
     if (transactions.isEmpty) {
       return Center(
         child: Text(
@@ -33,7 +31,6 @@ class _FavoritePageState extends State<FavoritePage> {
               itemCount: transactions.length,
               itemBuilder: (BuildContext context, int index) {
                 final transaction = transactions[index];
-
                 return buildRecipes(context, transaction, transactions, index);
               },
             ),
@@ -43,10 +40,16 @@ class _FavoritePageState extends State<FavoritePage> {
     }
   }
 
+  callback(varTopic) {
+    setState(() {
+      displayFavFuture = varTopic;
+    });
+  }
+
   Widget buildRecipes(
     BuildContext context,
-    FavRecip transaction,
-    List<FavRecip> transactions,
+    Recipe transaction,
+    List<Recipe> transactions,
     int index,
   ) {
     return Padding(
@@ -81,20 +84,21 @@ class _FavoritePageState extends State<FavoritePage> {
     );
   }
 
-  Future<List<FavRecip>> favRecipe(Future<List<FavoriteRecip>> getlist) async {
+  Future<List<Recipe>> favRecipe(Future<List<FavoriteRecip>> getlist) async {
     final list = await getlist;
-    List<FavRecip> recipeList = [];
+    List<Recipe> recipeList = [];
     for (var item in list) {
-      FavRecip favitem = new FavRecip(
+      Recipe favitem = new Recipe(
         item.recipeName,
         item.description,
         item.recipeTyp,
         item.picUrl,
         item.savingTimerecipe,
-        convertStringtoList(item.preparationList!),
-        convertStringtoList(item.ingredientslist!),
         item.duration,
+        item.savingFlag,
+        convertStringtoList(item.preparationList!),
         item.kilocal,
+        convertStringtoList(item.ingredientslist!),
       );
       recipeList.add(favitem);
     }
@@ -106,18 +110,18 @@ class _FavoritePageState extends State<FavoritePage> {
     return list;
   }
 
-  deleteTransaction(FavRecip transaction) async {
+  deleteTransaction(Recipe transaction) async {
     FavoriteRecip delete = await Helper.selectdeleteDataFav(transaction);
     await Helper.deletefavData(delete);
   }
 
-  Future<void> getDatafromlokalDatabase(Future<List<FavRecip>> data) async {
+  Future<void> getDatafromlokalDatabase(Future<List<Recipe>> data) async {
     displayFavFuture = data;
   }
 
   final ValueNotifier<int> _counter = ValueNotifier<int>(0);
   bool isSearching = false;
-  Future<List<FavRecip>>? displayFavFuture;
+  Future<List<Recipe>>? displayFavFuture;
   @override
   initState() {
     super.initState();
@@ -170,6 +174,8 @@ class _FavoritePageState extends State<FavoritePage> {
                     icon: Icon(Icons.cancel),
                     onPressed: () {
                       setState(() {
+                        getDatafromlokalDatabase(
+                            favRecipe(Helper.selectAllDataFromFavtable()));
                         this.isSearching = !this.isSearching;
                       });
                     },
@@ -197,7 +203,10 @@ class _FavoritePageState extends State<FavoritePage> {
                         child: FilterButton(),
                       ),
                       Expanded(
-                        child: SortDropBar(),
+                        child: SortDropBar(
+                          callbackFunction: callback,
+                          list: displayFavFuture,
+                        ),
                       ),
                     ],
                   ),

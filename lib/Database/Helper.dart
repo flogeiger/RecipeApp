@@ -1,5 +1,3 @@
-import 'package:sample/models/FavRecip.dart';
-
 import 'Datamodel/FavoriteData.dart';
 import 'Datamodel/StepData.dart';
 import 'package:sample/models/Recipe.dart';
@@ -29,13 +27,13 @@ class Helper {
   static Future<FavoriteRecip> selectdeleteData(Recipe recip) async {
     final fav_dao = _database!.favoriteRecipedao;
     final src = await fav_dao.checkingifDatabaseContainRecipe(
-      recip.name,
-      recip.picUrl,
+      recip.name!,
+      recip.picUrl!,
     );
     return src!;
   }
 
-  static Future<FavoriteRecip> selectdeleteDataFav(FavRecip recip) async {
+  static Future<FavoriteRecip> selectdeleteDataFav(Recipe recip) async {
     final fav_dao = _database!.favoriteRecipedao;
     final src = await fav_dao.checkingifDatabaseContainRecipe(
       recip.name!,
@@ -54,8 +52,8 @@ class Helper {
   static Future<bool> checkingifDataisSaved(Recipe recipe) async {
     final fav_dao = _database!.favoriteRecipedao;
     final src = await fav_dao.checkingifDatabaseContainRecipe(
-      recipe.name,
-      recipe.picUrl,
+      recipe.name!,
+      recipe.picUrl!,
     );
 
     if (src != null) {

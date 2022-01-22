@@ -6,10 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:sample/models/Recipe.dart';
 
 class HomePage extends StatefulWidget {
-  //bool filtern;
-  //List<Recipe>? recipeList;
   HomePage();
-  //HomePage(this.filtern, this.recipeList);
   @override
   State<HomePage> createState() => _HomePageState();
 }
@@ -56,7 +53,7 @@ class _HomePageState extends State<HomePage> {
   void getfilterItems(String inp) {
     List<Recipe> toRemove = [];
     getRecipeList!.forEach((element) {
-      if (!element.name.toLowerCase().contains(inp.toLowerCase())) {
+      if (!element.name!.toLowerCase().contains(inp.toLowerCase())) {
         toRemove.add(element);
       }
     });

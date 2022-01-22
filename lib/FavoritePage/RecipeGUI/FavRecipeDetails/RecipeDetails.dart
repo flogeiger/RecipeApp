@@ -1,19 +1,17 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:sample/HomePage/RecipeGUI/FavoritIconButton.dart';
-import 'package:sample/HomePage/RecipeGUI/UnlookedRecipeDetails/TabBarLogic/CostumeTabBar.dart';
+import 'TabBarLogic/CostumeTabBar.dart';
+import 'package:sample/FavoritePage/RecipeGUI/FavoritIconButton.dart';
 import 'package:sample/models/Recipe.dart';
 
-//logic von Gui vereinfachen
-//Menü für die Zubereitungsschritte erstellen
-class RecipeDetailsunlooked extends StatefulWidget {
+class RecipeDetails extends StatefulWidget {
   Recipe recipe;
-  RecipeDetailsunlooked(this.recipe);
+  RecipeDetails(this.recipe);
   @override
-  _RecipeDetailsunlookedState createState() => _RecipeDetailsunlookedState();
+  _RecipeDetailsState createState() => _RecipeDetailsState();
 }
 
-class _RecipeDetailsunlookedState extends State<RecipeDetailsunlooked> {
+class _RecipeDetailsState extends State<RecipeDetails> {
   bool _buttonPressed = false;
   bool _loopActive = false;
 

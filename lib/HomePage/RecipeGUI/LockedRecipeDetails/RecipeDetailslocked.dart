@@ -67,7 +67,7 @@ class _RecipeDetailslookedState extends State<RecipeDetailslooked> {
                       SizedBox(
                         width: MediaQuery.of(context).size.width * 0.9,
                         child: AutoSizeText(
-                          (widget.recipe.name),
+                          (widget.recipe.name!),
                           textAlign: TextAlign.start,
                           maxLines: 1,
                           style: TextStyle(
@@ -177,7 +177,7 @@ class _RecipeDetailslookedState extends State<RecipeDetailslooked> {
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(20),
                             child: Image.network(
-                              widget.recipe.picUrl,
+                              widget.recipe.picUrl!,
                               fit: BoxFit.cover,
                             ),
                           ),

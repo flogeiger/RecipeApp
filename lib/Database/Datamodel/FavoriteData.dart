@@ -34,7 +34,7 @@ class FavoriteRecip {
   String? savingTimerecipe;
 
   @ColumnInfo(name: "Saving_Flag")
-  int? savingFlag;
+  bool? savingFlag;
 
   FavoriteRecip({
     this.id,

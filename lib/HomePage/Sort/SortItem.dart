@@ -86,7 +86,7 @@ class _FilterItemState extends State<FilterItem> {
           }
           if (currentFilteroptiontxt == 'Einfachsten'.toUpperCase()) {
             widget.callbackFunction!(
-              FilterMethods.insertionSortforEinfachsten(widget.list!),
+              FilterMethods.insertionSortforEasiest(widget.list!),
             );
             Navigator.pop(context);
           }

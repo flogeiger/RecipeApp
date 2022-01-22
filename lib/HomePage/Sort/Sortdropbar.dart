@@ -13,7 +13,6 @@ class SortDropBar extends StatefulWidget {
 }
 
 class _SortDropBarState extends State<SortDropBar> {
-  String? _testString;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -109,26 +108,10 @@ class _SortDropBarState extends State<SortDropBar> {
                     list: widget.list,
                     callbackFunction: widget.callbackFunction,
                   )
-                  //if (sortName.sorttxt == 'Schnellsten'.toUpperCase()) {
-                  // Navigator.push(context, MaterialPageRoute(builder: (cont) {
-                  //return HomePage(
-                  //true,
-                  //FilterMethods.quickSort(
-                  //widget.recip, 0, widget.recip.length - 1),
-                  //);
-                  //}));
-                  //}
                 ],
               ),
             ),
           );
         });
-  }
-
-  void _selectItem(String name) {
-    Navigator.pop(context);
-    setState(() {
-      _testString = name;
-    });
   }
 }
