@@ -86,7 +86,7 @@ class _$CostumeDatabase extends CostumeDatabase {
         await database.execute(
             'CREATE TABLE IF NOT EXISTS `steps_table` (`step_id` INTEGER PRIMARY KEY AUTOINCREMENT, `count of steps` INTEGER, `distance` REAL, `Date_of_Walking` TEXT, `Walking_time` TEXT)');
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `fav_table` (`recipe_id` INTEGER PRIMARY KEY AUTOINCREMENT, `recipe_Name` TEXT, `description` TEXT, `recipeTyp` TEXT, `picUrl` TEXT, `duration` INTEGER, `kilocal` INTEGER, `recipe_preparation` TEXT, `recipe_ingredients` TEXT, `Time_Recipe_save` TEXT, `Saving_Flag` INTEGER)');
+            'CREATE TABLE IF NOT EXISTS `fav_table` (`recipe_id` INTEGER PRIMARY KEY AUTOINCREMENT, `recipe_Name` TEXT, `description` TEXT, `recipeTyp` TEXT, `picUrl` TEXT, `duration` INTEGER, `kilocal` INTEGER, `recipe_preparation` TEXT, `recipe_ingredients` TEXT, `Time_Recipe_save` TEXT, `Saving_Flag` INTEGER, `recipe_nutritions` TEXT)');
 
         await callback?.onCreate?.call(database, version);
       },
@@ -146,7 +146,8 @@ class _$Fav_dao extends Fav_dao {
                   'Time_Recipe_save': item.savingTimerecipe,
                   'Saving_Flag': item.savingFlag == null
                       ? null
-                      : (item.savingFlag! ? 1 : 0)
+                      : (item.savingFlag! ? 1 : 0),
+                  'recipe_nutritions': item.nutritionlist
                 }),
         _favoriteRecipDeletionAdapter = DeletionAdapter(
             database,
@@ -165,7 +166,8 @@ class _$Fav_dao extends Fav_dao {
                   'Time_Recipe_save': item.savingTimerecipe,
                   'Saving_Flag': item.savingFlag == null
                       ? null
-                      : (item.savingFlag! ? 1 : 0)
+                      : (item.savingFlag! ? 1 : 0),
+                  'recipe_nutritions': item.nutritionlist
                 });
 
   final sqflite.DatabaseExecutor database;
@@ -194,7 +196,8 @@ class _$Fav_dao extends Fav_dao {
             savingTimerecipe: row['Time_Recipe_save'] as String?,
             savingFlag: row['Saving_Flag'] == null
                 ? null
-                : (row['Saving_Flag'] as int) != 0));
+                : (row['Saving_Flag'] as int) != 0,
+            nutritionlist: row['recipe_nutritions'] as String?));
   }
 
   @override
@@ -215,7 +218,8 @@ class _$Fav_dao extends Fav_dao {
             savingTimerecipe: row['Time_Recipe_save'] as String?,
             savingFlag: row['Saving_Flag'] == null
                 ? null
-                : (row['Saving_Flag'] as int) != 0),
+                : (row['Saving_Flag'] as int) != 0,
+            nutritionlist: row['recipe_nutritions'] as String?),
         arguments: [recipName, url]);
   }
 
@@ -236,7 +240,8 @@ class _$Fav_dao extends Fav_dao {
             savingTimerecipe: row['Time_Recipe_save'] as String?,
             savingFlag: row['Saving_Flag'] == null
                 ? null
-                : (row['Saving_Flag'] as int) != 0),
+                : (row['Saving_Flag'] as int) != 0,
+            nutritionlist: row['recipe_nutritions'] as String?),
         arguments: [recipName]);
   }
 

@@ -46,6 +46,10 @@ class _FavoritePageState extends State<FavoritePage> {
     });
   }
 
+  callbackSetState() {
+    setState(() {});
+  }
+
   Widget buildRecipes(
     BuildContext context,
     Recipe transaction,
@@ -89,17 +93,17 @@ class _FavoritePageState extends State<FavoritePage> {
     List<Recipe> recipeList = [];
     for (var item in list) {
       Recipe favitem = new Recipe(
-        item.recipeName,
-        item.description,
-        item.recipeTyp,
-        item.picUrl,
-        item.savingTimerecipe,
-        item.duration,
-        item.savingFlag,
-        convertStringtoList(item.preparationList!),
-        item.kilocal,
-        convertStringtoList(item.ingredientslist!),
-      );
+          item.recipeName,
+          item.description,
+          item.recipeTyp,
+          item.picUrl,
+          item.savingTimerecipe,
+          item.duration,
+          item.savingFlag,
+          convertStringtoList(item.preparationList!),
+          item.kilocal,
+          convertStringtoList(item.ingredientslist!),
+          convertStringtoList(item.nutritionlist!));
       recipeList.add(favitem);
     }
     return recipeList;
@@ -110,10 +114,7 @@ class _FavoritePageState extends State<FavoritePage> {
     return list;
   }
 
-  deleteTransaction(Recipe transaction) async {
-    FavoriteRecip delete = await Helper.selectdeleteDataFav(transaction);
-    await Helper.deletefavData(delete);
-  }
+  deleteTransaction(Recipe transaction) async {}
 
   Future<void> getDatafromlokalDatabase(Future<List<Recipe>> data) async {
     displayFavFuture = data;

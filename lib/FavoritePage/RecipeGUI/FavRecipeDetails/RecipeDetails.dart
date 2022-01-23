@@ -1,5 +1,10 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:sample/AfterLogin/AfterLoginPage.dart';
+import 'package:sample/Database/Datamodel/FavoriteData.dart';
+import 'package:sample/Database/Helper.dart';
+import 'package:sample/FavoritePage/FavoritPage.dart';
 import 'TabBarLogic/CostumeTabBar.dart';
 import 'package:sample/FavoritePage/RecipeGUI/FavoritIconButton.dart';
 import 'package:sample/models/Recipe.dart';
@@ -46,7 +51,13 @@ class _RecipeDetailsState extends State<RecipeDetails> {
     _loopActive = false;
   }
 
+  deleteFavData() async {
+    FavoriteRecip delete = await Helper.selectdeleteData(widget.recipe);
+    await Helper.deletefavData(delete);
+  }
+
   int _counter = 1;
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -68,6 +79,12 @@ class _RecipeDetailsState extends State<RecipeDetails> {
                         GestureDetector(
                           onTap: () {
                             Navigator.pop(context);
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => AfterLoginPage(2),
+                              ),
+                            );
                           },
                           child: Container(
                             child: Icon(
@@ -82,7 +99,28 @@ class _RecipeDetailsState extends State<RecipeDetails> {
                             height: 80,
                           ),
                         ),
-                        FavoriteIconButton(widget.recipe),
+                        GestureDetector(
+                          onTap: () {
+                            deleteFavData();
+                            Fluttertoast.showToast(
+                              msg: "Rezept wurde aus den Favoriten entfernt!",
+                            );
+                            Navigator.of(context).pop();
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => AfterLoginPage(2),
+                              ),
+                            );
+                          },
+                          child: Container(
+                            child: Icon(
+                              Icons.favorite,
+                              color: Colors.red,
+                              size: 40,
+                            ),
+                          ),
+                        ),
                         SizedBox(
                           width: 30,
                         ),

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:sample/Database/Datamodel/FavoriteData.dart';
@@ -81,7 +83,6 @@ class _FavoriteIconButtonState extends State<FavoriteIconButton> {
   }
 
   deleteFavData() async {
-    var data = widget.recipe;
     FavoriteRecip delete = await Helper.selectdeleteData(widget.recipe);
     await Helper.deletefavData(delete);
   }
@@ -90,51 +91,28 @@ class _FavoriteIconButtonState extends State<FavoriteIconButton> {
     return list.join(",");
   }
 
+  FutureOr onGoBack(dynamic value) {
+    setState(() {});
+  }
+
   bool? isalreadysaved;
   bool? issaving;
   @override
   Widget build(BuildContext context) {
-    return widget.recipe.giftedRecipe == true
-        ? GestureDetector(
-            onTap: () {
-              if (isalreadysaved == false) {
-                isalreadysaved = true;
-                saveFavData();
-                setState(() {
-                  issaving = isalreadysaved;
-                });
-              } else {
-                isalreadysaved = false;
-                setState(() {
-                  issaving = isalreadysaved;
-                });
-                deleteFavData();
-              }
-            },
-            child: Container(
-              child: Icon(
-                Icons.favorite,
-                color: isalreadysaved == true || issaving == true
-                    ? Colors.red
-                    : Colors.white,
-                size: 40,
-              ),
-            ),
-          )
-        : GestureDetector(
-            onTap: () {
-              Fluttertoast.showToast(
-                  msg:
-                      "Du musst eine Erweiterung käuflich erwerben, um diese Funktion nutzen zu können",
-                  toastLength: Toast.LENGTH_LONG);
-            },
-            child: Container(
-              child: Icon(
-                Icons.favorite,
-                color: Colors.white,
-                size: 40,
-              ),
-            ),
-          );
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          deleteFavData();
+          Navigator.of(context).pop(true);
+        });
+      },
+      child: Container(
+        child: Icon(
+          Icons.favorite,
+          color: Colors.red,
+          size: 40,
+        ),
+      ),
+    );
   }
 }

@@ -5,7 +5,9 @@ import 'RecipeGUI/FavRecipeDetails/RecipeDetails.dart';
 
 class FavoriteRecipeSmall extends StatefulWidget {
   Recipe recipe;
-  FavoriteRecipeSmall(this.recipe);
+  FavoriteRecipeSmall(
+    this.recipe,
+  );
   @override
   _FavoritRecipeInfoSmallState createState() => _FavoritRecipeInfoSmallState();
 }
@@ -15,8 +17,11 @@ class _FavoritRecipeInfoSmallState extends State<FavoriteRecipeSmall> {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.of(context).push(
-            MaterialPageRoute(builder: (_) => RecipeDetails(widget.recipe)));
+        Navigator.pop(context);
+        Navigator.push(
+            context,
+            new MaterialPageRoute(
+                builder: (context) => new RecipeDetails(widget.recipe)));
       },
       child: Container(
         child: Row(

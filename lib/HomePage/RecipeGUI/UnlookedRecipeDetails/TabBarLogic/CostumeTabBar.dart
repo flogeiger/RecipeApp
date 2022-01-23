@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sample/HomePage/RecipeGUI/UnlookedRecipeDetails/TabBarLogic/CostumeStepper.dart';
+import 'package:sample/HomePage/RecipeGUI/UnlookedRecipeDetails/TabBarLogic/NutritionListview.dart';
 import 'package:sample/HomePage/RecipeGUI/UnlookedRecipeDetails/TabBarLogic/ingredientsListview.dart';
 import 'package:sample/models/Recipe.dart';
 
@@ -96,9 +97,7 @@ class _CostumeTabBarState extends State<CostumeTabBar>
             controller: _tabController,
             children: [
               IngredientsListview(widget.recipe),
-              Container(
-                color: Colors.blue,
-              ),
+              NutritionListview(widget.recipe),
               CostumeStepper(widget.recipe),
             ],
           ),

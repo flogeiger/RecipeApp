@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:sample/models/Recipe.dart';
 
-class IngredientsListview extends StatelessWidget {
+class NutritionListview extends StatelessWidget {
   Recipe _recipe;
-  IngredientsListview(this._recipe);
+  NutritionListview(this._recipe);
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -14,7 +14,7 @@ class IngredientsListview extends StatelessWidget {
           top: MediaQuery.of(context).size.width * 0.05,
         ),
         child: ListView.builder(
-          itemCount: _recipe.ingredientslist!.length,
+          itemCount: _recipe.nutritionlist!.length,
           itemBuilder: (context, index) {
             return Row(
               children: [
@@ -29,7 +29,7 @@ class IngredientsListview extends StatelessWidget {
                   padding: EdgeInsets.only(
                       left: MediaQuery.of(context).size.width * 0.08),
                   child: Text(
-                    _recipe.ingredientslist![index],
+                    _recipe.nutritionlist![index],
                     style: TextStyle(
                       fontSize: MediaQuery.of(context).size.width * 0.05,
                     ),

@@ -10,12 +10,11 @@ class ProfilePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.only(
-          bottomRight: Radius.circular(40),
-          bottomLeft: Radius.circular(40),
-        ),
-        color: Theme.of(context).bottomAppBarColor,
-      ),
+          borderRadius: BorderRadius.only(
+            bottomRight: Radius.circular(40),
+            bottomLeft: Radius.circular(40),
+          ),
+          color: Theme.of(context).secondaryHeaderColor),
       margin: EdgeInsets.only(bottom: 200),
       child: Center(
         child: Column(
@@ -37,7 +36,7 @@ class ProfilePage extends StatelessWidget {
                     child: CostumeOptionPoint(
                       Icons.military_tech_outlined,
                       'triumph',
-                      Colors.grey,
+                      Colors.white,
                     )),
                 SizedBox(
                   width: 20,
@@ -62,7 +61,7 @@ class ProfilePage extends StatelessWidget {
                   child: CostumeOptionPoint(
                     LineAwesomeIcons.cog,
                     'options',
-                    Colors.grey,
+                    Colors.white,
                   ),
                 ),
               ],
@@ -79,7 +78,10 @@ class ProfilePage extends StatelessWidget {
                   );
                 },
                 child: CostumeOptionPoint(
-                    LineAwesomeIcons.trophy, 'ranking', Colors.grey)),
+                  LineAwesomeIcons.trophy,
+                  'ranking',
+                  Colors.white,
+                )),
           ],
         ),
       ),

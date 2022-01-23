@@ -6,7 +6,7 @@ class RecipesPage extends StatelessWidget {
     return Container(
       child: Center(
         child: Container(
-          color: Colors.red,
+          color: Theme.of(context).secondaryHeaderColor,
         ),
       ),
     );

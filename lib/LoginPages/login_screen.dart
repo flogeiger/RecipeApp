@@ -130,7 +130,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       onPressed: () => googleSignIn().whenComplete(
                         () => Navigator.of(context).pushReplacement(
                           MaterialPageRoute(
-                            builder: (context) => AfterLoginPage(),
+                            builder: (context) => AfterLoginPage(0),
                           ),
                         ),
                       ),
@@ -182,7 +182,7 @@ class _LoginScreenState extends State<LoginScreen> {
             .then((uid) => {
                   Fluttertoast.showToast(msg: "Login Successful"),
                   Navigator.of(context).pushReplacement(MaterialPageRoute(
-                      builder: (context) => AfterLoginPage())),
+                      builder: (context) => AfterLoginPage(0))),
                 });
       } on FirebaseAuthException catch (error) {
         switch (error.code) {

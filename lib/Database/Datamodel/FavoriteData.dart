@@ -36,17 +36,20 @@ class FavoriteRecip {
   @ColumnInfo(name: "Saving_Flag")
   bool? savingFlag;
 
-  FavoriteRecip({
-    this.id,
-    this.recipeName,
-    this.description,
-    this.picUrl,
-    this.ingredientslist,
-    this.preparationList,
-    this.kilocal,
-    this.duration,
-    this.recipeTyp,
-    this.savingTimerecipe,
-    this.savingFlag,
-  });
+  @ColumnInfo(name: "recipe_nutritions")
+  String? nutritionlist;
+
+  FavoriteRecip(
+      {this.id,
+      this.recipeName,
+      this.description,
+      this.picUrl,
+      this.ingredientslist,
+      this.preparationList,
+      this.kilocal,
+      this.duration,
+      this.recipeTyp,
+      this.savingTimerecipe,
+      this.savingFlag,
+      this.nutritionlist});
 }

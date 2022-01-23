@@ -1,8 +1,6 @@
-import 'package:googleapis/content/v2_1.dart';
-
 class Recipe {
   String? name, description, recipeTyp, picUrl, savingTimerecipe;
-  List<dynamic>? preparationsteps, ingredientslist;
+  List<dynamic>? preparationsteps, ingredientslist, nutritionlist;
   int? duration, kilocal;
   bool? giftedRecipe;
   Recipe(
@@ -16,6 +14,7 @@ class Recipe {
     this.ingredientslist,
     this.kilocal,
     this.preparationsteps,
+    this.nutritionlist,
   );
   Recipe.fromJson(Map<String, dynamic> parsedJSON)
       : picUrl = parsedJSON['picUrl'],
@@ -27,5 +26,6 @@ class Recipe {
         giftedRecipe = parsedJSON['giftedrecipe'],
         preparationsteps = parsedJSON['preparationsteps'],
         ingredientslist = parsedJSON['ingredientslist'],
+        nutritionlist = parsedJSON['nutritionlist'],
         savingTimerecipe = parsedJSON['recipesavingtime'];
 }

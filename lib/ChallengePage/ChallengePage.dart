@@ -99,8 +99,9 @@ class _ChallengePageState extends State<ChallengePage> {
     var fullHeight = MediaQuery.of(context).size.height;
     var fullWidth = MediaQuery.of(context).size.width;
     return Scaffold(
+      //Googlen !!! kp was das tut
       resizeToAvoidBottomInset: true,
-      backgroundColor: Color(0xff070E3D),
+      backgroundColor: Theme.of(context).secondaryHeaderColor,
       body: SafeArea(
           child: Container(
         child: Column(
@@ -386,7 +387,7 @@ class _ChallengePageState extends State<ChallengePage> {
                   width: 44,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: Color(0xff1B2153),
+                    color: Colors.grey,
                   ),
                 ),
                 Image.asset(
@@ -408,33 +409,6 @@ class _ChallengePageState extends State<ChallengePage> {
                 height: fullHeight * 0.3,
                 child: stepsIndicator(),
               ),
-              isPause
-                  ? Text(
-                      "Schritte",
-                      style: TextStyle(
-                          color: Color(0xff24BF12),
-                          fontSize: 14,
-                          fontWeight: FontWeight.w400),
-                    )
-                  : Container(
-                      padding: EdgeInsets.all(8),
-                      height: 30,
-                      width: 80,
-                      decoration: BoxDecoration(
-                        color: Color(0xff1B2153),
-                        borderRadius: BorderRadius.circular(14),
-                      ),
-                      child: Center(
-                        child: Text(
-                          "Angehalten",
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                              color: Color(0xffFFFFFF),
-                              fontSize: 14,
-                              fontWeight: FontWeight.w300),
-                        ),
-                      ),
-                    )
             ],
           ),
           InkWell(
@@ -453,7 +427,7 @@ class _ChallengePageState extends State<ChallengePage> {
                   width: 44,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: Color(0xff1B2153),
+                    color: Colors.grey,
                   ),
                 ),
                 Image.asset(
@@ -671,7 +645,7 @@ class _ChallengePageState extends State<ChallengePage> {
           axisLineStyle: AxisLineStyle(
             thickness: 0.19,
             cornerStyle: CornerStyle.bothCurve,
-            color: Color(0xff1B2153),
+            color: Colors.white,
             thicknessUnit: GaugeSizeUnit.factor,
           ),
           pointers: <GaugePointer>[
@@ -701,7 +675,7 @@ class _ChallengePageState extends State<ChallengePage> {
                             color: Color(0xffFFFFFF)),
                       ),
                       Text(
-                        targetSteps == null ? "/6000" : "/$targetSteps",
+                        targetSteps == null ? "/12000" : "/$targetSteps",
                         style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w700,
