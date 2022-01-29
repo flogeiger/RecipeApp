@@ -2,17 +2,13 @@ import 'dart:async';
 import 'package:flutter/services.dart';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
-//import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:googleapis/mybusinessbusinessinformation/v1.dart';
 import 'package:pedometer/pedometer.dart';
-//import 'package:sample/Database/DataBaseHelper.dart';
-//import 'package:sample/models/StepsData.dart';
-//import 'Last7DaysStepsScreen.dart';
-//import 'StepsPopUpMenu.dart';
-//import 'StepsStatisticsScreen.dart';
+import 'package:sample/ChallengePage/ChallangeTabBar.dart';
+import 'package:sample/ChallengePage/PointHistory.dart';
+import 'package:sample/ChallengePage/RewardPage.dart';
 import 'package:sample/utils/Debug.dart';
 import 'package:sample/utils/Preference.dart';
-import 'package:sample/utils/Utils.dart';
 import 'package:stop_watch_timer/stop_watch_timer.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 import 'package:intl/intl.dart';
@@ -40,7 +36,6 @@ class _ChallengePageState extends State<ChallengePage> {
   double? calories;
   int? height;
   int? weight;
-  bool _isBannerAdReady = false;
 
   bool? isKmSelected;
   // ignore: cancel_subscriptions
@@ -98,78 +93,120 @@ class _ChallengePageState extends State<ChallengePage> {
   Widget build(BuildContext context) {
     var fullHeight = MediaQuery.of(context).size.height;
     var fullWidth = MediaQuery.of(context).size.width;
-    return Scaffold(
-      //Googlen !!! kp was das tut
-      resizeToAvoidBottomInset: true,
-      backgroundColor: Theme.of(context).secondaryHeaderColor,
-      body: SafeArea(
-          child: Container(
-        child: Column(
+    return SafeArea(
+      child: Scaffold(
+        //Googlen !!! kp was das tut
+        resizeToAvoidBottomInset: true,
+        backgroundColor: Theme.of(context).canvasColor,
+        appBar: AppBar(
+            backgroundColor: Theme.of(context).secondaryHeaderColor,
+            title: Center(child: Text('Herausforderung'))),
+        body: ListView(
+          shrinkWrap: true,
           children: [
-            Expanded(
-              child: SingleChildScrollView(
-                //child: Column(
-                //children: [
-                child: buildStepIndiactorRow(context, fullHeight, fullWidth),
-                //Container(
-                //margin: EdgeInsets.only(top: fullHeight * 0.08),
-                //child: Row(
-                //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                //children: [
-                //buildWeekCircularIndicator(
-                //fullHeight,
-                //allDaysInSingleWord[1],
-                //stepsPercentValue.isNotEmpty
-                //? stepsPercentValue[0]
-                //: 0.0),
-                //buildWeekCircularIndicator(
-                //fullHeight,
-                //allDaysInSingleWord[2],
-                //stepsPercentValue.isNotEmpty
-                //? stepsPercentValue[1]
-                //: 0.0),
-                //buildWeekCircularIndicator(
-                //fullHeight,
-                //allDaysInSingleWord[3],
-                //stepsPercentValue.isNotEmpty
-                //? stepsPercentValue[2]
-                //: 0.0),
-                //buildWeekCircularIndicator(
-                //fullHeight,
-                //allDaysInSingleWord[4],
-                //stepsPercentValue.isNotEmpty
-                //? stepsPercentValue[3]
-                //: 0.0),
-                //buildWeekCircularIndicator(
-                //fullHeight,
-                //allDaysInSingleWord[5],
-                //stepsPercentValue.isNotEmpty
-                //? stepsPercentValue[4]
-                //: 0.0),
-                //buildWeekCircularIndicator(
-                //fullHeight,
-                //allDaysInSingleWord[6],
-                //stepsPercentValue.isNotEmpty
-                //? stepsPercentValue[5]
-                //: 0.0),
-                //buildWeekCircularIndicator(
-                //fullHeight,
-                //allDaysInSingleWord[0],
-                //stepsPercentValue.isNotEmpty
-                //? stepsPercentValue[6]
-                //: 0.0),
-                //],
-                //),
-                //),
-                //otherInfo(fullHeight, context),
-                //weeklyAverage(fullHeight, fullWidth, context),
-                //],
-                //),
-              ),
+            buildStepIndiactorRow(context, fullHeight, fullWidth),
+            SizedBox(
+              height: 25,
             ),
+            Row(
+              children: <Widget>[
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(20, 0, 10, 0),
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (_) => PointHistoryPage()));
+                      },
+                      child: Container(
+                        height: MediaQuery.of(context).size.height * 0.15,
+                        decoration: BoxDecoration(
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.5),
+                              spreadRadius: 5,
+                              blurRadius: 7,
+                              offset: Offset(0, 2),
+                            )
+                          ],
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Padding(
+                          padding: EdgeInsets.only(left: 20),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.only(top: 15),
+                                child: Text(
+                                  'Punktestand',
+                                  style: TextStyle(
+                                    color: Theme.of(context).primaryColor,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(10, 0, 20, 0),
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                          builder: (_) => RewardPage(),
+                        ));
+                      },
+                      child: Container(
+                        height: MediaQuery.of(context).size.height * 0.15,
+                        decoration: BoxDecoration(
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.5),
+                              spreadRadius: 5,
+                              blurRadius: 7,
+                              offset: Offset(0, 2),
+                            )
+                          ],
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Padding(
+                          padding: EdgeInsets.only(left: 20),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.only(top: 15),
+                                child: Text(
+                                  'Belohnungen',
+                                  style: TextStyle(
+                                    color: Theme.of(context).primaryColor,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            ChallangeTabBar(),
           ],
         ),
-      )),
+      ),
     );
   }
 
@@ -239,87 +276,6 @@ class _ChallengePageState extends State<ChallengePage> {
             )
           ],
         ),
-      ),
-    );
-  }
-
-  otherInfo(double fullHeight, BuildContext context) {
-    return Container(
-      margin: EdgeInsets.only(top: fullHeight * 0.1),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          Column(
-            children: [
-              StreamBuilder<int>(
-                  stream: _stopWatchTimer.rawTime,
-                  builder: (context, snapshot) {
-                    time = snapshot.hasData ? snapshot.data! + oldTime! : 0;
-                    Preference.shared.setInt(Preference.OLD_TIME, time!);
-
-                    duration = StopWatchTimer.getDisplayTime(
-                      time!,
-                      hours: true,
-                      minute: true,
-                      second: false,
-                      milliSecond: false,
-                      hoursRightBreak: "h ",
-                    );
-                    Preference.shared.setString(Preference.DURATION, duration!);
-                    return Text(
-                      duration! + "m",
-                      style: TextStyle(
-                          fontSize: 32,
-                          fontWeight: FontWeight.w500,
-                          color: Color(0xffFFFFFF)),
-                    );
-                  }),
-              Text(
-                "Dauer",
-                style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500,
-                    color: Color(0xff9195B6)),
-              ),
-            ],
-          ),
-          Column(
-            children: [
-              Text(
-                calories!.toStringAsFixed(0),
-                style: TextStyle(
-                    fontSize: 32,
-                    fontWeight: FontWeight.w500,
-                    color: Color(0xffFFFFFF)),
-              ),
-              Text(
-                "Kcal",
-                style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500,
-                    color: Color(0xff9195B6)),
-              ),
-            ],
-          ),
-          Column(
-            children: [
-              Text(
-                distance!.toStringAsFixed(2),
-                style: TextStyle(
-                    fontSize: 32,
-                    fontWeight: FontWeight.w500,
-                    color: Color(0xffFFFFFF)),
-              ),
-              Text(
-                isKmSelected! ? "Km" : "Mile",
-                style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500,
-                    color: Color(0xff9195B6)),
-              ),
-            ],
-          ),
-        ],
       ),
     );
   }
@@ -411,228 +367,9 @@ class _ChallengePageState extends State<ChallengePage> {
               ),
             ],
           ),
-          InkWell(
-            onTap: () {
-//Navigator.push(
-              //context,
-              //MaterialPageRoute(
-              //builder: (context) => StepsStatisticsScreen(
-              //currentStepCount: currentStepCount)));
-            },
-            child: Stack(
-              alignment: Alignment.center,
-              children: [
-                Container(
-                  height: 44,
-                  width: 44,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Colors.grey,
-                  ),
-                ),
-                Image.asset(
-                  "assets/icons/ic_statistics.png",
-                  height: 15,
-                  width: 19,
-                ),
-              ],
-            ),
-          )
         ],
       ),
     );
-  }
-
-  editTargetStepsBottomDialog(double fullHeight, double fullWidth) {
-    return showModalBottomSheet(
-      context: context,
-      isDismissible: true,
-      isScrollControlled: true,
-      backgroundColor: Color(0xffFFFFFF),
-      builder: (context) {
-        return Padding(
-          padding:
-              EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-          child: Container(
-            height: fullHeight * 0.5,
-            color: Color(0xff070E3D),
-            child: Container(
-              decoration: new BoxDecoration(
-                  color: Color(0xffFFFFFF),
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(32),
-                      topRight: Radius.circular(32))),
-              child: Container(
-                margin: EdgeInsets.symmetric(
-                    vertical: fullHeight * 0.04, horizontal: fullWidth * 0.04),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Zielschritte bearbeiten",
-                      style: TextStyle(
-                          color: Color(0xff000000),
-                          fontSize: 24,
-                          fontWeight: FontWeight.w700),
-                    ),
-                    SizedBox(height: fullHeight * 0.01),
-                    Text(
-                      "Verbrannte Kalorien, Gehstrecke & Dauer werden entsprechend berechnet.",
-                      style: TextStyle(
-                          color: Color(0xff9195B6),
-                          fontSize: 15,
-                          fontWeight: FontWeight.w400),
-                    ),
-                    Expanded(
-                      child: Container(
-                        margin: EdgeInsets.only(top: fullHeight * 0.04),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              "Schritte",
-                              style: TextStyle(
-                                  color: Color(0xff000000),
-                                  fontSize: 25,
-                                  fontWeight: FontWeight.w600),
-                            ),
-                            Container(
-                              height: 60,
-                              width: 167,
-                              decoration: BoxDecoration(
-                                  color: Color(0xff9195B6),
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(10))),
-                              child: TextFormField(
-                                maxLines: 1,
-                                maxLength: 7,
-                                controller: targetStepController,
-                                textInputAction: TextInputAction.done,
-                                keyboardType: TextInputType.number,
-                                textAlign: TextAlign.center,
-                                inputFormatters: <TextInputFormatter>[
-                                  FilteringTextInputFormatter.digitsOnly,
-                                ],
-                                style: TextStyle(
-                                    color: Color(0xffFFFFFF),
-                                    fontSize: 30,
-                                    fontWeight: FontWeight.w700),
-                                cursorColor: Color(0xffFFFFFF),
-                                decoration: InputDecoration(
-                                  counterText: "",
-                                  border: InputBorder.none,
-                                ),
-                                onEditingComplete: () {
-                                  FocusScope.of(context).unfocus();
-                                },
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.only(top: fullHeight * 0.04),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Container(
-                            width: 165,
-                            height: 60,
-                            decoration: BoxDecoration(
-                              gradient: LinearGradient(colors: [
-                                Color(0xffF15432),
-                                Color(0xffFF3E3F)
-                              ]),
-                              borderRadius: BorderRadius.circular(30),
-                              boxShadow: [
-                                BoxShadow(
-                                  offset: Offset(0.0, 25),
-                                  spreadRadius: 2,
-                                  blurRadius: 50,
-                                  color: Color(0x90ff4343),
-                                ),
-                              ],
-                            ),
-                            child: Material(
-                              color: Colors.transparent,
-                              child: InkWell(
-                                  onTap: () {
-                                    FocusScope.of(context).unfocus();
-                                    Navigator.pop(context);
-                                  },
-                                  child: Center(
-                                    child: Text(
-                                      "ABBRECHEN",
-                                      style: TextStyle(
-                                          color: Color(0xffFFFFFF),
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.w900),
-                                    ),
-                                  )),
-                            ),
-                          ),
-                          Container(
-                            width: 165,
-                            height: 60,
-                            decoration: BoxDecoration(
-                              gradient: LinearGradient(colors: [
-                                Color(0xff21BE10),
-                                Color(0xff7BDE56)
-                              ]),
-                              borderRadius: BorderRadius.circular(30),
-                              boxShadow: [
-                                BoxShadow(
-                                  offset: Offset(0.0, 25),
-                                  spreadRadius: 2,
-                                  blurRadius: 50,
-                                  color: Color(0x902fc31c),
-                                ),
-                              ],
-                            ),
-                            child: Material(
-                              color: Colors.transparent,
-                              child: InkWell(
-                                  onTap: () {
-                                    setState(() {
-                                      targetSteps =
-                                          int.parse(targetStepController.text);
-                                    });
-                                    if (targetSteps! > 50) {
-                                      Preference.shared.setInt(
-                                          Preference.TARGET_STEPS,
-                                          targetSteps!);
-                                      FocusScope.of(context).unfocus();
-                                      Navigator.pop(context);
-                                    } else {
-                                      //TODO
-                                    }
-                                  },
-                                  child: Center(
-                                    child: Text(
-                                      "SPEICHERN",
-                                      style: TextStyle(
-                                          color: Color(0xffFFFFFF),
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.w900),
-                                    ),
-                                  )),
-                            ),
-                          )
-                        ],
-                      ),
-                    )
-                  ],
-                ),
-              ),
-            ),
-          ),
-        );
-      },
-    ).whenComplete(() {
-      //getStepsDataForCurrentWeek();
-      FocusScope.of(context).unfocus();
-    });
   }
 
   stepsIndicator() {
@@ -645,7 +382,7 @@ class _ChallengePageState extends State<ChallengePage> {
           axisLineStyle: AxisLineStyle(
             thickness: 0.19,
             cornerStyle: CornerStyle.bothCurve,
-            color: Colors.white,
+            color: Theme.of(context).secondaryHeaderColor,
             thicknessUnit: GaugeSizeUnit.factor,
           ),
           pointers: <GaugePointer>[
@@ -672,7 +409,7 @@ class _ChallengePageState extends State<ChallengePage> {
                         style: TextStyle(
                             fontSize: 48,
                             fontWeight: FontWeight.w700,
-                            color: Color(0xffFFFFFF)),
+                            color: Theme.of(context).secondaryHeaderColor),
                       ),
                       Text(
                         targetSteps == null ? "/12000" : "/$targetSteps",

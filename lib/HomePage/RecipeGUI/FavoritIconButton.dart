@@ -71,6 +71,7 @@ class _FavoriteIconButtonState extends State<FavoriteIconButton> {
         recipeTyp: data.recipeTyp,
         savingTimerecipe: savingDateinFavRecip(),
         savingFlag: data.giftedRecipe,
+        nutritionlist: convertListtoString(data.nutritionlist!),
       ),
     );
   }
