@@ -1,8 +1,6 @@
 import 'dart:async';
-import 'package:flutter/services.dart';
 
 import 'package:flutter/material.dart';
-import 'package:googleapis/mybusinessbusinessinformation/v1.dart';
 import 'package:pedometer/pedometer.dart';
 import 'package:sample/ChallengePage/ChallangeTabBar.dart';
 import 'package:sample/ChallengePage/PointHistory.dart';
@@ -60,9 +58,6 @@ class _ChallengePageState extends State<ChallengePage> {
     getisPauseFromPrefs();
     setTime();
     calculateDistance();
-    //DataBaseHelper().getAllStepsData();
-    //getStepsDataForCurrentWeek();
-    getLast7DaysSteps();
     super.initState();
   }
 
@@ -101,110 +96,112 @@ class _ChallengePageState extends State<ChallengePage> {
         appBar: AppBar(
             backgroundColor: Theme.of(context).secondaryHeaderColor,
             title: Center(child: Text('Herausforderung'))),
-        body: ListView(
-          shrinkWrap: true,
-          children: [
-            buildStepIndiactorRow(context, fullHeight, fullWidth),
-            SizedBox(
-              height: 25,
-            ),
-            Row(
-              children: <Widget>[
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(20, 0, 10, 0),
-                    child: InkWell(
-                      onTap: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (_) => PointHistoryPage()));
-                      },
-                      child: Container(
-                        height: MediaQuery.of(context).size.height * 0.15,
-                        decoration: BoxDecoration(
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.withOpacity(0.5),
-                              spreadRadius: 5,
-                              blurRadius: 7,
-                              offset: Offset(0, 2),
-                            )
-                          ],
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Padding(
-                          padding: EdgeInsets.only(left: 20),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.only(top: 15),
-                                child: Text(
-                                  'Punktestand',
-                                  style: TextStyle(
-                                    color: Theme.of(context).primaryColor,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
+        body: SizedBox(
+          height: MediaQuery.of(context).size.height,
+          child: ListView(
+            children: [
+              buildStepIndiactorRow(context, fullHeight, fullWidth),
+              SizedBox(
+                height: 25,
+              ),
+              Row(
+                children: <Widget>[
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(20, 0, 10, 0),
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (_) => PointHistoryPage()));
+                        },
+                        child: Container(
+                          height: MediaQuery.of(context).size.height * 0.15,
+                          decoration: BoxDecoration(
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.5),
+                                spreadRadius: 3,
+                                blurRadius: 7,
+                                offset: Offset(0, 2),
+                              )
+                            ],
+                            color: Theme.of(context).secondaryHeaderColor,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Padding(
+                            padding: EdgeInsets.only(left: 20),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.only(top: 15),
+                                  child: Text(
+                                    'Punktestand',
+                                    style: TextStyle(
+                                      color: Theme.of(context).canvasColor,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
                       ),
                     ),
                   ),
-                ),
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(10, 0, 20, 0),
-                    child: InkWell(
-                      onTap: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                          builder: (_) => RewardPage(),
-                        ));
-                      },
-                      child: Container(
-                        height: MediaQuery.of(context).size.height * 0.15,
-                        decoration: BoxDecoration(
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.withOpacity(0.5),
-                              spreadRadius: 5,
-                              blurRadius: 7,
-                              offset: Offset(0, 2),
-                            )
-                          ],
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Padding(
-                          padding: EdgeInsets.only(left: 20),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.only(top: 15),
-                                child: Text(
-                                  'Belohnungen',
-                                  style: TextStyle(
-                                    color: Theme.of(context).primaryColor,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(10, 0, 20, 0),
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                            builder: (_) => RewardPage(),
+                          ));
+                        },
+                        child: Container(
+                          height: MediaQuery.of(context).size.height * 0.15,
+                          decoration: BoxDecoration(
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.5),
+                                spreadRadius: 3,
+                                blurRadius: 7,
+                                offset: Offset(0, 2),
+                              )
+                            ],
+                            color: Theme.of(context).secondaryHeaderColor,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Padding(
+                            padding: EdgeInsets.only(left: 20),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.only(top: 15),
+                                  child: Text(
+                                    'Belohnungen',
+                                    style: TextStyle(
+                                      color: Theme.of(context).canvasColor,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
                       ),
                     ),
                   ),
-                ),
-              ],
-            ),
-            ChallangeTabBar(),
-          ],
+                ],
+              ),
+              ChallangeTabBar(),
+            ],
+          ),
         ),
       ),
     );
@@ -484,40 +481,8 @@ class _ChallengePageState extends State<ChallengePage> {
     }
   }
 
-  // openPopUpMenu(fullHeight, fullWidth) async {
-  //final String result = await Navigator.push(context, StepsPopUpMenu());
-
-  //if (result == "Edit target") {
-  //setState(() {
-  //var prefSteps = Preference.shared.getInt(Preference.TARGET_STEPS);
-
-  //if (prefSteps != null) {
-  //targetStepController.text = prefSteps.toString();
-  //} else {
-  //targetStepController.text = 6000.toString();
-  //}
-  //editTargetStepsBottomDialog(fullHeight, fullWidth);
-  //});
-  //}
-
-  //if (result == "Reset") {
-  //resetData();
-  //}
-
-  //if (result == "Turn off") {
-  //setState(() {
-  //if (isPause) {
-  //_stopWatchTimer.onExecute.add(StopWatchExecute.stop);
-  //_stepCountStream.cancel();
-  //isPause = false;
-  //Preference.shared.setBool(Preference.IS_PAUSE, isPause);
-  //}
-  //});
-  //}
-  //}
-
   getPreference() {
-    targetSteps = Preference.shared.getInt(Preference.TARGET_STEPS) ?? 6000;
+    targetSteps = Preference.shared.getInt(Preference.TARGET_STEPS) ?? 12000;
     currentStepCount = Preference.shared.getInt(Preference.CURRENT_STEPS) ?? 0;
     oldTime = Preference.shared.getInt(Preference.OLD_TIME) ?? 0;
     duration = Preference.shared.getString(Preference.DURATION) ?? "00h 0";
@@ -618,43 +583,5 @@ class _ChallengePageState extends State<ChallengePage> {
         //resetData();
       }
     }
-  }
-
-  //getStepsDataForCurrentWeek() async {
-  //for (int i = 0; i <= 6; i++) {
-  //var currentWeekDates = getDate(DateTime.now()
-  //.subtract(Duration(days: currentDate.weekday - 1))
-  //.add(Duration(days: i)));
-  //weekDates.add(currentWeekDates.toString());
-  //}
-  ////stepsData = await DataBaseHelper().getStepsForCurrentWeek();
-
-  //for (int i = 0; i < weekDates.length; i++) {
-  //bool isMatch = false;
-  //stepsData.forEach((element) {
-  //if (element.stepDate == weekDates[i]) {
-  //isMatch = true;
-  //setState(() {
-  //double value = element.steps.toDouble() / targetSteps.toDouble();
-  //if (value <= 1.0) {
-  //stepsPercentValue.add(value);
-  //} else {
-  //stepsPercentValue.add(1.0);
-  //}
-  //});
-  //}
-  //});
-  //if (!isMatch) {
-  //setState(() {
-  //stepsPercentValue.add(0.0);
-  //});
-  //}
-  //}
-  //getTodayStepsPercent();
-  //}
-
-  getLast7DaysSteps() async {
-    // last7DaysSteps = await DataBaseHelper().getTotalStepsForLast7Days();
-    setState(() {});
   }
 }

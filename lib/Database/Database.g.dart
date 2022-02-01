@@ -65,6 +65,8 @@ class _$CostumeDatabase extends CostumeDatabase {
 
   Fav_dao? _favoriteRecipedaoInstance;
 
+  Points_dao? _pointsdaoInstance;
+
   Future<sqflite.Database> open(String path, List<Migration> migrations,
       [Callback? callback]) async {
     final databaseOptions = sqflite.OpenDatabaseOptions(
@@ -87,6 +89,8 @@ class _$CostumeDatabase extends CostumeDatabase {
             'CREATE TABLE IF NOT EXISTS `steps_table` (`step_id` INTEGER PRIMARY KEY AUTOINCREMENT, `count of steps` INTEGER, `distance` REAL, `Date_of_Walking` TEXT, `Walking_time` TEXT)');
         await database.execute(
             'CREATE TABLE IF NOT EXISTS `fav_table` (`recipe_id` INTEGER PRIMARY KEY AUTOINCREMENT, `recipe_Name` TEXT, `description` TEXT, `recipeTyp` TEXT, `picUrl` TEXT, `duration` INTEGER, `kilocal` INTEGER, `recipe_preparation` TEXT, `recipe_ingredients` TEXT, `Time_Recipe_save` TEXT, `Saving_Flag` INTEGER, `recipe_nutritions` TEXT)');
+        await database.execute(
+            'CREATE TABLE IF NOT EXISTS `Points_table` (`point_id` INTEGER PRIMARY KEY AUTOINCREMENT, `amount of points` INTEGER, `useType` REAL, `points_time` TEXT)');
 
         await callback?.onCreate?.call(database, version);
       },
@@ -102,6 +106,11 @@ class _$CostumeDatabase extends CostumeDatabase {
   @override
   Fav_dao get favoriteRecipedao {
     return _favoriteRecipedaoInstance ??= _$Fav_dao(database, changeListener);
+  }
+
+  @override
+  Points_dao get pointsdao {
+    return _pointsdaoInstance ??= _$Points_dao(database, changeListener);
   }
 }
 
@@ -254,5 +263,26 @@ class _$Fav_dao extends Fav_dao {
   @override
   Future<void> deleteRecipe(FavoriteRecip recip) async {
     await _favoriteRecipDeletionAdapter.delete(recip);
+  }
+}
+
+class _$Points_dao extends Points_dao {
+  _$Points_dao(this.database, this.changeListener)
+      : _queryAdapter = QueryAdapter(database);
+
+  final sqflite.DatabaseExecutor database;
+
+  final StreamController<String> changeListener;
+
+  final QueryAdapter _queryAdapter;
+
+  @override
+  Future<List<PointsData>> getAllEntrysfromTable() async {
+    return _queryAdapter.queryList('SELECT * FROM Points_table',
+        mapper: (Map<String, Object?> row) => PointsData(
+            id: row['point_id'] as int?,
+            pointsAmount: row['amount of points'] as int?,
+            pointusetype: row['useType'] as double?,
+            time: row['points_time'] as String?));
   }
 }

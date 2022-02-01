@@ -43,7 +43,7 @@ class _RecipeInfoSmallState extends State<RecipeInfoSmall> {
                     borderRadius: BorderRadius.circular(20),
                     child: Image.network(
                       widget.recipe.picUrl!,
-                      fit: BoxFit.fill,
+                      fit: BoxFit.cover,
                       loadingBuilder: (BuildContext context, Widget child,
                           ImageChunkEvent? loadingProgress) {
                         if (loadingProgress == null) return child;

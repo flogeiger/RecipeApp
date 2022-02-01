@@ -3,9 +3,8 @@ import 'dart:async';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Preference {
-  static const String USER_ID = "USER_ID";
   static const String IS_USER_FIRSTTIME = "IS_USER_FIRSTTIME";
-  static const String TARGET_DRINK_WATER = "TARGET_DRINK_WATER";
+
   static const String SELECTED_DRINK_WATER_ML = "SELECTED_DRINK_WATER_ML";
   static const String IS_REMINDER_ON = "IS_REMINDER_ON";
   static const String IS_DISTANCE_INDICATOR_ON = "IS_DISTANCE_INDICATOR_ON";
@@ -17,12 +16,9 @@ class Preference {
   static const String IS_KM_SELECTED = "IS_KM_SELECTED";
   static const String START_TIME_REMINDER = "START_TIME_REMINDER";
   static const String DAILY_REMINDER_TIME = "DAILY_REMINDER_TIME";
-  static const String DRINK_WATER_INTERVAL = "DRINK_WATER_INTERVAL";
   static const String DAILY_REMINDER_REPEAT_DAY = "DAILY_REMINDER_REPEAT_DAY";
   static const String IS_DAILY_REMINDER_ON = "IS_DAILY_REMINDER_ON";
   static const String END_TIME_REMINDER = "END_TIME_REMINDER";
-  static const String DRINK_WATER_NOTIFICATION_MESSAGE =
-      "DRINK_WATER_NOTIFICATION_MESSAGE";
 
   static const String METRIC_IMPERIAL_UNITS = "METRIC_IMPERIAL_UNITS";
   static const String LANGUAGE = "LANGUAGE";
@@ -109,24 +105,6 @@ class Preference {
     }
 
     return new Future.value(true);
-  }
-
-  static Future<bool> clearTargetDrinkWater() async {
-    _pref!.getKeys().forEach((key) async {
-      if (key == TARGET_DRINK_WATER) {
-        await _pref!.remove(key);
-      }
-    });
-    return Future.value(true);
-  }
-
-  static Future<bool> clearSelectedDrinkWaterML() async {
-    _pref!.getKeys().forEach((key) async {
-      if (key == SELECTED_DRINK_WATER_ML) {
-        await _pref!.remove(key);
-      }
-    });
-    return Future.value(true);
   }
 
   static Future<bool> clearMetricAndImperialUnits() async {
