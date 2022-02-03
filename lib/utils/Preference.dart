@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Preference {
-  static const String IS_USER_FIRSTTIME = "IS_USER_FIRSTTIME";
+  static const String FirstTime_Loggin = "FirstTime_Loggin";
 
   static const String SELECTED_DRINK_WATER_ML = "SELECTED_DRINK_WATER_ML";
   static const String IS_REMINDER_ON = "IS_REMINDER_ON";

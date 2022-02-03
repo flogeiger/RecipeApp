@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:sample/Database/Helper.dart';
+import 'package:sample/FirstLogin/wizardScreen/WizardScreen.dart';
 import 'package:sample/LoginPages/login_screen.dart';
 import 'package:firebase_core/firebase_core.dart' as _firebasecore;
 import 'package:path_provider/path_provider.dart';
@@ -18,25 +19,28 @@ Future<void> main() async {
   );
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Pages(),
-      debugShowCheckedModeBanner: false,
-    );
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  @override
+  void initState() {
+    isfirstTimeLogin();
+    super.initState();
   }
-}
 
-class Pages extends StatefulWidget {
-  @override
-  _PagesState createState() => _PagesState();
-}
+  bool isFirstTimeloggin = true;
+  isfirstTimeLogin() async {
+    isFirstTimeloggin =
+        Preference.shared.getBool(Preference.FirstTime_Loggin) ?? true;
+  }
 
-class _PagesState extends State<Pages> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Email And Password Login',
       theme: ThemeData(
         primaryColor: Colors.black,
@@ -59,8 +63,7 @@ class _PagesState extends State<Pages> {
         //},
         //),
       ),
-      debugShowCheckedModeBanner: false,
-      home: LoginScreen(),
+      home: (isFirstTimeloggin) ? WizardScreen() : LoginScreen(),
     );
   }
 }

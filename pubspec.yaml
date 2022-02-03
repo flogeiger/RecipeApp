@@ -78,6 +78,14 @@ flutter:
     - assets/icons/ic_statistics.png
     - assets/icons/ic_play.png
     - assets/icons/ic_pause.png
+    - assets/icons/dummy_girl.png
+    - assets/icons/ic_female.png
+    - assets/icons/ic_male.png
+    - assets/icons/ic_select_pointer.png
+    - assets/icons/ic_run.png
+    - assets/icons/ic_walk.png
+    - assets/icons/ic_info.webp
+
 
   #   - images/a_dot_ham.jpeg
 
