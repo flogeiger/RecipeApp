@@ -2,18 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sample/FirstLogin/weeklygoalSetScreen/GradientButtonSmall.dart';
 import 'package:sample/FirstLogin/weeklygoalSetScreen/WeeklyGoalSetScreenIntro.dart';
-import 'package:sample/FirstLogin/wizardScreen/WizardScreen.dart';
 
 class HeightScreen extends StatefulWidget {
-  final bool? isBack;
-
-  final WizardScreenState wizardScreenState;
-
-  HeightScreen({
-    this.isBack = true,
-    required this.wizardScreenState,
-  });
-
+  final PageController? controller;
+  HeightScreen({this.controller});
   @override
   _HeightScreenState createState() => _HeightScreenState();
 }
@@ -39,7 +31,7 @@ class _HeightScreenState extends State<HeightScreen> {
     return Container(
       height: fullHeight,
       width: fullWidth,
-      color: Color(0xff070E3D),
+      color: Theme.of(context).secondaryHeaderColor,
       child: Column(
         mainAxisSize: MainAxisSize.max,
         children: [
@@ -60,7 +52,7 @@ class _HeightScreenState extends State<HeightScreen> {
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontWeight: FontWeight.w400,
-                color: Color(0xff9195B6),
+                color: Colors.white,
                 fontSize: 20,
               ),
             ),
@@ -101,11 +93,7 @@ class _HeightScreenState extends State<HeightScreen> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => WeeklyGoalSetScreen(
-                            weight: widget.wizardScreenState.weightSelected,
-                            height: cmHeight,
-                            gender: widget.wizardScreenState.genderSelected,
-                          )),
+                      builder: (context) => WeeklyGoalSetScreen()),
                 );
               },
             ),
@@ -122,8 +110,8 @@ class _HeightScreenState extends State<HeightScreen> {
       width: 205,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15),
-        border: Border.all(color: Color(0xff9195B6), width: 1.5),
-        color: Color(0xff1B2153),
+        border: Border.all(color: Colors.white, width: 1.5),
+        color: Theme.of(context).secondaryHeaderColor,
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -152,7 +140,7 @@ class _HeightScreenState extends State<HeightScreen> {
           Container(
             height: 23,
             child: VerticalDivider(
-              color: Color(0xff9195B6),
+              color: Colors.white,
               width: 1,
               thickness: 1,
             ),
@@ -197,6 +185,7 @@ class _HeightScreenState extends State<HeightScreen> {
                     padding: EdgeInsets.only(bottom: fullHeight * 0.025),
                     child: Image.asset(
                       "assets/icons/ic_select_pointer.png",
+                      color: Colors.white,
                     ),
                   ),
                 ),
@@ -204,7 +193,7 @@ class _HeightScreenState extends State<HeightScreen> {
                   width: 125,
                   height: 300,
                   child: CupertinoPicker(
-                    backgroundColor: Color(0xff070E3D),
+                    backgroundColor: Theme.of(context).secondaryHeaderColor,
                     useMagnifier: true,
                     magnification: 1.05,
                     looping: true,
@@ -232,7 +221,7 @@ class _HeightScreenState extends State<HeightScreen> {
                   width: 125,
                   height: 300,
                   child: CupertinoPicker(
-                    backgroundColor: Color(0xff070E3D),
+                    backgroundColor: Theme.of(context).secondaryHeaderColor,
                     useMagnifier: true,
                     magnification: 1.05,
                     looping: true,
@@ -271,6 +260,7 @@ class _HeightScreenState extends State<HeightScreen> {
                 padding: EdgeInsets.only(bottom: fullHeight * 0.025),
                 child: Image.asset(
                   "assets/icons/ic_select_pointer.png",
+                  color: Colors.white,
                 ),
               ),
             ),
@@ -278,7 +268,7 @@ class _HeightScreenState extends State<HeightScreen> {
               width: 125,
               height: 300,
               child: CupertinoPicker(
-                backgroundColor: Color(0xff070E3D),
+                backgroundColor: Theme.of(context).secondaryHeaderColor,
                 useMagnifier: true,
                 magnification: 1.05,
                 looping: true,

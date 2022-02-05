@@ -1,27 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sample/FirstLogin/weeklygoalSetScreen/GradientButtonSmall.dart';
-import 'package:sample/FirstLogin/wizardScreen/WizardScreen.dart';
 
 class WeightScreen extends StatefulWidget {
-  final PageController? pageController;
-  final Function? updatevalue;
-  final bool? isBack;
-  final Function? pageNum;
-
-  final WizardScreenState wizardScreenState;
-  final int? weight;
-  final Function onWeight;
-
-  WeightScreen(
-      {this.pageController,
-      this.updatevalue,
-      this.isBack = true,
-      this.pageNum,
-      required this.wizardScreenState,
-      required this.weight,
-      required this.onWeight});
-
+  final PageController? controller;
+  WeightScreen({this.controller});
   @override
   _WeightScreenState createState() => _WeightScreenState();
 }
@@ -46,7 +29,7 @@ class _WeightScreenState extends State<WeightScreen> {
     return Container(
       height: fullHeight,
       width: fullWidth,
-      color: Color(0xff070E3D),
+      color: Theme.of(context).secondaryHeaderColor,
       child: Column(
         mainAxisSize: MainAxisSize.max,
         children: [
@@ -67,55 +50,42 @@ class _WeightScreenState extends State<WeightScreen> {
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontWeight: FontWeight.w400,
-                color: Color(0xff9195B6),
+                color: Colors.white,
                 fontSize: 20,
               ),
             ),
           ),
           weightUnitPicker(fullHeight),
           weightSelector(fullHeight),
-          Container(
-            margin: EdgeInsets.only(
-                left: fullWidth * 0.15,
-                bottom: fullHeight * 0.08,
-                right: fullWidth * 0.15),
-            alignment: Alignment.bottomCenter,
-            child: GradientButtonSmall(
-              width: double.infinity,
-              height: 60,
-              radius: 50.0,
-              child: Text(
-                "Nächster Schritt".toUpperCase(),
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w500,
-                    fontSize: 18.0),
-              ),
-              gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: <Color>[
-                  Color(0xff8A3CFF),
-                  Color(0xffC040FF),
-                ],
-              ),
-              onPressed: () {
-                setState(() {
-                  widget.updatevalue!(1.0);
-                  widget.pageNum!(3);
-                });
-
-                convert();
-                widget.onWeight(weightKG);
-
-                widget.pageController!.nextPage(
-                  duration: const Duration(milliseconds: 400),
-                  curve: Curves.easeInOut,
-                );
+          Expanded(
+            child: InkWell(
+              onTap: () {
+                widget.controller!.nextPage(
+                    duration: Duration(milliseconds: 100),
+                    curve: Curves.easeIn);
               },
+              child: Container(
+                margin: EdgeInsets.only(
+                    left: fullWidth * 0.15,
+                    bottom: fullHeight * 0.08,
+                    right: fullWidth * 0.15),
+                alignment: Alignment.bottomCenter,
+                child: GradientButtonSmall(
+                  width: double.infinity,
+                  height: 60,
+                  radius: 50.0,
+                  child: Text(
+                    "Nächster Schritt".toUpperCase(),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w500,
+                        fontSize: 18.0),
+                  ),
+                ),
+              ),
             ),
           ),
         ],
@@ -130,8 +100,8 @@ class _WeightScreenState extends State<WeightScreen> {
       width: 205,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15),
-        border: Border.all(color: Color(0xff9195B6), width: 1.5),
-        color: Color(0xff1B2153),
+        border: Border.all(color: Colors.white, width: 1.5),
+        color: Theme.of(context).secondaryHeaderColor,
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -160,7 +130,7 @@ class _WeightScreenState extends State<WeightScreen> {
           Container(
             height: 23,
             child: VerticalDivider(
-              color: Color(0xff9195B6),
+              color: Colors.white,
               width: 1,
               thickness: 1,
             ),
@@ -203,6 +173,7 @@ class _WeightScreenState extends State<WeightScreen> {
                   padding: EdgeInsets.only(bottom: fullHeight * 0.025),
                   child: Image.asset(
                     "assets/icons/ic_select_pointer.png",
+                    color: Colors.white,
                   ),
                 ),
               ),
@@ -213,7 +184,7 @@ class _WeightScreenState extends State<WeightScreen> {
                   useMagnifier: true,
                   magnification: 1.05,
                   selectionOverlay: CupertinoPickerDefaultSelectionOverlay(
-                    background: Colors.white,
+                    background: Colors.transparent,
                   ),
                   scrollController: FixedExtentScrollController(initialItem: 0),
                   looping: true,
@@ -251,6 +222,7 @@ class _WeightScreenState extends State<WeightScreen> {
                   padding: EdgeInsets.only(bottom: fullHeight * 0.025),
                   child: Image.asset(
                     "assets/icons/ic_select_pointer.png",
+                    color: Colors.white,
                   ),
                 ),
               ),
@@ -272,8 +244,8 @@ class _WeightScreenState extends State<WeightScreen> {
                     });
                   },
                   itemExtent: 75.0,
-                  children: List.generate(978, (index) {
-                    index += 20;
+                  children: List.generate(400, (index) {
+                    index += 1;
                     return Text(
                       "$index",
                       style: TextStyle(

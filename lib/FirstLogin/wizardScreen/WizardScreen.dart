@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sample/FirstLogin/wizardScreen/SlideDots.dart';
 import 'WelcomeDialogScreen.dart';
 import 'GenderScreen.dart';
 import 'HeightScreen.dart';
@@ -10,10 +11,7 @@ class WizardScreen extends StatefulWidget {
 }
 
 class WizardScreenState extends State<WizardScreen> {
-  double? _updateValue;
   PageController pageController = new PageController();
-  bool isBack = false;
-  late int pageNum;
 
   String? genderSelected;
   int? weightSelected;
@@ -34,10 +32,6 @@ class WizardScreenState extends State<WizardScreen> {
   void initState() {
     super.initState();
 
-    pageNum = 1;
-
-    _updateValue = 0.33;
-
     Future.delayed(Duration(seconds: 1), () {
       showModalBottomSheet(
           context: context,
@@ -55,155 +49,85 @@ class WizardScreenState extends State<WizardScreen> {
     });
   }
 
+  List<Widget> _pages = [
+    Container(),
+    Container(),
+    Container(),
+  ];
+  int _currentPage = 0;
+  _onchanged(int index) {
+    setState(() {
+      _currentPage = index;
+    });
+  }
+
+  bool? wasActive;
+  int? postion = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
-        color: Color(0xff070E3D),
+        color: Theme.of(context).secondaryHeaderColor,
         child: SafeArea(
           child: Column(
             mainAxisSize: MainAxisSize.max,
             children: [
               Flexible(
-                child: _progressTopBar(),
+                child: Stack(
+                  alignment: AlignmentDirectional.topStart,
+                  children: <Widget>[
+                    Container(
+                      margin: const EdgeInsets.only(top: 20),
+                      child: Row(
+                        children: <Widget>[
+                          _currentPage > 0
+                              ? InkWell(
+                                  onTap: () {
+                                    pageController.previousPage(
+                                        duration: Duration(milliseconds: 100),
+                                        curve: Curves.easeIn);
+                                  },
+                                  child: Icon(
+                                    Icons.arrow_back,
+                                    color: Colors.white,
+                                    size: MediaQuery.of(context).size.height *
+                                        0.06,
+                                  ),
+                                )
+                              : Container(),
+                          SizedBox(
+                            width: 125,
+                          ),
+                          for (int i = 0; i < _pages.length; i++)
+                            if (i == _currentPage)
+                              SlideDots(true)
+                            else
+                              SlideDots(false)
+                        ],
+                      ),
+                    )
+                  ],
+                ),
               ),
               Flexible(
                 flex: 9,
-                child: new PageView(
-                  onPageChanged: (pos) {
-                    setState(() {
-                      isBack = (pos != 0);
-                    });
-                  },
+                child: PageView(
+                  scrollDirection: Axis.horizontal,
+                  onPageChanged: _onchanged,
                   controller: pageController,
-                  physics: new NeverScrollableScrollPhysics(),
-                  children: <Widget>[
-                    GenderScreen(
-                      pageController: pageController,
-                      updatevalue: updateValue,
-                      isBack: isBack,
-                      pageNum: updagePageNumber,
-                      onGender: onGender,
-                      gender: genderSelected,
-                      wizardScreenState: this,
-                    ),
-                    WeightScreen(
-                      pageController: pageController,
-                      updatevalue: updateValue,
-                      isBack: isBack,
-                      pageNum: updagePageNumber,
-                      onWeight: onWeight,
-                      wizardScreenState: this,
-                      weight: weightSelected,
-                    ),
-                    HeightScreen(
-                      isBack: isBack,
-                      wizardScreenState: this,
-                    ),
+                  physics: NeverScrollableScrollPhysics(),
+                  children: [
+                    GenderScreen(controller: pageController),
+                    WeightScreen(controller: pageController),
+                    HeightScreen(controller: pageController)
                   ],
                 ),
               ),
             ],
           ),
         ),
-      ),
-    );
-  }
-
-  updateValue(double progress) {
-    setState(() {
-      _updateValue = progress;
-      if (_updateValue!.toStringAsFixed(1) == '1.2') {
-        _updateValue = 0.0;
-        return;
-      }
-    });
-  }
-
-  updagePageNumber(int newnum) {
-    setState(() {
-      pageNum = newnum;
-    });
-  }
-
-  _progressTopBar() {
-    return Container(
-      alignment: Alignment.center,
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Visibility(
-            visible: isBack,
-            child: InkWell(
-              onTap: () {
-                if (pageController.hasClients) {
-                  if (pageController.page!.round() == 0) {
-                    setState(() {
-                      isBack = false;
-                    });
-                  }
-                  if (pageController.page!.round() != 0) {
-                    pageController.previousPage(
-                      duration: const Duration(milliseconds: 400),
-                      curve: Curves.easeInOut,
-                    );
-                    updateValue(_updateValue! - 0.30);
-                    updagePageNumber(pageNum - 1);
-                  }
-                }
-              },
-              child: Container(
-                  margin: EdgeInsets.only(left: 10),
-                  width: 50,
-                  height: 50,
-                  decoration: BoxDecoration(
-                      border: Border.all(
-                        color: Color(0xff1B2153),
-                      ),
-                      borderRadius: BorderRadius.all(Radius.circular(20))),
-                  child: Center(
-                      child: Icon(
-                    Icons.arrow_back_ios_rounded,
-                    color: Colors.white,
-                  ))),
-            ),
-          ),
-          if (!isBack)
-            Container(
-              height: 50,
-              width: 60,
-            ),
-          Expanded(
-            child: UnconstrainedBox(
-              child: ClipRRect(
-                borderRadius: BorderRadius.all(Radius.circular(30.0)),
-                child: Container(
-                  width: 100,
-                  child: LinearProgressIndicator(
-                    backgroundColor: Color(0xff1B2153),
-                    valueColor: new AlwaysStoppedAnimation<Color>(
-                      Color(0xffC040FF),
-                    ),
-                    minHeight: 8,
-                    value: _updateValue,
-                  ),
-                ),
-              ),
-            ),
-          ),
-          Container(
-            margin: EdgeInsets.only(right: 10),
-            child: Text(
-              pageNum.toString() + "/3",
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 20,
-                  fontWeight: FontWeight.w500),
-            ),
-          ),
-        ],
       ),
     );
   }

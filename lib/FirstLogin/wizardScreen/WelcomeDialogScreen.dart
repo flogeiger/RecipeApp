@@ -21,7 +21,7 @@ class _WelcomeDialogScreenState extends State<WelcomeDialogScreen> {
         children: [
           Container(
             decoration: BoxDecoration(
-              color: Color(0xff070E3D),
+              color: Theme.of(context).secondaryHeaderColor,
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(32),
                 topRight: Radius.circular(32),
@@ -51,7 +51,7 @@ class _WelcomeDialogScreenState extends State<WelcomeDialogScreen> {
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
-                          color: Color(0xff9195B6),
+                          color: Colors.white,
                           fontWeight: FontWeight.w400,
                           fontSize: 20),
                     ),
@@ -64,7 +64,7 @@ class _WelcomeDialogScreenState extends State<WelcomeDialogScreen> {
                       maxLines: 3,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
-                          color: Color(0xff9195B6),
+                          color: Colors.white,
                           fontWeight: FontWeight.w400,
                           fontSize: 20),
                     ),

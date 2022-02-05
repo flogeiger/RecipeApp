@@ -46,10 +46,6 @@ class _FavoritePageState extends State<FavoritePage> {
     });
   }
 
-  callbackSetState() {
-    setState(() {});
-  }
-
   Widget buildRecipes(
     BuildContext context,
     Recipe transaction,

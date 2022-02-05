@@ -1,10 +1,12 @@
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:sample/AfterLogin/AfterLoginPage.dart';
 import 'package:sample/Controller/Authentification.dart';
+import 'package:sample/FirstLogin/wizardScreen/WizardScreen.dart';
 import 'package:sample/LoginPages/registration_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:sample/utils/Preference.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -24,10 +26,20 @@ class _LoginScreenState extends State<LoginScreen> {
 
   // string for displaying the error Message
   String? errorMessage;
+  bool isFirstTimeloggin = true;
+  isfirstTimeLogin() async {
+    isFirstTimeloggin =
+        Preference.shared.getBool(Preference.FirstTime_Loggin) ?? true;
+  }
+
+  @override
+  void initState() {
+    isfirstTimeLogin();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    //email field
     final emailField = TextFormField(
         autofocus: false,
         controller: emailController,
@@ -182,7 +194,9 @@ class _LoginScreenState extends State<LoginScreen> {
             .then((uid) => {
                   Fluttertoast.showToast(msg: "Login Successful"),
                   Navigator.of(context).pushReplacement(MaterialPageRoute(
-                      builder: (context) => AfterLoginPage(0))),
+                      builder: (context) => (isFirstTimeloggin)
+                          ? WizardScreen()
+                          : AfterLoginPage(0))),
                 });
       } on FirebaseAuthException catch (error) {
         switch (error.code) {

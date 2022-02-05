@@ -8,17 +8,6 @@ import 'package:sample/utils/Preference.dart';
 import '../../utils/Preference.dart';
 
 class WeeklyGoalSetScreen extends StatefulWidget {
-  final String? gender;
-  final int? height;
-  final int? weight;
-
-  WeeklyGoalSetScreen({
-    Key? key,
-    required this.gender,
-    required this.height,
-    required this.weight,
-  }) : super(key: key);
-
   @override
   _WeeklyGoalSetScreenState createState() => _WeeklyGoalSetScreenState();
 }
@@ -425,11 +414,11 @@ class _WeeklyGoalSetScreenState extends State<WeeklyGoalSetScreen> {
 
   setDataToPrefs() {
     if (Debug.STORE_RES_IN_PREF) {
-      Preference.shared.setString(Preference.GENDER, widget.gender!);
+      //  Preference.shared.setString(Preference.GENDER, widget.gender!);
 
-      Preference.shared.setInt(Preference.WEIGHT, widget.weight!);
+      // Preference.shared.setInt(Preference.WEIGHT, widget.weight!);
 
-      Preference.shared.setInt(Preference.HEIGHT, widget.height!);
+      //Preference.shared.setInt(Preference.HEIGHT, widget.height!);
 
       Preference.shared.setInt(Preference.DISTANCE, distanceKM);
     }

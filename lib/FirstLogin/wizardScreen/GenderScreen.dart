@@ -1,28 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:sample/FirstLogin/weeklygoalSetScreen/GradientButtonSmall.dart';
-import 'package:sample/FirstLogin/wizardScreen/WizardScreen.dart';
 
 enum Gender { Male, Female }
 
 class GenderScreen extends StatefulWidget {
-  final PageController? pageController;
-  final Function? updatevalue;
-  final bool? isBack;
-  final Function? pageNum;
-
-  final WizardScreenState wizardScreenState;
-  final String? gender;
-  final Function onGender;
-
-  GenderScreen(
-      {this.pageController,
-      this.updatevalue,
-      this.isBack = false,
-      this.pageNum,
-      required this.gender,
-      required this.onGender,
-      required this.wizardScreenState});
-
+  final PageController? controller;
+  GenderScreen({this.controller});
   @override
   _GenderScreenState createState() => _GenderScreenState();
 }
@@ -42,7 +25,7 @@ class _GenderScreenState extends State<GenderScreen> {
     return Container(
       height: fullHeight,
       width: fullWidth,
-      color: Color(0xff070E3D),
+      color: Theme.of(context).secondaryHeaderColor,
       child: Column(
         mainAxisSize: MainAxisSize.max,
         children: [
@@ -63,7 +46,7 @@ class _GenderScreenState extends State<GenderScreen> {
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontWeight: FontWeight.w400,
-                color: Color(0xff9195B6),
+                color: Colors.white,
                 fontSize: 20,
               ),
             ),
@@ -71,45 +54,33 @@ class _GenderScreenState extends State<GenderScreen> {
           _maleContanier(fullHeight),
           _femaleContainer(fullHeight),
           Expanded(
-            child: Container(
-              margin: EdgeInsets.only(
-                  left: fullWidth * 0.15,
-                  bottom: fullHeight * 0.08,
-                  right: fullWidth * 0.15),
-              alignment: Alignment.bottomCenter,
-              child: GradientButtonSmall(
-                width: double.infinity,
-                height: 60,
-                radius: 50.0,
-                child: Text(
-                  "Nächster Schritt".toUpperCase(),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w500,
-                      fontSize: 18.0),
+            child: InkWell(
+              onTap: () {
+                widget.controller!.nextPage(
+                    duration: Duration(milliseconds: 100),
+                    curve: Curves.easeIn);
+              },
+              child: Container(
+                margin: EdgeInsets.only(
+                    left: fullWidth * 0.15,
+                    bottom: fullHeight * 0.08,
+                    right: fullWidth * 0.15),
+                alignment: Alignment.bottomCenter,
+                child: GradientButtonSmall(
+                  width: double.infinity,
+                  height: 60,
+                  radius: 50.0,
+                  child: Text(
+                    "Nächster Schritt".toUpperCase(),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w500,
+                        fontSize: 18.0),
+                  ),
                 ),
-                gradient: LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: <Color>[
-                    Color(0xff8A3CFF),
-                    Color(0xffC040FF),
-                  ],
-                ),
-                onPressed: () async {
-                  setState(() {
-                    widget.onGender(gender.toString());
-                    widget.updatevalue!(0.66);
-                    widget.pageNum!(2);
-                  });
-                  widget.pageController!.nextPage(
-                    duration: const Duration(milliseconds: 400),
-                    curve: Curves.easeInOut,
-                  );
-                },
               ),
             ),
           ),
@@ -129,10 +100,10 @@ class _GenderScreenState extends State<GenderScreen> {
         height: 60,
         decoration: BoxDecoration(
           border: Border.all(
-            color: Color(0xff1B2153),
+            color: Colors.white,
           ),
           borderRadius: BorderRadius.all(Radius.circular(30)),
-          color: Color(0xff1B2153),
+          color: Theme.of(context).secondaryHeaderColor,
         ),
         margin: EdgeInsets.only(top: fullHeight * 0.1, left: 60, right: 60),
         child: Row(
@@ -143,6 +114,7 @@ class _GenderScreenState extends State<GenderScreen> {
                 'assets/icons/ic_male.png',
                 width: 40,
                 height: 40,
+                color: Colors.white,
               ),
             ),
             Expanded(
@@ -187,10 +159,10 @@ class _GenderScreenState extends State<GenderScreen> {
         height: 60,
         decoration: BoxDecoration(
           border: Border.all(
-            color: Color(0xff1B2153),
+            color: Colors.white,
           ),
           borderRadius: BorderRadius.all(Radius.circular(30)),
-          color: Color(0xff1B2153),
+          color: Theme.of(context).secondaryHeaderColor,
         ),
         margin: EdgeInsets.only(top: 15, left: 60, right: 60, bottom: 20),
         child: Row(
@@ -201,6 +173,7 @@ class _GenderScreenState extends State<GenderScreen> {
                 'assets/icons/ic_female.png',
                 width: 40,
                 height: 40,
+                color: Colors.white,
               ),
             ),
             Expanded(
