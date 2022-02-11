@@ -1,9 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:sample/AfterLogin/AfterLoginPage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:sample/FirstLogin/FirstLoginScreen/FirstLoginScreen.dart';
 import 'package:sample/models/user_models.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:sample/utils/Preference.dart';
 
 class RegistrationScreen extends StatefulWidget {
   @override
@@ -21,6 +23,14 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   final emailEditingController = new TextEditingController();
   final passwordEditingController = new TextEditingController();
   final confirmPasswordEditingController = new TextEditingController();
+  bool isFirstTimeloggin = true;
+  @override
+  void initState() {
+    isFirstTimeloggin =
+        Preference.shared.getBool(Preference.FirstTime_Loggin) ?? true;
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -288,9 +298,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         .set(userModel.toMap());
     Fluttertoast.showToast(msg: "Account created successfully :) ");
 
-    Navigator.pushAndRemoveUntil(
-        (context),
-        MaterialPageRoute(builder: (context) => AfterLoginPage(0)),
-        (route) => false);
+    Navigator.of(context).pushReplacement(MaterialPageRoute(
+        builder: (context) =>
+            (isFirstTimeloggin) ? FirstLoginScreen() : AfterLoginPage(0)));
   }
 }

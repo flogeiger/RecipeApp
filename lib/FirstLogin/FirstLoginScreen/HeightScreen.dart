@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sample/FirstLogin/weeklygoalSetScreen/GradientButtonSmall.dart';
 import 'package:sample/FirstLogin/weeklygoalSetScreen/WeeklyGoalSetScreenIntro.dart';
+import 'package:sample/utils/Preference.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HeightScreen extends StatefulWidget {
   final PageController? controller;
@@ -88,7 +90,7 @@ class _HeightScreenState extends State<HeightScreen> {
                 ],
               ),
               onPressed: () {
-                convert();
+                Preference.shared.setInt(Preference.height, ftHeight);
 
                 Navigator.push(
                   context,
@@ -113,60 +115,19 @@ class _HeightScreenState extends State<HeightScreen> {
         border: Border.all(color: Colors.white, width: 1.5),
         color: Theme.of(context).secondaryHeaderColor,
       ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          InkWell(
-            onTap: () {
-              setState(() {
-                cmSelected = true;
-                ftSelected = false;
-                unit = true;
-              });
-            },
-            child: Container(
-              width: 100,
-              child: Center(
-                child: Text(
-                  "CM",
-                  style: TextStyle(
-                      color: cmSelected ? Colors.white : Color(0xff9195B6),
-                      fontWeight: FontWeight.w500,
-                      fontSize: 18),
-                ),
-              ),
+      child: Center(
+        child: Container(
+          width: 100,
+          child: Center(
+            child: Text(
+              "CM",
+              style: TextStyle(
+                  color: cmSelected ? Colors.white : Color(0xff9195B6),
+                  fontWeight: FontWeight.w500,
+                  fontSize: 18),
             ),
           ),
-          Container(
-            height: 23,
-            child: VerticalDivider(
-              color: Colors.white,
-              width: 1,
-              thickness: 1,
-            ),
-          ),
-          InkWell(
-            onTap: () {
-              setState(() {
-                cmSelected = false;
-                ftSelected = true;
-                unit = false;
-              });
-            },
-            child: Container(
-              width: 100,
-              child: Center(
-                child: Text(
-                  "FT",
-                  style: TextStyle(
-                      color: ftSelected ? Colors.white : Color(0xff9195B6),
-                      fontWeight: FontWeight.w500,
-                      fontSize: 18),
-                ),
-              ),
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }
@@ -297,13 +258,6 @@ class _HeightScreenState extends State<HeightScreen> {
           ],
         ),
       );
-    }
-  }
-
-  convert() {
-    if (unit == false) {
-      var h = (ftHeight * 30.48) + (inchHeight * 2.59);
-      cmHeight = h.toInt();
     }
   }
 }

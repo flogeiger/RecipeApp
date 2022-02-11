@@ -33,7 +33,7 @@ class _WelcomeDialogScreenState extends State<WelcomeDialogScreen> {
               child: Column(
                 children: <Widget>[
                   Text(
-                    "Hallo, Willkommen bei\n" + "Läufer App",
+                    "Hallo, Willkommen bei\n" + "mycarbcrew",
                     textAlign: TextAlign.center,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
@@ -46,7 +46,7 @@ class _WelcomeDialogScreenState extends State<WelcomeDialogScreen> {
                   Padding(
                     padding: const EdgeInsets.only(top: 30.0, bottom: 30),
                     child: Text(
-                      "Ich bin Kate, dein persönlicher Fitnesstrainer.",
+                      "Ich bin Laura, deine lieblings Influencerin.",
                       textAlign: TextAlign.center,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,

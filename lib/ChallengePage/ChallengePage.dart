@@ -488,8 +488,8 @@ class _ChallengePageState extends State<ChallengePage> {
     duration = Preference.shared.getString(Preference.DURATION) ?? "00h 0";
     distance = Preference.shared.getDouble(Preference.OLD_DISTANCE) ?? 0;
     calories = Preference.shared.getDouble(Preference.OLD_CALORIES) ?? 0;
-    height = Preference.shared.getInt(Preference.HEIGHT) ?? 164;
-    weight = Preference.shared.getInt(Preference.WEIGHT) ?? 50;
+    height = Preference.shared.getInt(Preference.height) ?? 164;
+    weight = Preference.shared.getInt(Preference.weight) ?? 50;
     isKmSelected = Preference.shared.getBool(Preference.IS_KM_SELECTED) ?? true;
   }
 

@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:sample/FirstLogin/wizardScreen/SlideDots.dart';
+import 'package:sample/FirstLogin/FirstLoginScreen/SlideDots.dart';
 import 'WelcomeDialogScreen.dart';
 import 'GenderScreen.dart';
 import 'HeightScreen.dart';
 import 'WeightScreen.dart';
 
-class WizardScreen extends StatefulWidget {
+class FirstLoginScreen extends StatefulWidget {
   @override
-  WizardScreenState createState() => WizardScreenState();
+  FirstLoginScreenState createState() => FirstLoginScreenState();
 }
 
-class WizardScreenState extends State<WizardScreen> {
+class FirstLoginScreenState extends State<FirstLoginScreen> {
   PageController pageController = new PageController();
 
   String? genderSelected;

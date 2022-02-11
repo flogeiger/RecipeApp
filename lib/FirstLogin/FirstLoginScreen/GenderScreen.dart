@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sample/FirstLogin/weeklygoalSetScreen/GradientButtonSmall.dart';
+import 'package:sample/utils/Preference.dart';
 
 enum Gender { Male, Female }
 
@@ -56,6 +57,8 @@ class _GenderScreenState extends State<GenderScreen> {
           Expanded(
             child: InkWell(
               onTap: () {
+                Preference.shared
+                    .setString(Preference.gender, gender.toString());
                 widget.controller!.nextPage(
                     duration: Duration(milliseconds: 100),
                     curve: Curves.easeIn);

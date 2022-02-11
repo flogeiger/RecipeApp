@@ -43,9 +43,12 @@ class ProfilePage extends StatelessWidget {
                 ),
                 CircleAvatar(
                   radius: 80,
-                  backgroundColor: Theme.of(context).primaryColor,
-                  backgroundImage: NetworkImage(
-                      'https://th.bing.com/th/id/OIP.t1zIsBRgRyG_Gui7EcaI-gHaIq?pid=ImgDet&rs=1'),
+                  backgroundColor: Colors.white,
+                  child: Icon(
+                    Icons.people_alt_outlined,
+                    color: Theme.of(context).primaryColor,
+                    size: 50,
+                  ),
                 ),
                 SizedBox(
                   width: 20,

@@ -1,7 +1,7 @@
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:sample/AfterLogin/AfterLoginPage.dart';
 import 'package:sample/Controller/Authentification.dart';
-import 'package:sample/FirstLogin/wizardScreen/WizardScreen.dart';
+import 'package:sample/FirstLogin/FirstLoginScreen/FirstLoginScreen.dart';
 import 'package:sample/LoginPages/registration_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -195,7 +195,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   Fluttertoast.showToast(msg: "Login Successful"),
                   Navigator.of(context).pushReplacement(MaterialPageRoute(
                       builder: (context) => (isFirstTimeloggin)
-                          ? WizardScreen()
+                          ? FirstLoginScreen()
                           : AfterLoginPage(0))),
                 });
       } on FirebaseAuthException catch (error) {

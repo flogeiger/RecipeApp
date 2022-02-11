@@ -5,7 +5,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 class Preference {
   static const String FirstTime_Loggin = "FirstTime_Loggin";
 
-  static const String SELECTED_DRINK_WATER_ML = "SELECTED_DRINK_WATER_ML";
   static const String IS_REMINDER_ON = "IS_REMINDER_ON";
   static const String IS_DISTANCE_INDICATOR_ON = "IS_DISTANCE_INDICATOR_ON";
   static const String TARGETVALUE_FOR_DISTANCE_IN_KM =
@@ -25,10 +24,10 @@ class Preference {
   static const String FIRST_DAY_OF_WEEK = "FIRST_DAY_OF_WEEK";
   static const String FIRST_DAY_OF_WEEK_IN_NUM = "FIRST_DAY_OF_WEEK_IN_NUM";
 
-  static const String GENDER = "GENDER";
+  static const String gender = "gender";
   static const String DISTANCE = "DISTANCE";
-  static const String HEIGHT = "HEIGHT";
-  static const String WEIGHT = "WEIGHT";
+  static const String height = "height";
+  static const String weight = "weight";
   static const String TOTAL_STEPS = "TOTAL_STEPS";
   static const String CURRENT_STEPS = "CURRENT_STEPS";
   static const String TARGET_STEPS = "TARGET_STEPS";

@@ -31,45 +31,15 @@ class _RecipesPageState extends State<RecipesPage>
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: _backgroundColor,
+      appBar: AppBar(
+          backgroundColor: Theme.of(context).secondaryHeaderColor,
+          title: Center(child: Text('Rezepte'))),
       body: SafeArea(
         child: AnimatedBuilder(
           animation: _bloc,
           builder: (_, __) => Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              Container(
-                color: Colors.white,
-                height: 80,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 30.0, vertical: 15),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      const Text(
-                        'Homepage',
-                        style: TextStyle(
-                          color: _blueColor,
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      CircleAvatar(
-                        backgroundColor: _greenColor,
-                        radius: 17,
-                        child: ClipOval(
-                          child: Image.network(
-                            'https://random.imagecdn.app/500/150',
-                            fit: BoxFit.cover,
-                            height: 30,
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-              ),
               SizedBox(
                 height: 60,
                 child: TabBar(
