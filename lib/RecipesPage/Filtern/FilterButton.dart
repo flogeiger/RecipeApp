@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:sample/HomePage/Filtern/Listviewoptions.dart';
+import 'Listviewoptions.dart';
+import 'package:sample/models/Recipe.dart';
 
 class FilterButton extends StatefulWidget {
+  final List<Recipe>? list;
+  final Function? callbackFunction;
+  FilterButton({@required this.callbackFunction, @required this.list});
   @override
   _FilterButtonState createState() => _FilterButtonState();
 }
@@ -43,8 +47,12 @@ class _FilterButtonState extends State<FilterButton> {
         ),
       ),
       onTap: () {
-        Navigator.of(context)
-            .push(MaterialPageRoute(builder: (_) => Filtern()));
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (_) => Filtern(
+                callbackFunction: widget.callbackFunction, list: widget.list),
+          ),
+        );
       },
     );
   }

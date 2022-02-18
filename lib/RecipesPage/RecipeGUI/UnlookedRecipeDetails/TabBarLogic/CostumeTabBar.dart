@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:sample/HomePage/RecipeGUI/UnlookedRecipeDetails/TabBarLogic/CostumeStepper.dart';
-import 'package:sample/HomePage/RecipeGUI/UnlookedRecipeDetails/TabBarLogic/NutritionListview.dart';
-import 'package:sample/HomePage/RecipeGUI/UnlookedRecipeDetails/TabBarLogic/ingredientsListview.dart';
+import 'package:sample/RecipesPage/RecipeGUI/UnlookedRecipeDetails/TabBarLogic/CostumeStepper.dart';
+import 'package:sample/RecipesPage/RecipeGUI/UnlookedRecipeDetails/TabBarLogic/NutritionListview.dart';
+import 'package:sample/RecipesPage/RecipeGUI/UnlookedRecipeDetails/TabBarLogic/ingredientsListview.dart';
 import 'package:sample/models/Recipe.dart';
 
 class CostumeTabBar extends StatefulWidget {

@@ -1,23 +1,82 @@
 import 'package:flutter/material.dart';
-import 'AfterFilternCategory.dart';
-import 'package:sample/FavoritePage/Filtern/TopMenuBar.dart';
-import 'package:sample/FavoritePage/Filtern/ButtonFiltern.dart';
+import 'package:sample/RecipesPage/Filtern/ButtonFiltern.dart';
+import 'package:sample/RecipesPage/Filtern/Listviewoptions.dart';
+import 'package:sample/RecipesPage/Filtern/caloriesfilter/CaloriesFilterCategory.dart';
+import 'package:sample/models/Recipe.dart';
 
-class AfterCategoryFilterItem extends StatefulWidget {
+class CaloriesFilterPage extends StatefulWidget {
+  final List<Recipe>? list;
+  final Function? callbackFunction;
+  CaloriesFilterPage({@required this.callbackFunction, @required this.list});
   @override
-  _AfterCategoryFilterItemState createState() =>
-      _AfterCategoryFilterItemState();
+  _CaloriesFilterPageState createState() => _CaloriesFilterPageState();
 }
 
-class _AfterCategoryFilterItemState extends State<AfterCategoryFilterItem> {
-  List<AfterFilternCategory> filterList = AfterFilternCategory.getFilternName();
+class _CaloriesFilterPageState extends State<CaloriesFilterPage> {
+  List<CaloriesFilterCategory> filterList =
+      CaloriesFilterCategory.getFilterCalories();
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: new Scaffold(
         body: Column(
           children: [
-            TopMenuBar(),
+            Container(
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => Filtern(
+                              callbackFunction: widget.callbackFunction,
+                              list: widget.list),
+                        ),
+                      );
+                    },
+                    child: Container(
+                      child: Icon(
+                        Icons.close,
+                        color: Theme.of(context).secondaryHeaderColor,
+                        size: 50,
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: Container(
+                      height: 30,
+                      color: Colors.white,
+                    ),
+                  ),
+                  Container(
+                    child: Text(
+                      'Kategorien',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 30,
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: Container(
+                      height: 30,
+                      color: Colors.white,
+                    ),
+                  ),
+                  Container(
+                    child: Text(
+                      'Alles löschen',
+                      style: TextStyle(
+                        color: Theme.of(context).secondaryHeaderColor,
+                        fontSize: 18,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
             Expanded(
               child: Container(
                 child: new ListView.builder(
@@ -65,7 +124,14 @@ class _AfterCategoryFilterItemState extends State<AfterCategoryFilterItem> {
                       ),
                       child: InkWell(
                         onTap: () {
-                          Navigator.pop(context);
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => Filtern(
+                                  callbackFunction: widget.callbackFunction,
+                                  list: widget.list),
+                            ),
+                          );
                         },
                         child: FilterButton(
                           'Abbrechen',
@@ -88,12 +154,7 @@ class _AfterCategoryFilterItemState extends State<AfterCategoryFilterItem> {
                       ),
                       child: InkWell(
                         onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => AfterCategoryFilterItem(),
-                            ),
-                          );
+                          Navigator.pop(context);
                         },
                         child: FilterButton(
                           'Anwenden',

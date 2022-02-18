@@ -1,7 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:sample/HomePage/RecipeGUI/FavoritIconButton.dart';
-import 'package:sample/HomePage/RecipeGUI/UnlookedRecipeDetails/TabBarLogic/CostumeTabBar.dart';
+import 'package:sample/RecipesPage/RecipeGUI/FavoritIconButton.dart';
+import 'package:sample/RecipesPage/RecipeGUI/UnlookedRecipeDetails/TabBarLogic/CostumeTabBar.dart';
 import 'package:sample/models/Recipe.dart';
 
 //logic von Gui vereinfachen

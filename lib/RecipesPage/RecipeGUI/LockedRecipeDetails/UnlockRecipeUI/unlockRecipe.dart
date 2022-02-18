@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:sample/HomePage/RecipeGUI/LockedRecipeDetails/UnlockRecipeUI/UnlockRecipeButton.dart';
-import 'package:sample/HomePage/RecipeGUI/LockedRecipeDetails/UnlockRecipeUI/afterunlockoptions.dart';
+import 'package:sample/RecipesPage/RecipeGUI/LockedRecipeDetails/UnlockRecipeUI/UnlockRecipeButton.dart';
+import 'package:sample/RecipesPage/RecipeGUI/LockedRecipeDetails/UnlockRecipeUI/afterunlockoptions.dart';
 
 class UnlockRecipeModalBar extends StatefulWidget {
   @override

@@ -1,170 +1,198 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:sample/HomePage/Sort/Sortdropbar.dart';
-import 'package:sample/HomePage/Filtern/FilterButton.dart';
-import 'package:sample/HomePage/RecipeGUI/smallrecipeInfo.dart';
 import 'package:flutter/material.dart';
-import 'package:sample/models/Recipe.dart';
+import 'rapidata.dart';
+import 'rappi_Ibloc.dart';
 
 class HomePage extends StatefulWidget {
-  HomePage();
   @override
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
-  Future<List<Recipe>> getDatafromFirebase() async {
-    if (getRecipeList!.isEmpty) {
-      CollectionReference _collectionRef =
-          FirebaseFirestore.instance.collection('Recipes');
+const _backgroundColor = Color(0xFFF6F9FA);
+const _blueColor = Color(0xFF0D1863);
+const _greenColor = Color(0xFF2BBEBA);
 
-      // Get docs from collection reference
-      QuerySnapshot querySnapshot = await _collectionRef.get();
-
-      // Get data from docs and convert map to List
-      final allData = querySnapshot.docs
-          .map((doc) => Recipe.fromJson(doc.data() as Map<String, dynamic>));
-      getRecipeList!.clear();
-      for (var item in allData) {
-        getRecipeList!.add(item);
-        firebaseList!.add(item);
-      }
-      return getRecipeList!;
-    } else {
-      return getRecipeList!;
-    }
-  }
+class _HomePageState extends State<HomePage>
+    with SingleTickerProviderStateMixin {
+  final _bloc = RappiBLoC();
 
   @override
-  initState() {
+  void initState() {
+    _bloc.init(this);
     super.initState();
   }
 
-  List<Recipe>? firebaseList = [];
-  List<Recipe>? getRecipeList = [];
-  bool isSearching = false;
-
-  void checksifinputexist(String inp) {
-    if (inp == "") {
-      getRecipeList!.clear();
-      getDatafromFirebase();
-    } else {
-      getfilterItems(inp);
-    }
-  }
-
-  void getfilterItems(String inp) {
-    List<Recipe> toRemove = [];
-    getRecipeList!.forEach((element) {
-      if (!element.name!.toLowerCase().contains(inp.toLowerCase())) {
-        toRemove.add(element);
-      }
-    });
-    getRecipeList!.removeWhere((e) => toRemove.contains(e));
-  }
-
-  callback(varTopic) {
-    setState(() {
-      getRecipeList = varTopic;
-    });
+  @override
+  void dispose() {
+    _bloc.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: _backgroundColor,
       appBar: AppBar(
-        backgroundColor: Theme.of(context).secondaryHeaderColor,
-        title: !isSearching
-            ? Center(child: Text('Hompage'))
-            : TextField(
-                style: TextStyle(color: Colors.white),
-                onChanged: (String input) {
-                  setState(() {
-                    checksifinputexist(input);
-                  });
-                },
-                decoration: InputDecoration(
-                    border: InputBorder.none,
-                    hintText: 'Search topic',
-                    icon: Icon(
-                      Icons.search,
-                      color: Colors.white,
-                    ),
-                    hintStyle: TextStyle(color: Colors.white)),
-                autofocus: true,
-              ),
-        actions: [
-          isSearching
-              ? IconButton(
-                  icon: Icon(Icons.cancel),
-                  onPressed: () {
-                    setState(() {
-                      this.isSearching = !this.isSearching;
-                      getRecipeList!.clear();
-                      getDatafromFirebase();
-                    });
-                  },
-                )
-              : IconButton(
-                  icon: Icon(Icons.search),
-                  onPressed: () {
-                    setState(() {
-                      this.isSearching = !this.isSearching;
-                    });
-                  },
-                ),
-        ],
-      ),
-      body: SingleChildScrollView(
-        child: Container(
-          color: Colors.white,
-          child: Column(
-            children: [
-              Container(
-                height: MediaQuery.of(context).size.height * 0.08,
-                child: Row(
-                  children: <Widget>[
-                    Expanded(
-                      child: FilterButton(),
-                    ),
-                    Expanded(
-                        child: SortDropBar(
-                      list: getRecipeList,
-                      callbackFunction: callback,
-                      firebaseList: firebaseList,
-                    )),
-                  ],
+          backgroundColor: Theme.of(context).secondaryHeaderColor,
+          title: Center(child: Text('Home'))),
+      body: SafeArea(
+        child: AnimatedBuilder(
+          animation: _bloc,
+          builder: (_, __) => Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              SizedBox(
+                height: 60,
+                child: TabBar(
+                  controller: _bloc.tabController,
+                  indicatorWeight: 0.000001,
+                  isScrollable: true,
+                  labelColor: _blueColor,
+                  onTap: _bloc.onTabTap,
+                  tabs: _bloc.tabs.map((e) => _RappiTabWidget(e)).toList(),
                 ),
               ),
-              Container(
-                  height: MediaQuery.of(context).size.height * 0.68,
-                  child: FutureBuilder(
-                    future: getDatafromFirebase(),
-                    builder: (BuildContext ctx, AsyncSnapshot snapshot) {
-                      switch (snapshot.connectionState) {
-                        case ConnectionState.waiting:
-                          return Center(child: CircularProgressIndicator());
-                        default:
-                          if (snapshot.hasError) {
-                            return Center(
-                                child: Text('Could not load the data!'));
-                          } else {
-                            return ListView.builder(
-                              physics: BouncingScrollPhysics(),
-                              itemCount: getRecipeList!.length,
-                              itemBuilder: (cxt, index) {
-                                final recipe = getRecipeList![index];
-                                return RecipeInfoSmall(recipe);
-                              },
-                            );
-                          }
-                      }
-                    },
-                  )),
+              Expanded(
+                child: ListView.builder(
+                  controller: _bloc.scrollController,
+                  itemCount: _bloc.items.length,
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  itemBuilder: (context, index) {
+                    final item = _bloc.items[index];
+
+                    if (item.isCategory) {
+                      return _RappiCategoryItem(item.category);
+                    } else {
+                      return _RappiProductItem(item.product);
+                    }
+                  },
+                ),
+              ),
             ],
           ),
         ),
       ),
-//      ),
+    );
+  }
+}
+
+class _RappiTabWidget extends StatelessWidget {
+  const _RappiTabWidget(this.tabCategory);
+  final RappiTabCategory tabCategory;
+
+  @override
+  Widget build(BuildContext context) {
+    final selected = tabCategory.selected;
+
+    return Opacity(
+      opacity: selected ? 1 : 0.5,
+      child: Card(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
+        elevation: selected ? 6 : 0,
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text(
+            tabCategory.category.name,
+            style: const TextStyle(
+              color: _blueColor,
+              fontSize: 13,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _RappiCategoryItem extends StatelessWidget {
+  const _RappiCategoryItem(this.category);
+  final RappiCategory? category;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: categoryHight,
+      alignment: Alignment.centerLeft,
+      color: Colors.transparent,
+      child: Text(
+        category!.name,
+        style: const TextStyle(
+          color: _blueColor,
+          fontSize: 16,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+    );
+  }
+}
+
+class _RappiProductItem extends StatelessWidget {
+  const _RappiProductItem(this.product);
+  final RappiProduct? product;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 5),
+      child: Card(
+        elevation: 6,
+        shadowColor: Colors.black54,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: SizedBox(
+          height: productHight,
+          child: Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.all(8.0),
+                height: productHight,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(12),
+                  child: Image.network(
+                    product!.image,
+                    width: productHight,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+              const SizedBox(width: 10),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Text(
+                      product!.name,
+                      style: const TextStyle(
+                        color: _blueColor,
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text(
+                      product!.description,
+                      maxLines: 2,
+                      style: const TextStyle(
+                        color: _blueColor,
+                        fontSize: 10,
+                      ),
+                    ),
+                    Text(
+                      'S/ ${product!.price.toStringAsFixed(2)}',
+                      style: const TextStyle(
+                        color: _greenColor,
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

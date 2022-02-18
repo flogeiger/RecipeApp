@@ -1,8 +1,5 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
-import 'package:sample/HomePage/Sort/unsortButton.dart';
-import 'package:sample/models/FilterMethods.dart';
+import 'unsortButton.dart';
 import 'package:sample/models/Recipe.dart';
 import 'package:sample/utils/Preference.dart';
 import 'SortItem.dart';

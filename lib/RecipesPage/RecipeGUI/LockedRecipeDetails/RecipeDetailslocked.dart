@@ -1,7 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:sample/HomePage/RecipeGUI/FavoritIconButton.dart';
-import 'package:sample/HomePage/RecipeGUI/LockedRecipeDetails/UnlockRecipeUI/unlockRecipe.dart';
+import 'package:sample/RecipesPage/RecipeGUI/FavoritIconButton.dart';
+import 'package:sample/RecipesPage/RecipeGUI/LockedRecipeDetails/UnlockRecipeUI/unlockRecipe.dart';
 import 'package:sample/models/Recipe.dart';
 
 class RecipeDetailslooked extends StatefulWidget {

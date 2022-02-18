@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:sample/HomePage/RecipeGUI/LockedRecipeDetails/RecipeDetailslocked.dart';
-import 'package:sample/HomePage/RecipeGUI/UnlookedRecipeDetails/RecipeDetailsunlooked.dart';
+import 'LockedRecipeDetails/RecipeDetailslocked.dart';
+import 'UnlookedRecipeDetails/RecipeDetailsunlooked.dart';
 import 'package:sample/models/Recipe.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 
