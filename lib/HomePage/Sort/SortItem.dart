@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sample/HomePage/HomePage.dart';
 import 'package:sample/models/FilterMethods.dart';
 import 'package:sample/models/Recipe.dart';
+import 'package:sample/utils/Preference.dart';
 import 'Sort.dart';
 
 class FilterItem extends StatefulWidget {
@@ -76,20 +77,28 @@ class _FilterItemState extends State<FilterItem> {
             widget.callbackFunction!(
               FilterMethods.quickSort(widget.list!, 0, widget.list!.length - 1),
             );
+
+            Preference.shared.setBool(Preference.issorted, true);
             Navigator.pop(context);
           }
           if (currentFilteroptiontxt == 'Neustes'.toUpperCase()) {
             widget.callbackFunction!(
               FilterMethods.getnewestRecipes(widget.list!),
             );
+
+            Preference.shared.setBool(Preference.issorted, true);
             Navigator.pop(context);
           }
           if (currentFilteroptiontxt == 'Einfachsten'.toUpperCase()) {
             widget.callbackFunction!(
               FilterMethods.insertionSortforEasiest(widget.list!),
             );
+
+            Preference.shared.setBool(Preference.issorted, true);
+
             Navigator.pop(context);
           }
+          setState(() {});
         },
         child: Container(
           color: Colors.red,

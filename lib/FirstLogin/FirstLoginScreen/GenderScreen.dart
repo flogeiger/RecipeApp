@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:sample/FirstLogin/weeklygoalSetScreen/GradientButtonSmall.dart';
 import 'package:sample/utils/Preference.dart';
 
-enum Gender { Male, Female }
-
 class GenderScreen extends StatefulWidget {
   final PageController? controller;
   GenderScreen({this.controller});
@@ -12,7 +10,7 @@ class GenderScreen extends StatefulWidget {
 }
 
 class _GenderScreenState extends State<GenderScreen> {
-  Gender? gender = Gender.Male;
+  String? gender = 'Männlich';
 
   @override
   void initState() {
@@ -96,7 +94,7 @@ class _GenderScreenState extends State<GenderScreen> {
     return InkWell(
       onTap: () {
         setState(() {
-          gender = Gender.Male;
+          gender = 'Männlich';
         });
       },
       child: Container(
@@ -136,11 +134,11 @@ class _GenderScreenState extends State<GenderScreen> {
               child: Radio(
                 fillColor:
                     MaterialStateColor.resolveWith((states) => Colors.white),
-                value: Gender.Male,
+                value: 'Männlich',
                 groupValue: gender,
-                onChanged: (Gender? value) {
+                onChanged: (value) {
                   setState(() {
-                    gender = value;
+                    gender = 'Männlich';
                   });
                 },
               ),
@@ -155,7 +153,7 @@ class _GenderScreenState extends State<GenderScreen> {
     return InkWell(
       onTap: () {
         setState(() {
-          gender = Gender.Female;
+          gender = 'Weiblich';
         });
       },
       child: Container(
@@ -195,11 +193,11 @@ class _GenderScreenState extends State<GenderScreen> {
               child: Radio(
                 fillColor:
                     MaterialStateColor.resolveWith((states) => Colors.white),
-                value: Gender.Female,
+                value: 'Weiblich',
                 groupValue: gender,
-                onChanged: (Gender? value) {
+                onChanged: (value) {
                   setState(() {
-                    gender = value;
+                    gender = 'Weiblich';
                   });
                 },
               ),

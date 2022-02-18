@@ -22,15 +22,15 @@ class Preference {
   static const String METRIC_IMPERIAL_UNITS = "METRIC_IMPERIAL_UNITS";
   static const String LANGUAGE = "LANGUAGE";
   static const String FIRST_DAY_OF_WEEK = "FIRST_DAY_OF_WEEK";
-  static const String FIRST_DAY_OF_WEEK_IN_NUM = "FIRST_DAY_OF_WEEK_IN_NUM";
 
   static const String gender = "gender";
-  static const String DISTANCE = "DISTANCE";
+  static const String issortedFav = "sortedFav";
+  static const String issorted = "sorted";
   static const String height = "height";
   static const String weight = "weight";
   static const String TOTAL_STEPS = "TOTAL_STEPS";
-  static const String CURRENT_STEPS = "CURRENT_STEPS";
-  static const String TARGET_STEPS = "TARGET_STEPS";
+  static const String stepscurrentcount = "currentcountsteps";
+  static const String stepsgoal = "TARGET_STEPS";
   static const String OLD_TIME = "OLD_TIME";
   static const String OLD_DISTANCE = "OLD_DISTANCE";
   static const String OLD_CALORIES = "OLD_CALORIES";

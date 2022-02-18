@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sample/models/FilterMethods.dart';
 import 'package:sample/models/Recipe.dart';
+import 'package:sample/utils/Preference.dart';
 import 'Sort.dart';
 
 class FilterItem extends StatefulWidget {
@@ -75,18 +76,21 @@ class _FilterItemState extends State<FilterItem> {
             widget.callbackFunction!(
               filterForFastestfavRecip(),
             );
+            Preference.shared.setBool(Preference.issortedFav, true);
             Navigator.pop(context);
           }
           if (currentFilteroptiontxt == 'Neustes'.toUpperCase()) {
             widget.callbackFunction!(
               filterForNewestfavRecip(),
             );
+            Preference.shared.setBool(Preference.issortedFav, true);
             Navigator.pop(context);
           }
           if (currentFilteroptiontxt == 'Einfachsten'.toUpperCase()) {
             widget.callbackFunction!(
               filterForEasiestfavRecip(),
             );
+            Preference.shared.setBool(Preference.issortedFav, true);
             Navigator.pop(context);
           }
         },

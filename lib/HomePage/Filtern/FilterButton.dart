@@ -11,7 +11,7 @@ class _FilterButtonState extends State<FilterButton> {
   Widget build(BuildContext context) {
     return GestureDetector(
       child: Container(
-        height: 40,
+        height: MediaQuery.of(context).size.height * 0.06,
         decoration: BoxDecoration(
           color: Theme.of(context).canvasColor,
           border: Border.all(

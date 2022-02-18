@@ -429,14 +429,16 @@ class _ChallengePageState extends State<ChallengePage> {
         Preference.shared.setInt(Preference.TOTAL_STEPS, totalSteps);
 
         currentStepCount = currentStepCount! + 1;
-        Preference.shared.setInt(Preference.CURRENT_STEPS, currentStepCount!);
+        Preference.shared
+            .setInt(Preference.stepscurrentcount, currentStepCount!);
       } else {
         setState(() {
           totalSteps = value.steps;
           Preference.shared.setInt(Preference.TOTAL_STEPS, totalSteps);
 
           currentStepCount = currentStepCount! + 1;
-          Preference.shared.setInt(Preference.CURRENT_STEPS, currentStepCount!);
+          Preference.shared
+              .setInt(Preference.stepscurrentcount, currentStepCount!);
         });
       }
       calculateDistance();
@@ -482,8 +484,9 @@ class _ChallengePageState extends State<ChallengePage> {
   }
 
   getPreference() {
-    targetSteps = Preference.shared.getInt(Preference.TARGET_STEPS) ?? 12000;
-    currentStepCount = Preference.shared.getInt(Preference.CURRENT_STEPS) ?? 0;
+    targetSteps = Preference.shared.getInt(Preference.stepsgoal) ?? 12000;
+    currentStepCount =
+        Preference.shared.getInt(Preference.stepscurrentcount) ?? 0;
     oldTime = Preference.shared.getInt(Preference.OLD_TIME) ?? 0;
     duration = Preference.shared.getString(Preference.DURATION) ?? "00h 0";
     distance = Preference.shared.getDouble(Preference.OLD_DISTANCE) ?? 0;
@@ -502,7 +505,7 @@ class _ChallengePageState extends State<ChallengePage> {
       } else {
         currentStepCount = 0;
       }
-      Preference.shared.setInt(Preference.CURRENT_STEPS, currentStepCount!);
+      Preference.shared.setInt(Preference.stepscurrentcount, currentStepCount!);
 
       distance = 0;
       Preference.shared.setDouble(Preference.OLD_DISTANCE, distance!);

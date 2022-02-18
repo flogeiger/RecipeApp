@@ -35,6 +35,10 @@ class FilterMethods {
     return list.reversed.toList();
   }
 
+  static List<Recipe> getnormalRecipelist(List<Recipe> list) {
+    return list;
+  }
+
   static List<Recipe> insertionSortforEasiest(List<Recipe> listrecip) {
     for (var i = 0; i < listrecip.length; i++) {
       var currentVal = listrecip[i];

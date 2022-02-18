@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
+import 'package:sample/utils/Preference.dart';
 
 class ChallangeTabBar extends StatefulWidget {
   @override
@@ -30,6 +31,17 @@ class _ChallangeTabBarState extends State<ChallangeTabBar>
 
   _selectedItem(int id) {
     _currentSelection = id;
+  }
+
+  double _percentindactor(int val) {
+    val = Preference.shared.getInt(Preference.stepscurrentcount) ?? 0;
+    int targetSteps = Preference.shared.getInt(Preference.stepsgoal) ?? 12000;
+    if (val == 0) {
+      return 0.0;
+    }
+    double result = val / targetSteps;
+
+    return result;
   }
 
   @override
@@ -391,7 +403,7 @@ class _ChallangeTabBarState extends State<ChallangeTabBar>
                                                 Theme.of(context).primaryColor,
                                             animationDuration: 100,
                                             lineHeight: 10,
-                                            percent: 0.4,
+                                            percent: _percentindactor(0),
                                             trailing: Text(
                                               '0/10000',
                                               style: TextStyle(

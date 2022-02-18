@@ -15,8 +15,6 @@ class HeightScreen extends StatefulWidget {
 class _HeightScreenState extends State<HeightScreen> {
   bool cmSelected = true;
   bool ftSelected = false;
-  var ftHeight = 0;
-  var inchHeight = 0;
   int? cmHeight = 20;
   bool unit = true;
 
@@ -90,7 +88,7 @@ class _HeightScreenState extends State<HeightScreen> {
                 ],
               ),
               onPressed: () {
-                Preference.shared.setInt(Preference.height, ftHeight);
+                Preference.shared.setInt(Preference.height, cmHeight!);
 
                 Navigator.push(
                   context,
@@ -163,7 +161,7 @@ class _HeightScreenState extends State<HeightScreen> {
                     ),
                     onSelectedItemChanged: (value) {
                       setState(() {
-                        ftHeight = value;
+                        cmHeight = value;
                       });
                     },
                     itemExtent: 75.0,
@@ -178,34 +176,6 @@ class _HeightScreenState extends State<HeightScreen> {
                     }),
                   ),
                 ),
-                Container(
-                  width: 125,
-                  height: 300,
-                  child: CupertinoPicker(
-                    backgroundColor: Theme.of(context).secondaryHeaderColor,
-                    useMagnifier: true,
-                    magnification: 1.05,
-                    looping: true,
-                    selectionOverlay: CupertinoPickerDefaultSelectionOverlay(
-                      background: Colors.transparent,
-                    ),
-                    onSelectedItemChanged: (value) {
-                      setState(() {
-                        inchHeight = value;
-                      });
-                    },
-                    itemExtent: 75.0,
-                    children: List.generate(12, (index) {
-                      return Text(
-                        "$index \"",
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 48,
-                            fontWeight: FontWeight.bold),
-                      );
-                    }),
-                  ),
-                )
               ],
             ),
           ],

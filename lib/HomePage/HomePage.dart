@@ -26,6 +26,7 @@ class _HomePageState extends State<HomePage> {
       getRecipeList!.clear();
       for (var item in allData) {
         getRecipeList!.add(item);
+        firebaseList!.add(item);
       }
       return getRecipeList!;
     } else {
@@ -38,6 +39,7 @@ class _HomePageState extends State<HomePage> {
     super.initState();
   }
 
+  List<Recipe>? firebaseList = [];
   List<Recipe>? getRecipeList = [];
   bool isSearching = false;
 
@@ -128,6 +130,7 @@ class _HomePageState extends State<HomePage> {
                         child: SortDropBar(
                       list: getRecipeList,
                       callbackFunction: callback,
+                      firebaseList: firebaseList,
                     )),
                   ],
                 ),

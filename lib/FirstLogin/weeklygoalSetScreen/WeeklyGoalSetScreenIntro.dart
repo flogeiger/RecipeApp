@@ -278,7 +278,7 @@ class _WeeklyGoalSetScreenState extends State<WeeklyGoalSetScreen> {
         onPressed: () {
           Preference.shared.setBool(Preference.FirstTime_Loggin, false);
 
-          Preference.shared.setInt(Preference.DISTANCE, distanceKM);
+          //Preference.shared.setInt(Preference.DISTANCE, distanceKM);
           Navigator.pushAndRemoveUntil(
               context,
               MaterialPageRoute(builder: (_) => AfterLoginPage(0)),
