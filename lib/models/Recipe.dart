@@ -1,21 +1,21 @@
 class Recipe {
   String? name, description, recipeTyp, picUrl, savingTimerecipe;
-  List<dynamic>? preparationsteps, ingredientslist, nutritionlist;
+  List<dynamic>? preparationsteps, ingredientslist, nutritionlist, filterTyps;
   int? duration, kilocal;
   bool? giftedRecipe;
   Recipe(
-    this.name,
-    this.description,
-    this.recipeTyp,
-    this.picUrl,
-    this.savingTimerecipe,
-    this.duration,
-    this.giftedRecipe,
-    this.ingredientslist,
-    this.kilocal,
-    this.preparationsteps,
-    this.nutritionlist,
-  );
+      this.name,
+      this.description,
+      this.recipeTyp,
+      this.picUrl,
+      this.savingTimerecipe,
+      this.duration,
+      this.giftedRecipe,
+      this.ingredientslist,
+      this.kilocal,
+      this.preparationsteps,
+      this.nutritionlist,
+      this.filterTyps);
   Recipe.fromJson(Map<String, dynamic> parsedJSON)
       : picUrl = parsedJSON['picUrl'],
         description = parsedJSON['description'],
@@ -27,5 +27,6 @@ class Recipe {
         preparationsteps = parsedJSON['preparationsteps'],
         ingredientslist = parsedJSON['ingredientslist'],
         nutritionlist = parsedJSON['nutritionlist'],
-        savingTimerecipe = parsedJSON['recipesavingtime'];
+        savingTimerecipe = parsedJSON['recipesavingtime'],
+        filterTyps = parsedJSON['filterTyp'];
 }

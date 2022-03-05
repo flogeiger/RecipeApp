@@ -1,12 +1,14 @@
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:sample/AfterLogin/AfterLoginPage.dart';
-import 'package:sample/Controller/Authentification.dart';
 import 'package:sample/FirstLogin/FirstLoginScreen/FirstLoginScreen.dart';
 import 'package:sample/LoginPages/registration_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:sample/services/Firebase_services.dart';
 import 'package:sample/utils/Preference.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -129,24 +131,24 @@ class _LoginScreenState extends State<LoginScreen> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
                     ElevatedButton.icon(
-                      style: ElevatedButton.styleFrom(
-                        primary: Colors.white,
-                        onPrimary: Theme.of(context).primaryColor,
-                        minimumSize: Size(double.infinity, 50),
-                      ),
-                      icon: FaIcon(
-                        FontAwesomeIcons.google,
-                        color: Colors.red,
-                      ),
-                      label: Text('Mit Google verbinden'),
-                      onPressed: () => googleSignIn().whenComplete(
-                        () => Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(
-                            builder: (context) => AfterLoginPage(0),
-                          ),
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors.white,
+                          onPrimary: Theme.of(context).primaryColor,
+                          minimumSize: Size(double.infinity, 50),
                         ),
-                      ),
-                    ),
+                        icon: FaIcon(
+                          FontAwesomeIcons.google,
+                          color: Colors.red,
+                        ),
+                        label: Text('Mit Google verbinden'),
+                        onPressed: () async {
+                          await FirebaseServices().signinWithGoogle();
+                          Navigator.of(context).pushReplacement(
+                            MaterialPageRoute(
+                              builder: (context) => AfterLoginPage(0),
+                            ),
+                          );
+                        }),
                     SizedBox(height: 45),
                     emailField,
                     SizedBox(height: 25),

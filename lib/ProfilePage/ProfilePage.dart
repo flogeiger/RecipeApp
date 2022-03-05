@@ -2,7 +2,7 @@ import 'CostumeOptionPoint.dart';
 import 'package:flutter/material.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'triumph.dart';
-import 'Options.dart';
+import 'OptionPage/Options.dart';
 import 'RankingPage.dart';
 
 class ProfilePage extends StatelessWidget {

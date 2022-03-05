@@ -99,7 +99,8 @@ class _FavoritePageState extends State<FavoritePage> {
           convertStringtoList(item.preparationList!),
           item.kilocal,
           convertStringtoList(item.ingredientslist!),
-          convertStringtoList(item.nutritionlist!));
+          convertStringtoList(item.nutritionlist!),
+          convertStringtoList(item.filterTyp!));
       recipeList.add(favitem);
     }
     return recipeList;

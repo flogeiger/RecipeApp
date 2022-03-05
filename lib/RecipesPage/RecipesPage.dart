@@ -129,11 +129,12 @@ class _RecipesPageState extends State<RecipesPage> {
                       ),
                     ),
                     Expanded(
-                        child: SortDropBar(
-                      list: getRecipeList,
-                      callbackFunction: callback,
-                      firebaseList: firebaseList,
-                    )),
+                      child: SortDropBar(
+                        list: getRecipeList,
+                        callbackFunction: callback,
+                        firebaseList: firebaseList,
+                      ),
+                    ),
                   ],
                 ),
               ),

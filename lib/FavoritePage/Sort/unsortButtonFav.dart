@@ -22,17 +22,19 @@ class _UnsortBottonFavState extends State<UnsortBottonFav>
     List<Recipe> recipeList = [];
     for (var item in list) {
       Recipe favitem = new Recipe(
-          item.recipeName,
-          item.description,
-          item.recipeTyp,
-          item.picUrl,
-          item.savingTimerecipe,
-          item.duration,
-          item.savingFlag,
-          convertStringtoList(item.preparationList!),
-          item.kilocal,
-          convertStringtoList(item.ingredientslist!),
-          convertStringtoList(item.nutritionlist!));
+        item.recipeName,
+        item.description,
+        item.recipeTyp,
+        item.picUrl,
+        item.savingTimerecipe,
+        item.duration,
+        item.savingFlag,
+        convertStringtoList(item.preparationList!),
+        item.kilocal,
+        convertStringtoList(item.ingredientslist!),
+        convertStringtoList(item.nutritionlist!),
+        convertStringtoList(item.filterTyp!),
+      );
       recipeList.add(favitem);
     }
     return recipeList;

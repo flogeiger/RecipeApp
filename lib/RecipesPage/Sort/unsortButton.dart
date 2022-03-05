@@ -31,10 +31,10 @@ class _UnsortBottonState extends State<UnsortBotton>
       duration: const Duration(milliseconds: 1000),
       vsync: this,
     );
-    controller!.forward().then((_) async {
-      await Future.delayed(Duration(seconds: 3));
-      controller!.reverse();
-    });
+    //controller!.forward().then((_) async {
+    //await Future.delayed(Duration(seconds: 3));
+    //controller!.reverse();
+    //});
     //animation = Tween(begin: 0, end: 2 * pi).animate(controller!);
     super.initState();
   }
@@ -48,6 +48,7 @@ class _UnsortBottonState extends State<UnsortBotton>
         );
         setState(() {
           Preference.shared.setBool(Preference.issorted, false);
+          Preference.shared.setBool(Preference.isfilterd, false);
         });
       },
       child: CircleAvatar(

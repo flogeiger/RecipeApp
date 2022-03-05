@@ -90,8 +90,10 @@ class _SortDropBarState extends State<SortDropBar>
                 top: 0,
                 right: 0,
                 child: UnsortBotton(
-                    callbackFunction: widget.callbackFunction,
-                    firebaseList: widget.firebaseList))
+                  callbackFunction: widget.callbackFunction,
+                  firebaseList: widget.firebaseList,
+                ),
+              )
       ],
     );
   }

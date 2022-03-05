@@ -46,28 +46,25 @@ class _AfterLoginPageState extends State<AfterLoginPage> {
               iconSize: 30,
               items: const <BottomNavigationBarItem>[
                 BottomNavigationBarItem(
-                  icon: FaIcon(
-                    FontAwesomeIcons.home,
-                  ),
-                  title: Text(
-                    'Home',
-                  ),
-                ),
+                    icon: FaIcon(
+                      FontAwesomeIcons.home,
+                    ),
+                    label: 'Home'),
                 BottomNavigationBarItem(
                   icon: Icon(Icons.receipt_long_rounded),
-                  title: Text('Rezepte'),
+                  label: 'Rezepte',
                 ),
                 BottomNavigationBarItem(
                   icon: FaIcon(FontAwesomeIcons.heart),
-                  title: Text('Favoriten'),
+                  label: 'Favoriten',
                 ),
                 BottomNavigationBarItem(
                   icon: FaIcon(FontAwesomeIcons.dumbbell),
-                  title: Text('Challenges'),
+                  label: 'Challenges',
                 ),
                 BottomNavigationBarItem(
                   icon: FaIcon(FontAwesomeIcons.user),
-                  title: Text('Mein Plan'),
+                  label: 'Mein Plan',
                 ),
               ],
               currentIndex: widget._selectedItem,

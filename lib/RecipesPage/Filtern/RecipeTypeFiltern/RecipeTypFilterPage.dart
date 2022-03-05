@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:sample/RecipesPage/Filtern/Listviewoptions.dart';
 import 'package:sample/models/Recipe.dart';
+import 'package:sample/utils/Preference.dart';
 import 'RecipeTypFilternCategory.dart';
 import 'package:sample/RecipesPage/Filtern/ButtonFiltern.dart';
 
@@ -15,6 +17,10 @@ class RecipeTypFilterPage extends StatefulWidget {
 class _RecipeTypFilterPageState extends State<RecipeTypFilterPage> {
   List<RecipeTypFilternCategory> filterList =
       RecipeTypFilternCategory.getFilterRecipeTyp();
+
+  List<String> filterwords = [];
+
+  List<Recipe> filterRecipes = [];
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -103,6 +109,15 @@ class _RecipeTypFilterPageState extends State<RecipeTypFilterPage> {
                                       ListTileControlAffinity.leading,
                                   onChanged: (bool? val) {
                                     itemChange(val!, index);
+                                    if (val == true) {
+                                      filterwords.add(
+                                        filterList[index].filterCategorytxt!,
+                                      );
+                                    } else {
+                                      filterwords.remove(
+                                        filterList[index].filterCategorytxt!,
+                                      );
+                                    }
                                   })
                             ],
                           ),
@@ -154,6 +169,54 @@ class _RecipeTypFilterPageState extends State<RecipeTypFilterPage> {
                       ),
                       child: InkWell(
                         onTap: () {
+                          for (var recipe in widget.list!) {
+                            if (filterwords.isEmpty) {
+                              Fluttertoast.showToast(
+                                  msg:
+                                      "Bitte wählen Sie eine Option aus, um diese Funktion zu betätigen");
+                              break;
+                            }
+
+                            for (int i = 0; i < filterwords.length; i++) {
+                              switch (filterwords[i]) {
+                                case "Vegan":
+                                  if (filterRecipes.contains(recipe)) break;
+                                  filterRecipes.add(recipe);
+                                  break;
+                                case "Glutenfrei":
+                                  if (filterRecipes.contains(recipe)) break;
+                                  filterRecipes.add(recipe);
+                                  break;
+                                case "Low carb":
+                                  if (filterRecipes.contains(recipe)) break;
+                                  filterRecipes.add(recipe);
+                                  break;
+                                case "Keto":
+                                  if (filterRecipes.contains(recipe)) break;
+                                  filterRecipes.add(recipe);
+                                  break;
+                                case "Vegetarisch":
+                                  if (filterRecipes.contains(recipe)) break;
+                                  filterRecipes.add(recipe);
+                                  break;
+                                case "Prescetaria":
+                                  if (filterRecipes.contains(recipe)) break;
+                                  filterRecipes.add(recipe);
+                                  break;
+                                case "Low Fat":
+                                  if (filterRecipes.contains(recipe)) break;
+                                  filterRecipes.add(recipe);
+                                  break;
+                                case "Low Sugar":
+                                  if (filterRecipes.contains(recipe)) break;
+                                  filterRecipes.add(recipe);
+                                  break;
+                              }
+                            }
+                          }
+                          widget.callbackFunction!(filterRecipes);
+
+                          Preference.shared.setBool(Preference.isfilterd, true);
                           Navigator.pop(context);
                         },
                         child: FilterButton(

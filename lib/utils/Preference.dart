@@ -26,6 +26,7 @@ class Preference {
   static const String gender = "gender";
   static const String issortedFav = "sortedFav";
   static const String issorted = "sorted";
+  static const String isfilterd = "filtered";
   static const String height = "height";
   static const String weight = "weight";
   static const String TOTAL_STEPS = "TOTAL_STEPS";

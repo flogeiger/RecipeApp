@@ -1,6 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.sample">
     <uses-permission android:name="android.permission.ACTIVITY_RECOGNITION" />
+    <uses-permission android:name="android.permission.USE_FINGERPRINT"/>
    <application
         android:label="sample"
         android:icon="@mipmap/ic_launcher">
