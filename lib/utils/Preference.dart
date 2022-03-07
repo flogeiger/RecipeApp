@@ -19,13 +19,10 @@ class Preference {
   static const String IS_DAILY_REMINDER_ON = "IS_DAILY_REMINDER_ON";
   static const String END_TIME_REMINDER = "END_TIME_REMINDER";
 
-  static const String METRIC_IMPERIAL_UNITS = "METRIC_IMPERIAL_UNITS";
-  static const String LANGUAGE = "LANGUAGE";
-  static const String FIRST_DAY_OF_WEEK = "FIRST_DAY_OF_WEEK";
-
   static const String gender = "gender";
   static const String issortedFav = "sortedFav";
   static const String issorted = "sorted";
+  static const String isfilterdFav = "filteredFav";
   static const String isfilterd = "filtered";
   static const String height = "height";
   static const String weight = "weight";
@@ -105,14 +102,5 @@ class Preference {
     }
 
     return new Future.value(true);
-  }
-
-  static Future<bool> clearMetricAndImperialUnits() async {
-    _pref!.getKeys().forEach((key) async {
-      if (key == METRIC_IMPERIAL_UNITS) {
-        await _pref!.remove(key);
-      }
-    });
-    return Future.value(true);
   }
 }

@@ -126,6 +126,7 @@ class _RecipesPageState extends State<RecipesPage> {
                       child: FilterButton(
                         callbackFunction: callback,
                         list: getRecipeList,
+                        firebaselist: firebaseList,
                       ),
                     ),
                     Expanded(

@@ -33,7 +33,7 @@ class _UnsortBottonFavState extends State<UnsortBottonFav>
         item.kilocal,
         convertStringtoList(item.ingredientslist!),
         convertStringtoList(item.nutritionlist!),
-        convertStringtoList(item.filterTyp!),
+        convertStringtoList(item.filterTyps!),
       );
       recipeList.add(favitem);
     }
@@ -58,6 +58,7 @@ class _UnsortBottonFavState extends State<UnsortBottonFav>
         widget.callbackFunction!(favRecipe(Helper.selectAllDataFromFavtable()));
         setState(() {
           Preference.shared.setBool(Preference.issortedFav, false);
+          Preference.shared.setBool(Preference.isfilterdFav, false);
         });
       },
       child: CircleAvatar(

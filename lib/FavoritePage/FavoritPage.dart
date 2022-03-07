@@ -100,7 +100,7 @@ class _FavoritePageState extends State<FavoritePage> {
           item.kilocal,
           convertStringtoList(item.ingredientslist!),
           convertStringtoList(item.nutritionlist!),
-          convertStringtoList(item.filterTyp!));
+          convertStringtoList(item.filterTyps!));
       recipeList.add(favitem);
     }
     return recipeList;
@@ -198,7 +198,9 @@ class _FavoritePageState extends State<FavoritePage> {
                   child: Row(
                     children: <Widget>[
                       Expanded(
-                        child: FilterButton(),
+                        child: FilterButton(
+                          callbackFunction: callback,
+                        ),
                       ),
                       Expanded(
                         child: SortDropBar(

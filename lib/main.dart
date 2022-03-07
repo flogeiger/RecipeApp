@@ -45,6 +45,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     if (background) {
       Preference.shared.setBool(Preference.issorted, false);
       Preference.shared.setBool(Preference.issortedFav, false);
+      Preference.shared.setBool(Preference.isfilterd, false);
     }
   }
 

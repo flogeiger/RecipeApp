@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:sample/RecipesPage/Filtern/Listviewoptions.dart';
+import 'package:sample/Database/Datamodel/FavoriteData.dart';
+import 'package:sample/Database/Helper.dart';
+import 'package:sample/FavoritePage/Filtern/Listviewoptions.dart';
 import 'package:sample/models/Recipe.dart';
 import 'package:sample/utils/Constant.dart';
 import 'package:sample/utils/Preference.dart';
 import 'RecipeTypFilternCategory.dart';
-import 'package:sample/RecipesPage/Filtern/ButtonFiltern.dart';
+import 'package:sample/FavoritePage/Filtern/ButtonFiltern.dart';
 
 class RecipeTypFilterPage extends StatefulWidget {
-  final List<Recipe>? list;
   final Function? callbackFunction;
-  RecipeTypFilterPage({@required this.callbackFunction, @required this.list});
+  RecipeTypFilterPage({
+    @required this.callbackFunction,
+  });
   @override
   _RecipeTypFilterPageState createState() => _RecipeTypFilterPageState();
 }
@@ -31,6 +34,44 @@ class _RecipeTypFilterPageState extends State<RecipeTypFilterPage> {
     }
   }
 
+  Future<List<Recipe>> convertListtoFuture(List<Recipe> list) async {
+    return list;
+  }
+
+  List<Recipe> recipeList = [];
+  Future<List<Recipe>> favRecipe(Future<List<FavoriteRecip>> getlist) async {
+    final list = await getlist;
+    for (var item in list) {
+      Recipe favitem = new Recipe(
+        item.recipeName,
+        item.description,
+        item.recipeTyp,
+        item.picUrl,
+        item.savingTimerecipe,
+        item.duration,
+        item.savingFlag,
+        convertStringtoList(item.preparationList!),
+        item.kilocal,
+        convertStringtoList(item.ingredientslist!),
+        convertStringtoList(item.nutritionlist!),
+        convertStringtoList(item.filterTyps!),
+      );
+      recipeList.add(favitem);
+    }
+    return recipeList;
+  }
+
+  List<String> convertStringtoList(String input) {
+    final list = input.split(',');
+    return list;
+  }
+
+  @override
+  void initState() {
+    favRecipe(Helper.selectAllDataFromFavtable());
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -47,8 +88,8 @@ class _RecipeTypFilterPageState extends State<RecipeTypFilterPage> {
                         context,
                         MaterialPageRoute(
                           builder: (context) => Filtern(
-                              callbackFunction: widget.callbackFunction,
-                              list: widget.list),
+                            callbackFunction: widget.callbackFunction,
+                          ),
                         ),
                       );
                     },
@@ -153,8 +194,8 @@ class _RecipeTypFilterPageState extends State<RecipeTypFilterPage> {
                             context,
                             MaterialPageRoute(
                               builder: (context) => Filtern(
-                                  callbackFunction: widget.callbackFunction,
-                                  list: widget.list),
+                                callbackFunction: widget.callbackFunction,
+                              ),
                             ),
                           );
                         },
@@ -183,7 +224,7 @@ class _RecipeTypFilterPageState extends State<RecipeTypFilterPage> {
                             Fluttertoast.showToast(
                                 msg: Constant.msgChoosOptions);
                           } else {
-                            for (var recipe in widget.list!) {
+                            for (var recipe in recipeList) {
                               for (int i = 0; i < filterwords.length; i++) {
                                 switch (filterwords[i]) {
                                   case Constant.vegan:
@@ -275,14 +316,15 @@ class _RecipeTypFilterPageState extends State<RecipeTypFilterPage> {
                                       filterRecipes.add(recipe);
                                     }
                                     break;
-                                    break;
                                 }
                               }
                             }
-                            widget.callbackFunction!(filterRecipes);
+                            widget.callbackFunction!(
+                              convertListtoFuture(filterRecipes),
+                            );
 
                             Preference.shared
-                                .setBool(Preference.isfilterd, true);
+                                .setBool(Preference.isfilterdFav, true);
                             Navigator.pop(context);
                           }
                         },

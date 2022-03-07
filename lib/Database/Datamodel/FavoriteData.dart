@@ -40,7 +40,7 @@ class FavoriteRecip {
   String? nutritionlist;
 
   @ColumnInfo(name: "filterTyp")
-  String? filterTyp;
+  String? filterTyps;
 
   FavoriteRecip(
       {this.id,
@@ -55,5 +55,5 @@ class FavoriteRecip {
       this.savingTimerecipe,
       this.savingFlag,
       this.nutritionlist,
-      this.filterTyp});
+      this.filterTyps});
 }

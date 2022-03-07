@@ -6,8 +6,13 @@ import 'package:sample/models/Recipe.dart';
 
 class FilterButton extends StatefulWidget {
   final List<Recipe>? list;
+  final List<Recipe>? firebaselist;
+
   final Function? callbackFunction;
-  FilterButton({@required this.callbackFunction, @required this.list});
+  FilterButton(
+      {@required this.callbackFunction,
+      @required this.list,
+      @required this.firebaselist});
   @override
   _FilterButtonState createState() => _FilterButtonState();
 }
@@ -80,12 +85,11 @@ class _FilterButtonState extends State<FilterButton> {
                 left: 0,
               )
             : Positioned(
-                // will be positioned in the top right of the container
                 top: 0,
                 left: 0,
                 child: UnsortBotton(
                   callbackFunction: widget.callbackFunction,
-                  firebaseList: widget.list,
+                  firebaseList: widget.firebaselist,
                 ),
               )
       ],

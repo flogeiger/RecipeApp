@@ -5,7 +5,6 @@ import 'package:pedometer/pedometer.dart';
 import 'package:sample/ChallengePage/ChallangeTabBar.dart';
 import 'package:sample/ChallengePage/PointHistory.dart';
 import 'package:sample/ChallengePage/RewardPage.dart';
-import 'package:sample/utils/Debug.dart';
 import 'package:sample/utils/Preference.dart';
 import 'package:stop_watch_timer/stop_watch_timer.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
@@ -446,7 +445,6 @@ class _ChallengePageState extends State<ChallengePage> {
       getTodayStepsPercent();
     }, onError: (error) {
       totalSteps = 0;
-      Debug.printLog("Error: $error");
     }, cancelOnError: false);
   }
 

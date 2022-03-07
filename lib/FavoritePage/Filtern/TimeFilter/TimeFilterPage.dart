@@ -1,39 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:sample/RecipesPage/Filtern/ButtonFiltern.dart';
-import 'package:sample/RecipesPage/Filtern/Listviewoptions.dart';
-import 'package:sample/RecipesPage/Filtern/TimeFilter/TimeFilterCategory.dart';
-import 'package:sample/models/Recipe.dart';
+import 'package:sample/FavoritePage/Filtern/ButtonFiltern.dart';
+import 'package:sample/FavoritePage/Filtern/Listviewoptions.dart';
+import 'package:sample/FavoritePage/Filtern/TimeFilter/TimeFilterCategory.dart';
 
 class TimeFilterPage extends StatefulWidget {
-  final List<Recipe>? list;
   final Function? callbackFunction;
-  TimeFilterPage({@required this.callbackFunction, @required this.list});
+  TimeFilterPage({
+    @required this.callbackFunction,
+  });
   @override
   _TimeFilterPageState createState() => _TimeFilterPageState();
 }
 
 class _TimeFilterPageState extends State<TimeFilterPage> {
   List<TimeFilterCategory> filterList = TimeFilterCategory.getFilterCategory();
-  List<Recipe> recipeList = [];
-  addRecipesaccordingtopreparationTime(bool isChecked, int index) {
-    if (isChecked == true) {
-      if (index == 0) {
-        for (var recipe in widget.list!) {
-          if (recipe.duration! > 0 && recipe.duration! <= 10) {
-            recipeList.add(recipe);
-          }
-        }
-      }
-      if (index == 6) {
-        for (var recipe in widget.list!) {
-          if (recipe.duration! > 60) {
-            recipeList.add(recipe);
-          }
-        }
-      }
-    } else {}
-  }
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -50,8 +30,8 @@ class _TimeFilterPageState extends State<TimeFilterPage> {
                         context,
                         MaterialPageRoute(
                           builder: (context) => Filtern(
-                              callbackFunction: widget.callbackFunction,
-                              list: widget.list),
+                            callbackFunction: widget.callbackFunction,
+                          ),
                         ),
                       );
                     },
@@ -121,9 +101,7 @@ class _TimeFilterPageState extends State<TimeFilterPage> {
                                   controlAffinity:
                                       ListTileControlAffinity.leading,
                                   onChanged: (bool? val) {
-                                    addRecipesaccordingtopreparationTime(
-                                        val!, index);
-                                    itemChange(val, index);
+                                    itemChange(val!, index);
                                   })
                             ],
                           ),
@@ -149,8 +127,8 @@ class _TimeFilterPageState extends State<TimeFilterPage> {
                             context,
                             MaterialPageRoute(
                               builder: (context) => Filtern(
-                                  callbackFunction: widget.callbackFunction,
-                                  list: widget.list),
+                                callbackFunction: widget.callbackFunction,
+                              ),
                             ),
                           );
                         },
