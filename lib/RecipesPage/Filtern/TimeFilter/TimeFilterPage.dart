@@ -1,8 +1,13 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:sample/RecipesPage/Filtern/ButtonFiltern.dart';
 import 'package:sample/RecipesPage/Filtern/Listviewoptions.dart';
+import 'TimeFilterListview.dart';
 import 'package:sample/RecipesPage/Filtern/TimeFilter/TimeFilterCategory.dart';
 import 'package:sample/models/Recipe.dart';
+
+import '../../../utils/Preference.dart';
 
 class TimeFilterPage extends StatefulWidget {
   final List<Recipe>? list;
@@ -13,25 +18,49 @@ class TimeFilterPage extends StatefulWidget {
 }
 
 class _TimeFilterPageState extends State<TimeFilterPage> {
-  List<TimeFilterCategory> filterList = TimeFilterCategory.getFilterCategory();
+  List<TimeFilterCategory> filterList = [];
   List<Recipe> recipeList = [];
+
+  Future<List<TimeFilterCategory>> getFilterCategory() async {
+    Query _collectionRef =
+        FirebaseFirestore.instance.collection("TimeFilterOption").orderBy(
+              'bigval',
+            );
+
+    // Get docs from collection reference
+    QuerySnapshot querySnapshot = await _collectionRef.get();
+    // Get data from docs and convert map to List
+    final allData = querySnapshot.docs.map((doc) =>
+        TimeFilterCategory.fromJson(doc.data() as Map<String, dynamic>));
+    for (var item in allData) {
+      if (filterList.contains(item)) {
+        break;
+      } else {
+        filterList.add(item);
+      }
+    }
+    return filterList;
+  }
+
   addRecipesaccordingtopreparationTime(bool isChecked, int index) {
+    //2 attibute vomn und bis
+    //Lokale Arrays in die Datenbank speichern
+
     if (isChecked == true) {
-      if (index == 0) {
-        for (var recipe in widget.list!) {
-          if (recipe.duration! > 0 && recipe.duration! <= 10) {
-            recipeList.add(recipe);
-          }
+      for (var recipe in widget.list!) {
+        if (recipe.duration! > filterList[index].smalval! &&
+            recipe.duration! <= filterList[index].bigval!) {
+          recipeList.add(recipe);
         }
       }
-      if (index == 6) {
-        for (var recipe in widget.list!) {
-          if (recipe.duration! > 60) {
-            recipeList.add(recipe);
-          }
+    } else {
+      for (var recipe in widget.list!) {
+        if (recipe.duration! > filterList[index].smalval! &&
+            recipe.duration! <= filterList[index].bigval!) {
+          recipeList.remove(recipe);
         }
       }
-    } else {}
+    }
   }
 
   @override
@@ -98,38 +127,23 @@ class _TimeFilterPageState extends State<TimeFilterPage> {
             ),
             Expanded(
               child: Container(
-                child: new ListView.builder(
-                    itemCount: filterList.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return new Card(
-                        child: new Container(
-                          padding: new EdgeInsets.all(10.0),
-                          child: new Column(
-                            children: <Widget>[
-                              new CheckboxListTile(
-                                  activeColor:
-                                      Theme.of(context).secondaryHeaderColor,
-                                  dense: true,
-                                  selected: filterList[index].isChecked!,
-                                  value: filterList[index].isChecked,
-                                  title: new Text(
-                                    filterList[index].filterCategorytxt!,
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                    ),
-                                  ),
-                                  controlAffinity:
-                                      ListTileControlAffinity.leading,
-                                  onChanged: (bool? val) {
-                                    addRecipesaccordingtopreparationTime(
-                                        val!, index);
-                                    itemChange(val, index);
-                                  })
-                            ],
-                          ),
-                        ),
-                      );
-                    }),
+                child: FutureBuilder(
+                  future: getFilterCategory(),
+                  builder: (BuildContext ctx, AsyncSnapshot snapshot) {
+                    switch (snapshot.connectionState) {
+                      case ConnectionState.waiting:
+                        return Center(child: CircularProgressIndicator());
+                      default:
+                        if (snapshot.hasError) {
+                          return Center(
+                              child: Text('Could not load the data!'));
+                        } else {
+                          return TimeFilterListview(
+                              filterList, addRecipesaccordingtopreparationTime);
+                        }
+                    }
+                  },
+                ),
               ),
             ),
             Container(
@@ -175,7 +189,18 @@ class _TimeFilterPageState extends State<TimeFilterPage> {
                       ),
                       child: InkWell(
                         onTap: () {
-                          Navigator.pop(context);
+                          if (recipeList.isEmpty == true) {
+                            Fluttertoast.showToast(
+                              msg: 'Bitte wählen Sie eine Option aus!',
+                              fontSize: 18,
+                            );
+                          } else {
+                            widget.callbackFunction!(recipeList);
+
+                            Preference.shared
+                                .setBool(Preference.isfilterd, true);
+                            Navigator.pop(context);
+                          }
                         },
                         child: FilterButton(
                           'Anwenden',
@@ -195,11 +220,5 @@ class _TimeFilterPageState extends State<TimeFilterPage> {
         ),
       ),
     );
-  }
-
-  void itemChange(bool val, int index) {
-    setState(() {
-      filterList[index].isChecked = val;
-    });
   }
 }

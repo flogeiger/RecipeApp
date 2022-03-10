@@ -213,35 +213,6 @@ class _WeeklyGoalSetScreenState extends State<WeeklyGoalSetScreen> {
                 ),
               ],
             ),
-            Expanded(
-              child: Container(
-                margin: EdgeInsets.only(
-                    left: fullWidth * 0.06, top: fullHeight * 0.0001),
-                alignment: Alignment.center,
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Image.asset(
-                      'assets/icons/ic_info.webp',
-                      scale: 3.4,
-                      color: Colors.white,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 10.0),
-                      child: Text(
-                        "Sie können diese beiden Arten von \nÜbungen miteinander kombinieren.",
-                        maxLines: 2,
-                        style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 16,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            )
           ],
         ),
       ),

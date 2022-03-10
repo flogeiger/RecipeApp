@@ -1,6 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:sample/RecipesPage/Filtern/Listviewoptions.dart';
+import 'package:sample/RecipesPage/Filtern/RecipeTypeFiltern/RecipeTypFilterListview.dart';
 import 'package:sample/models/Recipe.dart';
 import 'package:sample/utils/Constant.dart';
 import 'package:sample/utils/Preference.dart';
@@ -16,18 +18,55 @@ class RecipeTypFilterPage extends StatefulWidget {
 }
 
 class _RecipeTypFilterPageState extends State<RecipeTypFilterPage> {
-  List<RecipeTypFilternCategory> filterList =
-      RecipeTypFilternCategory.getFilterRecipeTyp();
+  List<RecipeTypFilternCategory> filterList = [];
+  Future<List<RecipeTypFilternCategory>> getFilterCategory() async {
+    Query _collectionRef =
+        FirebaseFirestore.instance.collection("RecipeTypFilterOption").orderBy(
+              'filtercat',
+            );
 
-  List<String> filterwords = [];
+    // Get docs from collection reference
+    QuerySnapshot querySnapshot = await _collectionRef.get();
+    // Get data from docs and convert map to List
+    final allData = querySnapshot.docs.map((doc) =>
+        RecipeTypFilternCategory.fromJson(doc.data() as Map<String, dynamic>));
+    for (var item in allData) {
+      if (filterList.contains(item)) {
+        break;
+      } else {
+        filterList.add(item);
+      }
+    }
+    return filterList;
+  }
 
-  List<Recipe> filterRecipes = [];
+  List<Recipe> recipeList = [];
 
   bool checkfilteroptioninRecipe(List<dynamic> list, String filteroption) {
     if (list.contains(filteroption) == true) {
       return true;
     } else {
       return false;
+    }
+  }
+
+  addRecipesaccordingtopreparationTime(bool isChecked, int index) {
+    if (isChecked == true) {
+      for (var recipe in widget.list!) {
+        for (var item in recipe.filterTyps!) {
+          if (item == filterList[index].filterCategorytxt!) {
+            if (recipeList.contains(recipe) != true) recipeList.add(recipe);
+          }
+        }
+      }
+    } else {
+      for (var recipe in widget.list!) {
+        for (var item in recipe.filterTyps!) {
+          if (item == filterList[index].filterCategorytxt!) {
+            recipeList.remove(recipe);
+          }
+        }
+      }
     }
   }
 
@@ -95,45 +134,23 @@ class _RecipeTypFilterPageState extends State<RecipeTypFilterPage> {
             ),
             Expanded(
               child: Container(
-                child: new ListView.builder(
-                    itemCount: filterList.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return new Card(
-                        child: new Container(
-                          padding: new EdgeInsets.all(10.0),
-                          child: new Column(
-                            children: <Widget>[
-                              new CheckboxListTile(
-                                  activeColor:
-                                      Theme.of(context).secondaryHeaderColor,
-                                  dense: true,
-                                  selected: filterList[index].isChecked!,
-                                  value: filterList[index].isChecked,
-                                  title: new Text(
-                                    filterList[index].filterCategorytxt!,
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                    ),
-                                  ),
-                                  controlAffinity:
-                                      ListTileControlAffinity.leading,
-                                  onChanged: (bool? val) {
-                                    itemChange(val!, index);
-                                    if (val == true) {
-                                      filterwords.add(
-                                        filterList[index].filterCategorytxt!,
-                                      );
-                                    } else {
-                                      filterwords.remove(
-                                        filterList[index].filterCategorytxt!,
-                                      );
-                                    }
-                                  })
-                            ],
-                          ),
-                        ),
-                      );
-                    }),
+                child: FutureBuilder(
+                  future: getFilterCategory(),
+                  builder: (BuildContext ctx, AsyncSnapshot snapshot) {
+                    switch (snapshot.connectionState) {
+                      case ConnectionState.waiting:
+                        return Center(child: CircularProgressIndicator());
+                      default:
+                        if (snapshot.hasError) {
+                          return Center(
+                              child: Text('Could not load the data!'));
+                        } else {
+                          return RecipeTypFilterListview(
+                              filterList, addRecipesaccordingtopreparationTime);
+                        }
+                    }
+                  },
+                ),
               ),
             ),
             Container(
@@ -179,107 +196,13 @@ class _RecipeTypFilterPageState extends State<RecipeTypFilterPage> {
                       ),
                       child: InkWell(
                         onTap: () {
-                          if (filterwords.isEmpty) {
+                          if (recipeList.isEmpty == true) {
                             Fluttertoast.showToast(
-                                msg: Constant.msgChoosOptions);
+                              msg: 'Bitte wählen Sie eine Option aus!',
+                              fontSize: 18,
+                            );
                           } else {
-                            for (var recipe in widget.list!) {
-                              for (int i = 0; i < filterwords.length; i++) {
-                                switch (filterwords[i]) {
-                                  case Constant.vegan:
-                                    if (filterRecipes.contains(recipe)) {
-                                      break;
-                                    }
-                                    if (checkfilteroptioninRecipe(
-                                            recipe.filterTyps!,
-                                            Constant.vegan) ==
-                                        true) {
-                                      filterRecipes.add(recipe);
-                                    }
-
-                                    break;
-                                  case Constant.glutenfrei:
-                                    if (filterRecipes.contains(recipe)) {
-                                      break;
-                                    }
-                                    if (checkfilteroptioninRecipe(
-                                            recipe.filterTyps!,
-                                            Constant.glutenfrei) ==
-                                        true) {
-                                      filterRecipes.add(recipe);
-                                    }
-                                    break;
-                                  case Constant.lowcarb:
-                                    if (filterRecipes.contains(recipe)) {
-                                      break;
-                                    }
-                                    if (checkfilteroptioninRecipe(
-                                            recipe.filterTyps!,
-                                            Constant.lowcarb) ==
-                                        true) {
-                                      filterRecipes.add(recipe);
-                                    }
-                                    break;
-                                  case Constant.keto:
-                                    if (filterRecipes.contains(recipe)) {
-                                      break;
-                                    }
-                                    if (checkfilteroptioninRecipe(
-                                            recipe.filterTyps!,
-                                            Constant.keto) ==
-                                        true) {
-                                      filterRecipes.add(recipe);
-                                    }
-                                    break;
-                                  case Constant.vegetarisch:
-                                    if (filterRecipes.contains(recipe)) {
-                                      break;
-                                    }
-                                    if (checkfilteroptioninRecipe(
-                                            recipe.filterTyps!,
-                                            Constant.vegetarisch) ==
-                                        true) {
-                                      filterRecipes.add(recipe);
-                                    }
-                                    break;
-                                  case Constant.prescetaria:
-                                    if (filterRecipes.contains(recipe)) {
-                                      break;
-                                    }
-                                    if (checkfilteroptioninRecipe(
-                                            recipe.filterTyps!,
-                                            Constant.prescetaria) ==
-                                        true) {
-                                      filterRecipes.add(recipe);
-                                    }
-                                    break;
-                                  case Constant.lowFat:
-                                    if (filterRecipes.contains(recipe)) {
-                                      break;
-                                    }
-                                    if (checkfilteroptioninRecipe(
-                                            recipe.filterTyps!,
-                                            Constant.lowFat) ==
-                                        true) {
-                                      filterRecipes.add(recipe);
-                                    }
-                                    break;
-                                  case Constant.lowsugar:
-                                    if (filterRecipes.contains(recipe)) {
-                                      break;
-                                    }
-                                    if (checkfilteroptioninRecipe(
-                                            recipe.filterTyps!,
-                                            Constant.lowsugar) ==
-                                        true) {
-                                      filterRecipes.add(recipe);
-                                    }
-                                    break;
-                                    break;
-                                }
-                              }
-                            }
-                            widget.callbackFunction!(filterRecipes);
+                            widget.callbackFunction!(recipeList);
 
                             Preference.shared
                                 .setBool(Preference.isfilterd, true);

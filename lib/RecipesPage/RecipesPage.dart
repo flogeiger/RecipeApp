@@ -11,7 +11,7 @@ class RecipesPage extends StatefulWidget {
 }
 
 class _RecipesPageState extends State<RecipesPage> {
-  Future<List<Recipe>> getDatafromFirebase() async {
+  Future<List<Recipe>> getRecipesfromFirebase() async {
     if (getRecipeList!.isEmpty) {
       CollectionReference _collectionRef =
           FirebaseFirestore.instance.collection('Recipes');
@@ -45,7 +45,7 @@ class _RecipesPageState extends State<RecipesPage> {
   void checksifinputexist(String inp) {
     if (inp == "") {
       getRecipeList!.clear();
-      getDatafromFirebase();
+      getRecipesfromFirebase();
     } else {
       getfilterItems(inp);
     }
@@ -99,7 +99,7 @@ class _RecipesPageState extends State<RecipesPage> {
                     setState(() {
                       this.isSearching = !this.isSearching;
                       getRecipeList!.clear();
-                      getDatafromFirebase();
+                      getRecipesfromFirebase();
                     });
                   },
                 )
@@ -142,7 +142,7 @@ class _RecipesPageState extends State<RecipesPage> {
               Container(
                   height: MediaQuery.of(context).size.height * 0.68,
                   child: FutureBuilder(
-                    future: getDatafromFirebase(),
+                    future: getRecipesfromFirebase(),
                     builder: (BuildContext ctx, AsyncSnapshot snapshot) {
                       switch (snapshot.connectionState) {
                         case ConnectionState.waiting:
