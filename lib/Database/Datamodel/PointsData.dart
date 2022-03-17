@@ -1,16 +1,16 @@
 import 'package:floor/floor.dart';
 
-@Entity(tableName: 'Points_table')
+@Entity(tableName: 'points_table')
 class PointsData {
   @PrimaryKey(autoGenerate: true)
   @ColumnInfo(name: "point_id")
   int? id;
 
-  @ColumnInfo(name: "amount of points")
+  @ColumnInfo(name: "amount_of_points")
   int? pointsAmount;
 
   @ColumnInfo(name: "useType")
-  double? pointusetype;
+  String? pointusetype;
 
   @ColumnInfo(name: "points_time")
   String? time;

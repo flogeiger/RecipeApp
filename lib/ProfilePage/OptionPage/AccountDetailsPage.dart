@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:sample/ProfilePage/Helper.dart';
+import 'package:sample/utils/Preference.dart';
 
 class AccountDetailsPage extends StatefulWidget {
   @override
@@ -9,7 +10,13 @@ class AccountDetailsPage extends StatefulWidget {
 }
 
 class _AccountDetailsPageState extends State<AccountDetailsPage> {
-  File? prefile;
+  File profile = new File('');
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    Preference.shared.setString(Preference.profileImage, '');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,20 +50,32 @@ class _AccountDetailsPageState extends State<AccountDetailsPage> {
             shrinkWrap: true,
             children: [
               InkWell(
-                onTap: (() => Helper.getFromGallery(prefile!)),
+                onTap: (() async {
+                  await Helper.getFromGallery(profile);
+                  setState(() {});
+                }),
                 child: CircleAvatar(
-                  radius: 40,
-                  backgroundColor: Colors.grey,
-                  child: CircleAvatar(
-                    radius: 37,
-                    backgroundColor: Colors.white,
-                    child: Icon(
-                      Icons.people_alt_outlined,
-                      color: Theme.of(context).primaryColor,
-                      size: 50,
-                    ),
-                  ),
-                ),
+                    radius: 60,
+                    backgroundColor: Colors.grey,
+                    child: Preference.shared
+                                .getString(Preference.profileImage)!
+                                .isEmpty ==
+                            true
+                        ? CircleAvatar(
+                            radius: 57,
+                            backgroundColor: Colors.white,
+                            child: Icon(
+                              Icons.people_alt_outlined,
+                              color: Theme.of(context).primaryColor,
+                              size: 50,
+                            ),
+                          )
+                        : CircleAvatar(
+                            radius: 57,
+                            backgroundColor: Colors.white,
+                            backgroundImage: FileImage(File(Preference.shared
+                                .getString(Preference.profileImage)!)),
+                          )),
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 15, bottom: 15),

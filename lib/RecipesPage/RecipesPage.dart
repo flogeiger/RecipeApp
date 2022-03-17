@@ -113,62 +113,58 @@ class _RecipesPageState extends State<RecipesPage> {
                 ),
         ],
       ),
-      body: SingleChildScrollView(
-        child: Container(
-          color: Colors.white,
-          child: Column(
-            children: [
-              Container(
-                height: MediaQuery.of(context).size.height * 0.08,
-                child: Row(
-                  children: <Widget>[
-                    Expanded(
-                      child: FilterButton(
-                        callbackFunction: callback,
-                        list: getRecipeList,
-                        firebaselist: firebaseList,
+      body: FutureBuilder(
+        future: getRecipesfromFirebase(),
+        builder: (BuildContext ctx, AsyncSnapshot snapshot) {
+          switch (snapshot.connectionState) {
+            case ConnectionState.waiting:
+              return Center(child: CircularProgressIndicator());
+            default:
+              if (snapshot.hasError) {
+                return Center(child: Text('Could not load the data!'));
+              } else {
+                return Column(
+                  children: [
+                    Container(
+                      height: MediaQuery.of(context).size.height * 0.08,
+                      width: MediaQuery.of(context).size.width,
+                      child: Row(
+                        children: <Widget>[
+                          Expanded(
+                            child: FilterButton(
+                              callbackFunction: callback,
+                              list: getRecipeList,
+                              firebaselist: firebaseList,
+                            ),
+                          ),
+                          Expanded(
+                            child: SortDropBar(
+                              list: getRecipeList,
+                              callbackFunction: callback,
+                              firebaseList: firebaseList,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                    Expanded(
-                      child: SortDropBar(
-                        list: getRecipeList,
-                        callbackFunction: callback,
-                        firebaseList: firebaseList,
+                    Container(
+                      color: Colors.white,
+                      height: MediaQuery.of(context).size.height * 0.68,
+                      child: ListView.builder(
+                        physics: BouncingScrollPhysics(),
+                        itemCount: getRecipeList!.length,
+                        itemBuilder: (cxt, index) {
+                          final recipe = getRecipeList![index];
+                          return RecipeInfoSmall(recipe);
+                        },
                       ),
-                    ),
+                    )
                   ],
-                ),
-              ),
-              Container(
-                  height: MediaQuery.of(context).size.height * 0.68,
-                  child: FutureBuilder(
-                    future: getRecipesfromFirebase(),
-                    builder: (BuildContext ctx, AsyncSnapshot snapshot) {
-                      switch (snapshot.connectionState) {
-                        case ConnectionState.waiting:
-                          return Center(child: CircularProgressIndicator());
-                        default:
-                          if (snapshot.hasError) {
-                            return Center(
-                                child: Text('Could not load the data!'));
-                          } else {
-                            return ListView.builder(
-                              physics: BouncingScrollPhysics(),
-                              itemCount: getRecipeList!.length,
-                              itemBuilder: (cxt, index) {
-                                final recipe = getRecipeList![index];
-                                return RecipeInfoSmall(recipe);
-                              },
-                            );
-                          }
-                      }
-                    },
-                  )),
-            ],
-          ),
-        ),
+                );
+              }
+          }
+        },
       ),
-//      ),
     );
   }
 }

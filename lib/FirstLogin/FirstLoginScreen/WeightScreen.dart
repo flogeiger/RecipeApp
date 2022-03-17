@@ -11,7 +11,7 @@ class WeightScreen extends StatefulWidget {
 }
 
 class _WeightScreenState extends State<WeightScreen> {
-  int? weight = 20;
+  int? weight = 1;
 
   @override
   void initState() {
@@ -56,6 +56,7 @@ class _WeightScreenState extends State<WeightScreen> {
           Expanded(
             child: InkWell(
               onTap: () {
+                Preference.shared.setInt(Preference.weight, weight!);
                 widget.controller!.nextPage(
                     duration: Duration(milliseconds: 100),
                     curve: Curves.easeIn);
@@ -143,8 +144,9 @@ class _WeightScreenState extends State<WeightScreen> {
                 looping: true,
                 scrollController: FixedExtentScrollController(initialItem: 0),
                 onSelectedItemChanged: (value) {
+                  weight = value;
                   setState(() {
-                    Preference.shared.setInt(Preference.weight, value);
+                    Preference.shared.setInt(Preference.weight, weight!);
                   });
                 },
                 itemExtent: 75.0,

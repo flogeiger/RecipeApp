@@ -45,16 +45,6 @@ class _WelcomeDialogScreenState extends State<WelcomeDialogScreen> {
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 30.0, bottom: 30),
-                    child: Text(
-                      "Ich bin Laura, deine lieblings Influencerin.",
-                      textAlign: TextAlign.center,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w400,
-                          fontSize: 20),
-                    ),
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8.0),

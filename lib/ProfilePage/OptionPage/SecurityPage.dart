@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:local_auth/local_auth.dart';
 
 class SecurityPage extends StatefulWidget {
   @override
@@ -6,6 +8,57 @@ class SecurityPage extends StatefulWidget {
 }
 
 class _SecurityPageState extends State<SecurityPage> {
+  LocalAuthentication auth = LocalAuthentication();
+  bool prefboolvar = false;
+  List<BiometricType>? availableBiometrics;
+  String Authent = 'Test';
+
+  Future<void> _checkBiometrics() async {
+    bool? canCheckBiometrics;
+
+    try {
+      canCheckBiometrics = await auth.canCheckBiometrics;
+    } on PlatformException catch (e) {
+      print(e);
+    }
+    if (!mounted) return;
+
+    setState(() {
+      prefboolvar = canCheckBiometrics!;
+    });
+  }
+
+  Future<void> _getAvailableBiometrics() async {
+    List<BiometricType>? _availableBiometrics;
+    try {
+      _availableBiometrics = await auth.getAvailableBiometrics();
+    } on PlatformException catch (e) {
+      print(e);
+    }
+    if (!mounted) return;
+
+    setState(() {
+      availableBiometrics = _availableBiometrics!;
+    });
+  }
+
+  Future<void> _authenticate() async {
+    bool _authenticate = false;
+    try {
+      _authenticate = await auth.authenticate(
+          localizedReason: 'Bitte entsperren Sie das Gerät mit dem Daumen',
+          useErrorDialogs: true,
+          stickyAuth: false);
+    } on PlatformException catch (e) {
+      print(e);
+    }
+    if (!mounted) return;
+
+    setState(() {
+      Authent = _authenticate ? "Authorized" : "Not Authorized";
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(

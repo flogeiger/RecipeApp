@@ -10,6 +10,9 @@ import 'package:stop_watch_timer/stop_watch_timer.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 import 'package:intl/intl.dart';
 
+import '../Database/Datamodel/PointsData.dart';
+import '../Database/Helper.dart';
+
 class ChallengePage extends StatefulWidget {
   @override
   _ChallengePageState createState() => _ChallengePageState();
@@ -83,6 +86,28 @@ class _ChallengePageState extends State<ChallengePage> {
 
   List<double> stepsPercentValue = [];
 
+//only for testing
+
+  savingDateinFavRecip() {
+    var date = new DateTime.now().toString();
+
+    var dateParse = DateTime.parse(date);
+
+    var formattedDate = "${dateParse.day}-${dateParse.month}-${dateParse.year}";
+    return formattedDate;
+  }
+
+  savePoints() async {
+    await Helper.insertPoints(
+      PointsData(
+        id: null,
+        pointsAmount: 50,
+        pointusetype: '10000 KM gelaufen',
+        time: savingDateinFavRecip(),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     var fullHeight = MediaQuery.of(context).size.height;
@@ -110,6 +135,7 @@ class _ChallengePageState extends State<ChallengePage> {
                       padding: const EdgeInsets.fromLTRB(20, 0, 10, 0),
                       child: InkWell(
                         onTap: () {
+                          //savePoints();
                           Navigator.of(context).push(MaterialPageRoute(
                               builder: (_) => PointHistoryPage()));
                         },

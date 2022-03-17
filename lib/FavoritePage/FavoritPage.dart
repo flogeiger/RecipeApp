@@ -117,7 +117,6 @@ class _FavoritePageState extends State<FavoritePage> {
     displayFavFuture = data;
   }
 
-  final ValueNotifier<int> _counter = ValueNotifier<int>(0);
   bool isSearching = false;
   Future<List<Recipe>>? displayFavFuture;
   @override

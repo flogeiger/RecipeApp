@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:sample/ProfilePage/OptionPage/PrivacyProtectionPage.dart';
 
+import 'package:url_launcher/url_launcher.dart';
 import 'dart:io';
 
 import 'TermsofUsagePage.dart';
-import 'ImpressumPage.dart';
 
 import '../Helper.dart';
 import 'AccountDetailsPage.dart';
@@ -17,6 +16,17 @@ class OptionPageconfig extends StatefulWidget {
 }
 
 class _OptionPageconfigState extends State<OptionPageconfig> {
+  Future<void>? _launched;
+  Future<void> _launchInBrowser(String url) async {
+    if (!await launch(
+      url,
+      forceSafariVC: false,
+      forceWebView: false,
+    )) {
+      throw 'Could not launch $url';
+    }
+  }
+
   File? prefFile;
   showAlertDialog(BuildContext ctx) {
     Widget cancelButton = TextButton(
@@ -45,6 +55,11 @@ class _OptionPageconfigState extends State<OptionPageconfig> {
 
   @override
   Widget build(BuildContext context) {
+    const String toLaunchimpressum = 'https://mycarbcrew.com/impressum/';
+    const String toLaunchprivacyterms =
+        'https://mycarbcrew.com/datenschutzerklaerung/';
+    const String toLaunchInstagramm = 'https://www.instagram.com/mycarbcrew/';
+
     return SafeArea(
       child: Scaffold(
         body: Container(
@@ -142,11 +157,9 @@ class _OptionPageconfigState extends State<OptionPageconfig> {
                 ),
                 ListTile(
                   onTap: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (_) => PrivacyProtectionPage(),
-                      ),
-                    );
+                    setState(() {
+                      _launched = _launchInBrowser(toLaunchprivacyterms);
+                    });
                   },
                   leading: Icon(
                     Icons.privacy_tip,
@@ -200,11 +213,27 @@ class _OptionPageconfigState extends State<OptionPageconfig> {
                 ),
                 ListTile(
                   onTap: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (_) => ImpressumPage(),
-                      ),
-                    );
+                    setState(() {
+                      _launched = _launchInBrowser(toLaunchInstagramm);
+                    });
+                  },
+                  leading: Icon(
+                    //Instagramm Icon!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                    Icons.inbox,
+                    size: 40,
+                  ),
+                  trailing: Icon(
+                    Icons.arrow_forward_ios_outlined,
+                    size: 40,
+                  ),
+                  title: Text('Instagram'),
+                  subtitle: Text('Social Media'),
+                ),
+                ListTile(
+                  onTap: () {
+                    setState(() {
+                      _launched = _launchInBrowser(toLaunchimpressum);
+                    });
                   },
                   leading: Icon(
                     Icons.privacy_tip,

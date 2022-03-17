@@ -17,7 +17,7 @@ class Preference {
   static const String DAILY_REMINDER_TIME = "DAILY_REMINDER_TIME";
   static const String DAILY_REMINDER_REPEAT_DAY = "DAILY_REMINDER_REPEAT_DAY";
   static const String IS_DAILY_REMINDER_ON = "IS_DAILY_REMINDER_ON";
-  static const String END_TIME_REMINDER = "END_TIME_REMINDER";
+  static const String profileImage = "imageofProfile";
 
   static const String gender = "gender";
   static const String issortedFav = "sortedFav";

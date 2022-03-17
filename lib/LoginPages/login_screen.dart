@@ -106,6 +106,10 @@ class _LoginScreenState extends State<LoginScreen> {
           padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
           minWidth: MediaQuery.of(context).size.width,
           onPressed: () {
+//            Navigator.of(context).pushReplacement(MaterialPageRoute(
+            //builder: (context) => (isFirstTimeloggin)
+            //? FirstLoginScreen()
+            //: AfterLoginPage(0)));
             signIn(emailController.text, passwordController.text);
           },
           child: Text(

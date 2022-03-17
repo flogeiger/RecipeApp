@@ -20,7 +20,7 @@ class FilterButton extends StatefulWidget {
 class _FilterButtonState extends State<FilterButton> {
   bool? isfiltered;
   getPreference() {
-    isfiltered = Preference.shared.getBool(Preference.isfilterd) ?? false;
+    isfiltered = Preference.shared.getBool(Preference.isfilterd);
   }
 
   @override

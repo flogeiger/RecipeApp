@@ -1,3 +1,5 @@
+import 'package:sample/Database/Datamodel/PointsData.dart';
+
 import 'Datamodel/FavoriteData.dart';
 import 'Datamodel/StepData.dart';
 import 'package:sample/models/Recipe.dart';
@@ -66,5 +68,16 @@ class Helper {
   static Future<void> deletefavData(FavoriteRecip recip) async {
     final Fav_dao = _database!.favoriteRecipedao;
     await Fav_dao.deleteRecipe(recip);
+  }
+
+  static Future<List<PointsData>> selectAllDataFrompointstable() async {
+    final fav_Dao = _database!.pointsdao;
+    final src = await fav_Dao.getAllEntrysfromTable();
+    return src;
+  }
+
+  static Future<void> insertPoints(PointsData pointsData) async {
+    final points_Dao = _database!.pointsdao;
+    await points_Dao.insertPointData(pointsData);
   }
 }

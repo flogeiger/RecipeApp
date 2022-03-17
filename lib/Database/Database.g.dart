@@ -90,7 +90,7 @@ class _$CostumeDatabase extends CostumeDatabase {
         await database.execute(
             'CREATE TABLE IF NOT EXISTS `fav_table` (`recipe_id` INTEGER PRIMARY KEY AUTOINCREMENT, `recipe_Name` TEXT, `description` TEXT, `recipeTyp` TEXT, `picUrl` TEXT, `duration` INTEGER, `kilocal` INTEGER, `recipe_preparation` TEXT, `recipe_ingredients` TEXT, `Time_Recipe_save` TEXT, `Saving_Flag` INTEGER, `recipe_nutritions` TEXT, `filterTyp` TEXT)');
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `Points_table` (`point_id` INTEGER PRIMARY KEY AUTOINCREMENT, `amount of points` INTEGER, `useType` REAL, `points_time` TEXT)');
+            'CREATE TABLE IF NOT EXISTS `points_table` (`point_id` INTEGER PRIMARY KEY AUTOINCREMENT, `amount_of_points` INTEGER, `useType` TEXT, `points_time` TEXT)');
 
         await callback?.onCreate?.call(database, version);
       },
@@ -273,7 +273,26 @@ class _$Fav_dao extends Fav_dao {
 
 class _$Points_dao extends Points_dao {
   _$Points_dao(this.database, this.changeListener)
-      : _queryAdapter = QueryAdapter(database);
+      : _queryAdapter = QueryAdapter(database),
+        _pointsDataInsertionAdapter = InsertionAdapter(
+            database,
+            'points_table',
+            (PointsData item) => <String, Object?>{
+                  'point_id': item.id,
+                  'amount_of_points': item.pointsAmount,
+                  'useType': item.pointusetype,
+                  'points_time': item.time
+                }),
+        _pointsDataDeletionAdapter = DeletionAdapter(
+            database,
+            'points_table',
+            ['point_id'],
+            (PointsData item) => <String, Object?>{
+                  'point_id': item.id,
+                  'amount_of_points': item.pointsAmount,
+                  'useType': item.pointusetype,
+                  'points_time': item.time
+                });
 
   final sqflite.DatabaseExecutor database;
 
@@ -281,13 +300,28 @@ class _$Points_dao extends Points_dao {
 
   final QueryAdapter _queryAdapter;
 
+  final InsertionAdapter<PointsData> _pointsDataInsertionAdapter;
+
+  final DeletionAdapter<PointsData> _pointsDataDeletionAdapter;
+
   @override
   Future<List<PointsData>> getAllEntrysfromTable() async {
-    return _queryAdapter.queryList('SELECT * FROM Points_table',
+    return _queryAdapter.queryList('SELECT * FROM points_table',
         mapper: (Map<String, Object?> row) => PointsData(
             id: row['point_id'] as int?,
-            pointsAmount: row['amount of points'] as int?,
-            pointusetype: row['useType'] as double?,
+            pointsAmount: row['amount_of_points'] as int?,
+            pointusetype: row['useType'] as String?,
             time: row['points_time'] as String?));
+  }
+
+  @override
+  Future<void> insertPointData(PointsData pointsData) async {
+    await _pointsDataInsertionAdapter.insert(
+        pointsData, OnConflictStrategy.abort);
+  }
+
+  @override
+  Future<void> deletePointData(PointsData pointsData) async {
+    await _pointsDataDeletionAdapter.delete(pointsData);
   }
 }
