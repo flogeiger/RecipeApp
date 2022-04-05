@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:sample/FavoritePage/Filtern/ButtonFiltern.dart';
 import 'package:sample/FavoritePage/Filtern/Listviewoptions.dart';
 import 'package:sample/FavoritePage/Filtern/caloriesfilter/CaloriesFilterCategory.dart';
+import 'package:auto_route/auto_route.dart';
+import 'package:sample/utils/routes/routes.gr.dart';
 
 class CaloriesFilterPage extends StatefulWidget {
   final Function? callbackFunction;
@@ -27,13 +29,9 @@ class _CaloriesFilterPageState extends State<CaloriesFilterPage> {
                 children: [
                   GestureDetector(
                     onTap: () {
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => Filtern(
-                            callbackFunction: widget.callbackFunction,
-                          ),
-                        ),
+                      context.router.pop(
+                        FavFilternRoute(
+                            callbackFunction: widget.callbackFunction),
                       );
                     },
                     child: Container(
@@ -124,13 +122,9 @@ class _CaloriesFilterPageState extends State<CaloriesFilterPage> {
                       ),
                       child: InkWell(
                         onTap: () {
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => Filtern(
-                                callbackFunction: widget.callbackFunction,
-                              ),
-                            ),
+                          context.router.pop(
+                            FavFilternRoute(
+                                callbackFunction: widget.callbackFunction),
                           );
                         },
                         child: FilterButton(

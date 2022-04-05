@@ -6,19 +6,21 @@ import 'package:sample/FavoritePage/Filtern/Listviewoptions.dart';
 import 'package:sample/models/Recipe.dart';
 import 'package:sample/utils/Constant.dart';
 import 'package:sample/utils/Preference.dart';
+import 'package:sample/utils/routes/routes.gr.dart';
 import 'RecipeTypFilternCategory.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:sample/FavoritePage/Filtern/ButtonFiltern.dart';
 
-class RecipeTypFilterPage extends StatefulWidget {
+class FavRecipeTypFilterPage extends StatefulWidget {
   final Function? callbackFunction;
-  RecipeTypFilterPage({
+  FavRecipeTypFilterPage({
     @required this.callbackFunction,
   });
   @override
   _RecipeTypFilterPageState createState() => _RecipeTypFilterPageState();
 }
 
-class _RecipeTypFilterPageState extends State<RecipeTypFilterPage> {
+class _RecipeTypFilterPageState extends State<FavRecipeTypFilterPage> {
   List<RecipeTypFilternCategory> filterList =
       RecipeTypFilternCategory.getFilterRecipeTyp();
 
@@ -84,13 +86,9 @@ class _RecipeTypFilterPageState extends State<RecipeTypFilterPage> {
                 children: [
                   GestureDetector(
                     onTap: () {
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => Filtern(
-                            callbackFunction: widget.callbackFunction,
-                          ),
-                        ),
+                      context.router.pop(
+                        FavFilternRoute(
+                            callbackFunction: widget.callbackFunction),
                       );
                     },
                     child: Container(
@@ -190,13 +188,9 @@ class _RecipeTypFilterPageState extends State<RecipeTypFilterPage> {
                       ),
                       child: InkWell(
                         onTap: () {
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => Filtern(
-                                callbackFunction: widget.callbackFunction,
-                              ),
-                            ),
+                          context.router.pop(
+                            FavFilternRoute(
+                                callbackFunction: widget.callbackFunction),
                           );
                         },
                         child: FilterButton(

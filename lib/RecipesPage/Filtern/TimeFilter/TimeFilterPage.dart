@@ -1,23 +1,25 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:sample/RecipesPage/Filtern/ButtonFiltern.dart';
 import 'package:sample/RecipesPage/Filtern/Listviewoptions.dart';
+import 'package:sample/utils/routes/routes.gr.dart';
 import 'TimeFilterListview.dart';
 import 'package:sample/RecipesPage/Filtern/TimeFilter/TimeFilterCategory.dart';
 import 'package:sample/models/Recipe.dart';
 
 import '../../../utils/Preference.dart';
 
-class TimeFilterPage extends StatefulWidget {
+class RecipeTimeFilterPage extends StatefulWidget {
   final List<Recipe>? list;
   final Function? callbackFunction;
-  TimeFilterPage({@required this.callbackFunction, @required this.list});
+  RecipeTimeFilterPage({@required this.callbackFunction, @required this.list});
   @override
   _TimeFilterPageState createState() => _TimeFilterPageState();
 }
 
-class _TimeFilterPageState extends State<TimeFilterPage> {
+class _TimeFilterPageState extends State<RecipeTimeFilterPage> {
   List<TimeFilterCategory> filterList = [];
   List<Recipe> recipeList = [];
 
@@ -75,14 +77,9 @@ class _TimeFilterPageState extends State<TimeFilterPage> {
                 children: [
                   GestureDetector(
                     onTap: () {
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => Filtern(
-                              callbackFunction: widget.callbackFunction,
-                              list: widget.list),
-                        ),
-                      );
+                      context.router.pop(RecipeFilternRoute(
+                          callbackFunction: widget.callbackFunction,
+                          list: widget.list));
                     },
                     child: Container(
                       child: Icon(
@@ -159,14 +156,9 @@ class _TimeFilterPageState extends State<TimeFilterPage> {
                       ),
                       child: InkWell(
                         onTap: () {
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => Filtern(
-                                  callbackFunction: widget.callbackFunction,
-                                  list: widget.list),
-                            ),
-                          );
+                          context.router.pop(RecipeFilternRoute(
+                              callbackFunction: widget.callbackFunction,
+                              list: widget.list));
                         },
                         child: FilterButton(
                           'Abbrechen',

@@ -4,14 +4,14 @@ import 'package:sample/RecipesPage/RecipeGUI/FavoritIconButton.dart';
 import 'package:sample/RecipesPage/RecipeGUI/LockedRecipeDetails/UnlockRecipeUI/unlockRecipe.dart';
 import 'package:sample/models/Recipe.dart';
 
-class RecipeDetailslooked extends StatefulWidget {
+class RecipeDetailslookedPage extends StatefulWidget {
   Recipe recipe;
-  RecipeDetailslooked(this.recipe);
+  RecipeDetailslookedPage(this.recipe);
   @override
   _RecipeDetailslookedState createState() => _RecipeDetailslookedState();
 }
 
-class _RecipeDetailslookedState extends State<RecipeDetailslooked> {
+class _RecipeDetailslookedState extends State<RecipeDetailslookedPage> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(

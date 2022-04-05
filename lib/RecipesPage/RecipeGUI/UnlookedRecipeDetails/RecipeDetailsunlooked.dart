@@ -6,14 +6,14 @@ import 'package:sample/models/Recipe.dart';
 
 //logic von Gui vereinfachen
 //Menü für die Zubereitungsschritte erstellen
-class RecipeDetailsunlooked extends StatefulWidget {
+class RecipeDetailsunlookedPage extends StatefulWidget {
   Recipe recipe;
-  RecipeDetailsunlooked(this.recipe);
+  RecipeDetailsunlookedPage(this.recipe);
   @override
   _RecipeDetailsunlookedState createState() => _RecipeDetailsunlookedState();
 }
 
-class _RecipeDetailsunlookedState extends State<RecipeDetailsunlooked> {
+class _RecipeDetailsunlookedState extends State<RecipeDetailsunlookedPage> {
   bool _buttonPressed = false;
   bool _loopActive = false;
 

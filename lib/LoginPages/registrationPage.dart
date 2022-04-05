@@ -6,13 +6,15 @@ import 'package:sample/models/user_models.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:sample/utils/Preference.dart';
+import 'package:sample/utils/routes/routes.gr.dart';
+import 'package:auto_route/auto_route.dart';
 
-class RegistrationScreen extends StatefulWidget {
+class RegistrationPage extends StatefulWidget {
   @override
-  _RegistrationScreenState createState() => _RegistrationScreenState();
+  _RegistrationPageState createState() => _RegistrationPageState();
 }
 
-class _RegistrationScreenState extends State<RegistrationScreen> {
+class _RegistrationPageState extends State<RegistrationPage> {
   final _auth = FirebaseAuth.instance;
   String? errorMessage;
   // our form key
@@ -298,8 +300,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         .set(userModel.toMap());
     Fluttertoast.showToast(msg: "Account created successfully :) ");
 
-    Navigator.of(context).pushReplacement(MaterialPageRoute(
-        builder: (context) =>
-            (isFirstTimeloggin) ? FirstLoginScreen() : AfterLoginPage(0)));
+    if (isFirstTimeloggin) {
+      context.router.replace(FirstLoginRoute());
+    } else {
+      context.router.replace(AfterLoginRoute(selectedItem: 0));
+    }
   }
 }

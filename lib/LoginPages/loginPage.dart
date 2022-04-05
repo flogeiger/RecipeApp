@@ -1,21 +1,22 @@
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:sample/AfterLogin/AfterLoginPage.dart';
-import 'package:sample/FirstLogin/FirstLoginScreen/FirstLoginScreen.dart';
-import 'package:sample/LoginPages/registration_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:sample/services/Firebase_services.dart';
 import 'package:sample/utils/Preference.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:sample/utils/routes/routes.gr.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:auto_route/auto_route.dart';
+import 'package:auto_route/auto_route.dart';
 
-class LoginScreen extends StatefulWidget {
+class LoginPage extends StatefulWidget {
   @override
   _LoginScreenState createState() => _LoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _LoginScreenState extends State<LoginPage> {
   // form key
   final _formKey = GlobalKey<FormState>();
 
@@ -147,11 +148,14 @@ class _LoginScreenState extends State<LoginScreen> {
                         label: Text('Mit Google verbinden'),
                         onPressed: () async {
                           await FirebaseServices().signinWithGoogle();
-                          Navigator.of(context).pushReplacement(
+                          context.router.replace(
+                            AfterLoginRoute(selectedItem: 0),
+                          );
+                          /*Navigator.of(context).pushReplacement(
                             MaterialPageRoute(
                               builder: (context) => AfterLoginPage(0),
                             ),
-                          );
+                          );*/
                         }),
                     SizedBox(height: 45),
                     emailField,
@@ -166,11 +170,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           Text("Don't have an account? "),
                           GestureDetector(
                             onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          RegistrationScreen()));
+                              context.router.push(RegistrationRoute());
                             },
                             child: Text(
                               "SignUp",
@@ -197,13 +197,15 @@ class _LoginScreenState extends State<LoginScreen> {
       try {
         await _auth
             .signInWithEmailAndPassword(email: email, password: password)
-            .then((uid) => {
-                  Fluttertoast.showToast(msg: "Login Successful"),
-                  Navigator.of(context).pushReplacement(MaterialPageRoute(
-                      builder: (context) => (isFirstTimeloggin)
-                          ? FirstLoginScreen()
-                          : AfterLoginPage(0))),
-                });
+            .then((uid) {
+          Fluttertoast.showToast(msg: "Login Successful");
+
+          if (isFirstTimeloggin) {
+            context.router.replace(FirstLoginRoute());
+          } else {
+            context.router.replace(AfterLoginRoute(selectedItem: 0));
+          }
+        });
       } on FirebaseAuthException catch (error) {
         switch (error.code) {
           case "invalid-email":

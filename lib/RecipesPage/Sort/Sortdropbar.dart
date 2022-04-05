@@ -100,57 +100,58 @@ class _SortDropBarState extends State<SortDropBar>
 
   void _onpressed() {
     showModalBottomSheet(
-        context: context,
-        builder: (context) {
-          return Container(
+      context: context,
+      builder: (context) {
+        return Container(
+          decoration: BoxDecoration(
+            border: Border.all(color: Color(0xFF737373)),
+            color: Color(0xFF737373),
+          ),
+          height: 500,
+          width: double.infinity,
+          child: Container(
             decoration: BoxDecoration(
-              border: Border.all(color: Color(0xFF737373)),
-              color: Color(0xFF737373),
-            ),
-            height: 500,
-            width: double.infinity,
-            child: Container(
-              decoration: BoxDecoration(
-                  color: Theme.of(context).canvasColor,
-                  border: Border.all(
-                    color: Color(0xFF737373),
-                  ),
-                  borderRadius: BorderRadius.only(
-                    topLeft: const Radius.circular(10),
-                    topRight: const Radius.circular(10),
-                  )),
-              child: Column(
-                children: [
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Container(
-                          height: 50,
-                          color: Colors.white,
+                color: Theme.of(context).canvasColor,
+                border: Border.all(
+                  color: Color(0xFF737373),
+                ),
+                borderRadius: BorderRadius.only(
+                  topLeft: const Radius.circular(10),
+                  topRight: const Radius.circular(10),
+                )),
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    Expanded(
+                      child: Container(
+                        height: 50,
+                        color: Colors.white,
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                      child: Container(
+                        child: Icon(
+                          Icons.close,
+                          color: Theme.of(context).secondaryHeaderColor,
+                          size: 50,
                         ),
                       ),
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.pop(context);
-                        },
-                        child: Container(
-                          child: Icon(
-                            Icons.close,
-                            color: Theme.of(context).secondaryHeaderColor,
-                            size: 50,
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                  FilterItem(
-                    list: widget.list,
-                    callbackFunction: widget.callbackFunction,
-                  )
-                ],
-              ),
+                    )
+                  ],
+                ),
+                FilterItem(
+                  list: widget.list,
+                  callbackFunction: widget.callbackFunction,
+                )
+              ],
             ),
-          );
-        });
+          ),
+        );
+      },
+    );
   }
 }

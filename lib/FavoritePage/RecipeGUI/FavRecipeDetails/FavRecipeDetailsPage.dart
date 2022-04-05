@@ -5,18 +5,20 @@ import 'package:sample/AfterLogin/AfterLoginPage.dart';
 import 'package:sample/Database/Datamodel/FavoriteData.dart';
 import 'package:sample/Database/Helper.dart';
 import 'package:sample/FavoritePage/FavoritPage.dart';
+import 'package:sample/utils/routes/routes.gr.dart';
 import 'TabBarLogic/CostumeTabBar.dart';
 import 'package:sample/FavoritePage/RecipeGUI/FavoritIconButton.dart';
 import 'package:sample/models/Recipe.dart';
+import 'package:auto_route/auto_route.dart';
 
-class RecipeDetails extends StatefulWidget {
+class FavRecipeDetailsPage extends StatefulWidget {
   Recipe recipe;
-  RecipeDetails(this.recipe);
+  FavRecipeDetailsPage(this.recipe);
   @override
   _RecipeDetailsState createState() => _RecipeDetailsState();
 }
 
-class _RecipeDetailsState extends State<RecipeDetails> {
+class _RecipeDetailsState extends State<FavRecipeDetailsPage> {
   bool _buttonPressed = false;
   bool _loopActive = false;
 
@@ -78,13 +80,8 @@ class _RecipeDetailsState extends State<RecipeDetails> {
                         ),
                         GestureDetector(
                           onTap: () {
-                            Navigator.pop(context);
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => AfterLoginPage(2),
-                              ),
-                            );
+                            context.router
+                                .pop(AfterLoginRoute(selectedItem: 2));
                           },
                           child: Container(
                             child: Icon(
@@ -105,12 +102,8 @@ class _RecipeDetailsState extends State<RecipeDetails> {
                             Fluttertoast.showToast(
                               msg: "Rezept wurde aus den Favoriten entfernt!",
                             );
-                            Navigator.of(context).pop();
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => AfterLoginPage(2),
-                              ),
+                            context.router.pop(
+                              AfterLoginRoute(selectedItem: 2),
                             );
                           },
                           child: Container(

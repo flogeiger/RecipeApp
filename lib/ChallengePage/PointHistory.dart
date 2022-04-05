@@ -14,36 +14,40 @@ class PointHistoryPage extends StatelessWidget {
     List<Widget> build = [];
     for (var date in dateList) {
       build.add(
-        ListTile(
-          leading: Text(date),
-          textColor: Theme.of(ctx).canvasColor,
-          tileColor: Theme.of(ctx).secondaryHeaderColor,
+        Material(
+          child: ListTile(
+            leading: Text(date),
+            textColor: Theme.of(ctx).canvasColor,
+            tileColor: Theme.of(ctx).secondaryHeaderColor,
+          ),
         ),
       );
       for (var item in itemlist) {
         if (item.time == date) {
           build.add(
-            ListTile(
-              leading: Icon(
-                Icons.info,
-                size: 40,
-                color: Theme.of(ctx).secondaryHeaderColor,
+            Material(
+              child: ListTile(
+                leading: Icon(
+                  Icons.info,
+                  size: 40,
+                  color: Theme.of(ctx).secondaryHeaderColor,
+                ),
+                title: Text(item.pointusetype!),
+                trailing: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    Icon(
+                      Icons.cookie,
+                      color: Theme.of(ctx).secondaryHeaderColor,
+                    ),
+                    Text(
+                      item.pointsAmount.toString(),
+                    )
+                  ],
+                ),
+                textColor: Theme.of(ctx).primaryColor,
+                tileColor: Theme.of(ctx).canvasColor,
               ),
-              title: Text(item.pointusetype!),
-              trailing: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  Icon(
-                    Icons.cookie,
-                    color: Theme.of(ctx).secondaryHeaderColor,
-                  ),
-                  Text(
-                    item.pointsAmount.toString(),
-                  )
-                ],
-              ),
-              textColor: Theme.of(ctx).primaryColor,
-              tileColor: Theme.of(ctx).canvasColor,
             ),
           );
         }
@@ -56,6 +60,9 @@ class PointHistoryPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        appBar: AppBar(
+          title: Text("Tolle SAche"),
+        ),
         backgroundColor: Theme.of(context).secondaryHeaderColor,
         body: FutureBuilder(
           future: getpointsData(),
@@ -79,33 +86,7 @@ class PointHistoryPage extends StatelessWidget {
                   }
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      Row(
-                        children: [
-                          InkWell(
-                            onTap: () {
-                              Navigator.of(context).pop();
-                            },
-                            child: Icon(
-                              Icons.arrow_back,
-                              size: MediaQuery.of(context).size.height * 0.05,
-                              color: Theme.of(context).canvasColor,
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(
-                                left: MediaQuery.of(context).size.width * 0.20),
-                            child: Text(
-                              'Cookie Wallet',
-                              style: TextStyle(
-                                fontSize:
-                                    MediaQuery.of(context).size.height * 0.04,
-                                color: Theme.of(context).canvasColor,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
+                    children: [
                       Container(
                         width: MediaQuery.of(context).size.width * 0.40,
                         height: MediaQuery.of(context).size.width * 0.40,
@@ -142,9 +123,9 @@ class PointHistoryPage extends StatelessWidget {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      SizedBox(
-                        height: 300,
+                      Expanded(
                         child: ListView(
+                          shrinkWrap: true,
                           children: buildWidgets(list, dateList, context),
                         ),
                       ),

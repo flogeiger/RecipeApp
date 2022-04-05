@@ -1,21 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:sample/LoginPages/loginPage.dart';
+import 'package:sample/utils/Preference.dart';
+import 'package:sample/utils/routes/routes.gr.dart';
 
 import 'package:url_launcher/url_launcher.dart';
 import 'dart:io';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import 'TermsofUsagePage.dart';
+import 'package:auto_route/auto_route.dart';
 
-import '../Helper.dart';
 import 'AccountDetailsPage.dart';
 import 'NotificationPage.dart';
 import 'SecurityPage.dart';
 
-class OptionPageconfig extends StatefulWidget {
+class OptionconfigPage extends StatefulWidget {
   @override
-  State<OptionPageconfig> createState() => _OptionPageconfigState();
+  State<OptionconfigPage> createState() => _OptionconfigPageState();
 }
 
-class _OptionPageconfigState extends State<OptionPageconfig> {
+class _OptionconfigPageState extends State<OptionconfigPage> {
   Future<void>? _launched;
   Future<void> _launchInBrowser(String url) async {
     if (!await launch(
@@ -36,8 +40,9 @@ class _OptionPageconfigState extends State<OptionPageconfig> {
       child: Text('Abbrechen'),
     );
     Widget continueButton = TextButton(
-      onPressed: () {
-        Navigator.pop(context);
+      onPressed: () async {
+        await _signOut();
+        context.router.push(LoginRoute());
       },
       child: Text('Abmelden'),
     );
@@ -53,11 +58,17 @@ class _OptionPageconfigState extends State<OptionPageconfig> {
         });
   }
 
+  Future<void> _signOut() async {
+    await FirebaseAuth.instance.signOut();
+  }
+
   @override
   Widget build(BuildContext context) {
     const String toLaunchimpressum = 'https://mycarbcrew.com/impressum/';
+    const String toLauchownSite = 'https://mycarbcrew.com/';
     const String toLaunchprivacyterms =
         'https://mycarbcrew.com/datenschutzerklaerung/';
+    const String toLaunchTiktok = 'https://www.tiktok.com/@mycarbcrew';
     const String toLaunchInstagramm = 'https://www.instagram.com/mycarbcrew/';
 
     return SafeArea(
@@ -69,21 +80,28 @@ class _OptionPageconfigState extends State<OptionPageconfig> {
             child: ListView(
               shrinkWrap: true,
               children: <Widget>[
-                InkWell(
-                  onTap: (() => Helper.getFromGallery(prefFile!)),
-                  child: CircleAvatar(
-                    radius: 40,
-                    backgroundColor: Colors.grey,
-                    child: CircleAvatar(
-                      radius: 37,
-                      backgroundColor: Colors.white,
-                      child: Icon(
-                        Icons.people_alt_outlined,
-                        color: Theme.of(context).primaryColor,
-                        size: 50,
-                      ),
-                    ),
-                  ),
+                CircleAvatar(
+                  radius: 60,
+                  backgroundColor: Colors.grey,
+                  child: Preference.shared
+                              .getString(Preference.profileImage)!
+                              .isEmpty ==
+                          true
+                      ? CircleAvatar(
+                          radius: 57,
+                          backgroundColor: Colors.white,
+                          child: Icon(
+                            Icons.people_alt_outlined,
+                            color: Theme.of(context).primaryColor,
+                            size: 50,
+                          ),
+                        )
+                      : CircleAvatar(
+                          radius: 57,
+                          backgroundColor: Colors.white,
+                          backgroundImage: FileImage(File(Preference.shared
+                              .getString(Preference.profileImage)!)),
+                        ),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 10),
@@ -113,11 +131,7 @@ class _OptionPageconfigState extends State<OptionPageconfig> {
                     size: 40,
                   ),
                   onTap: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (_) => AccountDetailsPage(),
-                      ),
-                    );
+                    context.router.push(AccountDetailsRoute());
                   },
                   trailing: Icon(
                     Icons.arrow_forward_ios_outlined,
@@ -142,11 +156,7 @@ class _OptionPageconfigState extends State<OptionPageconfig> {
                     size: 40,
                   ),
                   onTap: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (_) => NotificationPage(),
-                      ),
-                    );
+                    context.router.push(NotificationRoute());
                   },
                   trailing: Icon(
                     Icons.arrow_forward_ios_outlined,
@@ -175,11 +185,7 @@ class _OptionPageconfigState extends State<OptionPageconfig> {
                 ListTile(
                   //Hier wird eine HinterlegteSeite Aufgerufen
                   onTap: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (_) => SecurityPage(),
-                      ),
-                    );
+                    context.router.push(SecurityRoute());
                   },
                   leading: Icon(
                     Icons.security_outlined,
@@ -194,11 +200,7 @@ class _OptionPageconfigState extends State<OptionPageconfig> {
                 ),
                 ListTile(
                   onTap: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (_) => TermsofUsagePage(),
-                      ),
-                    );
+                    context.router.push(TermsofUsageRoute());
                   },
                   leading: Icon(
                     Icons.library_books_outlined,
@@ -210,24 +212,6 @@ class _OptionPageconfigState extends State<OptionPageconfig> {
                   ),
                   title: Text('Nutzungsbedingungen'),
                   subtitle: Text('Allgemeine Geschäftsbedingungen'),
-                ),
-                ListTile(
-                  onTap: () {
-                    setState(() {
-                      _launched = _launchInBrowser(toLaunchInstagramm);
-                    });
-                  },
-                  leading: Icon(
-                    //Instagramm Icon!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                    Icons.inbox,
-                    size: 40,
-                  ),
-                  trailing: Icon(
-                    Icons.arrow_forward_ios_outlined,
-                    size: 40,
-                  ),
-                  title: Text('Instagram'),
-                  subtitle: Text('Social Media'),
                 ),
                 ListTile(
                   onTap: () {
@@ -245,6 +229,67 @@ class _OptionPageconfigState extends State<OptionPageconfig> {
                   ),
                   title: Text('Impressum'),
                   subtitle: Text('Unsere Impressum'),
+                ),
+                const Padding(
+                  padding: const EdgeInsets.only(top: 8.0),
+                  child: Text(
+                    'Social Media',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                ListTile(
+                  onTap: () {
+                    setState(() {
+                      _launched = _launchInBrowser(toLaunchInstagramm);
+                    });
+                  },
+                  leading: Icon(
+                    //Instagramm Icon!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                    Icons.inbox,
+                    size: 40,
+                  ),
+                  trailing: Icon(
+                    Icons.arrow_forward_ios_outlined,
+                    size: 40,
+                  ),
+                  title: Text('Instagram'),
+                ),
+                ListTile(
+                  onTap: () {
+                    setState(() {
+                      _launched = _launchInBrowser(toLaunchTiktok);
+                    });
+                  },
+                  leading: Icon(
+                    //Instagramm Icon!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                    Icons.inbox,
+                    size: 40,
+                  ),
+                  trailing: Icon(
+                    Icons.arrow_forward_ios_outlined,
+                    size: 40,
+                  ),
+                  title: Text('TikTok'),
+                ),
+                ListTile(
+                  onTap: () {
+                    setState(() {
+                      _launched = _launchInBrowser(toLauchownSite);
+                    });
+                  },
+                  leading: Icon(
+                    //Instagramm Icon!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                    Icons.inbox,
+                    size: 40,
+                  ),
+                  trailing: Icon(
+                    Icons.arrow_forward_ios_outlined,
+                    size: 40,
+                  ),
+                  title: Text('Online shop'),
                 ),
                 InkWell(
                   onTap: () => showAlertDialog(context),

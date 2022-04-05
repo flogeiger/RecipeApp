@@ -4,16 +4,19 @@ import 'package:sample/RecipesPage/Filtern/ButtonFiltern.dart';
 import 'package:sample/RecipesPage/Filtern/Listviewoptions.dart';
 import 'package:sample/RecipesPage/Filtern/caloriesfilter/CaloriesFilterCategory.dart';
 import 'package:sample/models/Recipe.dart';
+import 'package:auto_route/auto_route.dart';
+import 'package:sample/utils/routes/routes.gr.dart';
 
-class CaloriesFilterPage extends StatefulWidget {
+class RecipeCaloriesFilterPage extends StatefulWidget {
   final List<Recipe>? list;
   final Function? callbackFunction;
-  CaloriesFilterPage({@required this.callbackFunction, @required this.list});
+  RecipeCaloriesFilterPage(
+      {@required this.callbackFunction, @required this.list});
   @override
   _CaloriesFilterPageState createState() => _CaloriesFilterPageState();
 }
 
-class _CaloriesFilterPageState extends State<CaloriesFilterPage> {
+class _CaloriesFilterPageState extends State<RecipeCaloriesFilterPage> {
   List<CaloriesFilterCategory> filterList =
       CaloriesFilterCategory.getFilterCalories();
   @override
@@ -28,14 +31,9 @@ class _CaloriesFilterPageState extends State<CaloriesFilterPage> {
                 children: [
                   GestureDetector(
                     onTap: () {
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => Filtern(
-                              callbackFunction: widget.callbackFunction,
-                              list: widget.list),
-                        ),
-                      );
+                      context.router.pop(RecipeFilternRoute(
+                          callbackFunction: widget.callbackFunction,
+                          list: widget.list));
                     },
                     child: Container(
                       child: Icon(
@@ -125,14 +123,9 @@ class _CaloriesFilterPageState extends State<CaloriesFilterPage> {
                       ),
                       child: InkWell(
                         onTap: () {
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => Filtern(
-                                  callbackFunction: widget.callbackFunction,
-                                  list: widget.list),
-                            ),
-                          );
+                          context.router.pop(RecipeFilternRoute(
+                              callbackFunction: widget.callbackFunction,
+                              list: widget.list));
                         },
                         child: FilterButton(
                           'Abbrechen',

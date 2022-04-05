@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:sample/AfterLogin/AfterLoginPage.dart';
+import 'package:sample/utils/routes/routes.gr.dart';
 import 'GradientButtonSmall.dart';
 import 'package:sample/utils/Preference.dart';
+import 'package:auto_route/auto_route.dart';
 
 import '../../utils/Preference.dart';
 
-class WeeklyGoalSetScreen extends StatefulWidget {
+class WeeklyGoalSetPage extends StatefulWidget {
   @override
-  _WeeklyGoalSetScreenState createState() => _WeeklyGoalSetScreenState();
+  _WeeklyGoalSetPageState createState() => _WeeklyGoalSetPageState();
 }
 
-class _WeeklyGoalSetScreenState extends State<WeeklyGoalSetScreen> {
+class _WeeklyGoalSetPageState extends State<WeeklyGoalSetPage> {
   bool unit = true;
   var distanceKM = 1;
 
@@ -254,10 +256,7 @@ class _WeeklyGoalSetScreenState extends State<WeeklyGoalSetScreen> {
           Preference.shared.setBool(Preference.issortedFav, false);
 
           //Preference.shared.setInt(Preference.DISTANCE, distanceKM);
-          Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(builder: (_) => AfterLoginPage(0)),
-              (route) => false);
+          context.router.replace(AfterLoginRoute(selectedItem: 0));
         },
       ),
     );

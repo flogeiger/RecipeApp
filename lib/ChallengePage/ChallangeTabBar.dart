@@ -15,6 +15,7 @@ class _ChallangeTabBarState extends State<ChallangeTabBar>
     super.initState();
     _tabController = new TabController(vsync: this, length: 2);
     _tabController!.addListener(_handleTabSelection);
+    Preference.shared.setInt(Preference.checkChallengePage, 1);
   }
 
   @override
@@ -34,17 +35,23 @@ class _ChallangeTabBarState extends State<ChallangeTabBar>
   }
 
   double _percentindactor(int val) {
-    val = Preference.shared.getInt(Preference.stepscurrentcount) ?? 0;
+    double val =
+        Preference.shared.getInt(Preference.stepscurrentcount)!.toDouble();
     int targetSteps = Preference.shared.getInt(Preference.stepsgoal) ?? 12000;
     if (val == 0) {
+      Preference.shared.setDouble(Preference.percentageindicatorsteps, val);
       return 0.0;
+    } else if (val % 200 == 0) {
+      Preference.shared.setDouble(Preference.percentageindicatorsteps, val);
+      double result = val / targetSteps;
+      return result;
+    } else {
+      double? oldval =
+          Preference.shared.getDouble(Preference.percentageindicatorsteps) ?? 0;
+      return oldval;
     }
-    double result = val / targetSteps;
-
-    return result;
   }
 
-  @override
   Widget build(BuildContext context) {
     return Column(
       children: [
@@ -188,7 +195,7 @@ class _ChallangeTabBarState extends State<ChallangeTabBar>
                                             width: MediaQuery.of(context)
                                                     .size
                                                     .width *
-                                                0.5,
+                                                0.4,
                                             backgroundColor:
                                                 Theme.of(context).canvasColor,
                                             progressColor:
@@ -290,7 +297,7 @@ class _ChallangeTabBarState extends State<ChallangeTabBar>
                                             width: MediaQuery.of(context)
                                                     .size
                                                     .width *
-                                                0.5,
+                                                0.4,
                                             backgroundColor:
                                                 Theme.of(context).canvasColor,
                                             progressColor:
@@ -396,7 +403,7 @@ class _ChallangeTabBarState extends State<ChallangeTabBar>
                                             width: MediaQuery.of(context)
                                                     .size
                                                     .width *
-                                                0.5,
+                                                0.4,
                                             backgroundColor:
                                                 Theme.of(context).canvasColor,
                                             progressColor:
@@ -405,10 +412,15 @@ class _ChallangeTabBarState extends State<ChallangeTabBar>
                                             lineHeight: 10,
                                             percent: _percentindactor(0),
                                             trailing: Text(
-                                              '0/10000',
+                                              '10000/10000',
                                               style: TextStyle(
                                                   color: Theme.of(context)
-                                                      .canvasColor),
+                                                      .canvasColor,
+                                                  fontSize:
+                                                      MediaQuery.of(context)
+                                                              .size
+                                                              .height *
+                                                          0.018),
                                             ),
                                           ),
                                         ),
@@ -513,7 +525,7 @@ class _ChallangeTabBarState extends State<ChallangeTabBar>
                                             width: MediaQuery.of(context)
                                                     .size
                                                     .width *
-                                                0.5,
+                                                0.4,
                                             backgroundColor:
                                                 Theme.of(context).canvasColor,
                                             progressColor:
@@ -615,7 +627,7 @@ class _ChallangeTabBarState extends State<ChallangeTabBar>
                                             width: MediaQuery.of(context)
                                                     .size
                                                     .width *
-                                                0.5,
+                                                0.4,
                                             backgroundColor:
                                                 Theme.of(context).canvasColor,
                                             progressColor:
@@ -721,7 +733,7 @@ class _ChallangeTabBarState extends State<ChallangeTabBar>
                                             width: MediaQuery.of(context)
                                                     .size
                                                     .width *
-                                                0.5,
+                                                0.4,
                                             backgroundColor:
                                                 Theme.of(context).canvasColor,
                                             progressColor:

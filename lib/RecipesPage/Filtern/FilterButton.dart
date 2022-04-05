@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:sample/RecipesPage/Sort/unsortButton.dart';
 import 'package:sample/utils/Preference.dart';
+import 'package:sample/utils/routes/routes.gr.dart';
 import 'Listviewoptions.dart';
 import 'package:sample/models/Recipe.dart';
+import 'package:auto_route/auto_route.dart';
 
 class FilterButton extends StatefulWidget {
   final List<Recipe>? list;
@@ -69,13 +71,8 @@ class _FilterButtonState extends State<FilterButton> {
             ),
           ),
           onTap: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (_) => Filtern(
-                    callbackFunction: widget.callbackFunction,
-                    list: widget.list),
-              ),
-            );
+            context.router.push(RecipeFilternRoute(
+                callbackFunction: widget.callbackFunction, list: widget.list));
           },
         ),
         isfiltered == false

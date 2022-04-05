@@ -36,6 +36,9 @@ class Preference {
   static const String IS_PAUSE = "IS_PAUSE";
   static const String DURATION = "DURATION";
 
+  static const String checkChallengePage = "checkChallengePage";
+  static const String percentageindicatorsteps = "percentageindicator";
+
   static final Preference _preference = Preference._internal();
 
   factory Preference() {

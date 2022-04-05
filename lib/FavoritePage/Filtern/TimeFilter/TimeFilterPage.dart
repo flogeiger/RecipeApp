@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:sample/FavoritePage/Filtern/ButtonFiltern.dart';
 import 'package:sample/FavoritePage/Filtern/Listviewoptions.dart';
 import 'package:sample/FavoritePage/Filtern/TimeFilter/TimeFilterCategory.dart';
+import 'package:auto_route/auto_route.dart';
+import 'package:sample/utils/routes/routes.gr.dart';
 
 class TimeFilterPage extends StatefulWidget {
   final Function? callbackFunction;
@@ -26,13 +28,9 @@ class _TimeFilterPageState extends State<TimeFilterPage> {
                 children: [
                   GestureDetector(
                     onTap: () {
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => Filtern(
-                            callbackFunction: widget.callbackFunction,
-                          ),
-                        ),
+                      context.router.pop(
+                        FavFilternRoute(
+                            callbackFunction: widget.callbackFunction),
                       );
                     },
                     child: Container(
@@ -123,13 +121,9 @@ class _TimeFilterPageState extends State<TimeFilterPage> {
                       ),
                       child: InkWell(
                         onTap: () {
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => Filtern(
-                                callbackFunction: widget.callbackFunction,
-                              ),
-                            ),
+                          context.router.pop(
+                            FavFilternRoute(
+                                callbackFunction: widget.callbackFunction),
                           );
                         },
                         child: FilterButton(

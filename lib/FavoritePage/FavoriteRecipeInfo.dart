@@ -1,7 +1,8 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:sample/models/Recipe.dart';
-import 'RecipeGUI/FavRecipeDetails/RecipeDetails.dart';
+import 'package:sample/utils/routes/routes.gr.dart';
+import 'package:auto_route/auto_route.dart';
 
 class FavoriteRecipeSmall extends StatefulWidget {
   Recipe recipe;
@@ -17,11 +18,7 @@ class _FavoritRecipeInfoSmallState extends State<FavoriteRecipeSmall> {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.pop(context);
-        Navigator.push(
-            context,
-            new MaterialPageRoute(
-                builder: (context) => new RecipeDetails(widget.recipe)));
+        context.router.push(FavRecipeDetailsRoute(recipe: widget.recipe));
       },
       child: Container(
         child: Row(

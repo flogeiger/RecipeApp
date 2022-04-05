@@ -10,14 +10,6 @@ class AccountDetailsPage extends StatefulWidget {
 }
 
 class _AccountDetailsPageState extends State<AccountDetailsPage> {
-  File profile = new File('');
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    Preference.shared.setString(Preference.profileImage, '');
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,33 +41,28 @@ class _AccountDetailsPageState extends State<AccountDetailsPage> {
           child: ListView(
             shrinkWrap: true,
             children: [
-              InkWell(
-                onTap: (() async {
-                  await Helper.getFromGallery(profile);
-                  setState(() {});
-                }),
-                child: CircleAvatar(
-                    radius: 60,
-                    backgroundColor: Colors.grey,
-                    child: Preference.shared
-                                .getString(Preference.profileImage)!
-                                .isEmpty ==
-                            true
-                        ? CircleAvatar(
-                            radius: 57,
-                            backgroundColor: Colors.white,
-                            child: Icon(
-                              Icons.people_alt_outlined,
-                              color: Theme.of(context).primaryColor,
-                              size: 50,
-                            ),
-                          )
-                        : CircleAvatar(
-                            radius: 57,
-                            backgroundColor: Colors.white,
-                            backgroundImage: FileImage(File(Preference.shared
-                                .getString(Preference.profileImage)!)),
-                          )),
+              CircleAvatar(
+                radius: 60,
+                backgroundColor: Colors.grey,
+                child: Preference.shared
+                            .getString(Preference.profileImage)!
+                            .isEmpty ==
+                        true
+                    ? CircleAvatar(
+                        radius: 57,
+                        backgroundColor: Colors.white,
+                        child: Icon(
+                          Icons.people_alt_outlined,
+                          color: Theme.of(context).primaryColor,
+                          size: 50,
+                        ),
+                      )
+                    : CircleAvatar(
+                        radius: 57,
+                        backgroundColor: Colors.white,
+                        backgroundImage: FileImage(File(Preference.shared
+                            .getString(Preference.profileImage)!)),
+                      ),
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 15, bottom: 15),
@@ -126,7 +113,7 @@ class _AccountDetailsPageState extends State<AccountDetailsPage> {
                 child: Row(
                   children: <Widget>[
                     Text(
-                      'Name',
+                      'E-Mail',
                       style: TextStyle(
                           fontSize: 22,
                           color: Color.fromARGB(255, 156, 150, 150)),

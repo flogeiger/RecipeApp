@@ -5,12 +5,12 @@ import 'GenderScreen.dart';
 import 'HeightScreen.dart';
 import 'WeightScreen.dart';
 
-class FirstLoginScreen extends StatefulWidget {
+class FirstLoginPage extends StatefulWidget {
   @override
-  FirstLoginScreenState createState() => FirstLoginScreenState();
+  FirstLoginPageState createState() => FirstLoginPageState();
 }
 
-class FirstLoginScreenState extends State<FirstLoginScreen> {
+class FirstLoginPageState extends State<FirstLoginPage> {
   PageController pageController = new PageController();
 
   String? genderSelected;

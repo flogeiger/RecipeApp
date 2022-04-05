@@ -1,11 +1,32 @@
+import 'dart:io';
+
+import 'package:sample/ProfilePage/Helper.dart';
+import 'package:sample/utils/Preference.dart';
+import 'package:sample/utils/routes/routes.gr.dart';
+
 import 'CostumeOptionPoint.dart';
 import 'package:flutter/material.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'triumph.dart';
-import 'OptionPage/Options.dart';
+import 'OptionPage/OptionsconfigPage.dart';
 import 'RankingPage.dart';
+import 'package:auto_route/auto_route.dart';
 
-class ProfilePage extends StatelessWidget {
+class ProfilePage extends StatefulWidget {
+  @override
+  State<ProfilePage> createState() => _ProfilePageState();
+}
+
+class _ProfilePageState extends State<ProfilePage> {
+  String? filename;
+  File profile = new File('');
+  @override
+  void initState() {
+    // TODO: implement initState
+    filename = Preference.shared.getString(Preference.profileImage) ?? '';
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -27,11 +48,7 @@ class ProfilePage extends StatelessWidget {
               children: <Widget>[
                 GestureDetector(
                     onTap: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (_) => Triumph(),
-                        ),
-                      );
+                      context.router.push(TriumphRoute());
                     },
                     child: CostumeOptionPoint(
                       Icons.military_tech_outlined,
@@ -41,13 +58,30 @@ class ProfilePage extends StatelessWidget {
                 SizedBox(
                   width: 20,
                 ),
-                CircleAvatar(
-                  radius: 80,
-                  backgroundColor: Colors.white,
-                  child: Icon(
-                    Icons.people_alt_outlined,
-                    color: Theme.of(context).primaryColor,
-                    size: 50,
+                InkWell(
+                  onTap: (() async {
+                    await Helper.getFromGallery(profile);
+                    setState(() {});
+                  }),
+                  child: CircleAvatar(
+                    radius: 80,
+                    backgroundColor: Colors.grey,
+                    child: filename == ''
+                        ? CircleAvatar(
+                            radius: 77,
+                            backgroundColor: Colors.white,
+                            child: Icon(
+                              Icons.people_alt_outlined,
+                              color: Theme.of(context).primaryColor,
+                              size: 50,
+                            ),
+                          )
+                        : CircleAvatar(
+                            radius: 77,
+                            backgroundColor: Colors.white,
+                            backgroundImage: FileImage(File(Preference.shared
+                                .getString(Preference.profileImage)!)),
+                          ),
                   ),
                 ),
                 SizedBox(
@@ -55,11 +89,7 @@ class ProfilePage extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (_) => (OptionPageconfig()),
-                      ),
-                    );
+                    context.router.push(OptionconfigRoute());
                   },
                   child: CostumeOptionPoint(
                     LineAwesomeIcons.cog,
@@ -74,11 +104,7 @@ class ProfilePage extends StatelessWidget {
             ),
             GestureDetector(
                 onTap: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (_) => (RankingPage()),
-                    ),
-                  );
+                  context.router.push(RankingRoute());
                 },
                 child: CostumeOptionPoint(
                   LineAwesomeIcons.trophy,

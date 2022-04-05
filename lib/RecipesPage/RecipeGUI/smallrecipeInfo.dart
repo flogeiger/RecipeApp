@@ -1,5 +1,7 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'LockedRecipeDetails/RecipeDetailslocked.dart';
+import 'package:sample/utils/routes/routes.gr.dart';
+import 'LockedRecipeDetails/RecipeDetailslockedPage.dart';
 import 'UnlookedRecipeDetails/RecipeDetailsunlooked.dart';
 import 'package:sample/models/Recipe.dart';
 import 'package:auto_size_text/auto_size_text.dart';
@@ -24,11 +26,11 @@ class _RecipeInfoSmallState extends State<RecipeInfoSmall> {
       child: InkWell(
         onTap: () {
           if (widget.recipe.giftedRecipe == true) {
-            Navigator.of(context).push(MaterialPageRoute(
-                builder: (_) => RecipeDetailsunlooked(widget.recipe)));
+            context.router
+                .push(RecipeDetailsunlookedRoute(recipe: widget.recipe));
           } else if (widget.recipe.giftedRecipe == false) {
-            Navigator.of(context).push(MaterialPageRoute(
-                builder: (_) => RecipeDetailslooked(widget.recipe)));
+            context.router
+                .push(RecipeDetailslookedRoute(recipe: widget.recipe));
           }
         },
         child: Container(

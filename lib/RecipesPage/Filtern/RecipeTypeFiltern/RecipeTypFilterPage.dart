@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -6,6 +7,7 @@ import 'package:sample/RecipesPage/Filtern/RecipeTypeFiltern/RecipeTypFilterList
 import 'package:sample/models/Recipe.dart';
 import 'package:sample/utils/Constant.dart';
 import 'package:sample/utils/Preference.dart';
+import 'package:sample/utils/routes/routes.gr.dart';
 import 'RecipeTypFilternCategory.dart';
 import 'package:sample/RecipesPage/Filtern/ButtonFiltern.dart';
 
@@ -82,14 +84,9 @@ class _RecipeTypFilterPageState extends State<RecipeTypFilterPage> {
                 children: [
                   GestureDetector(
                     onTap: () {
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => Filtern(
-                              callbackFunction: widget.callbackFunction,
-                              list: widget.list),
-                        ),
-                      );
+                      context.router.pop(RecipeFilternRoute(
+                          callbackFunction: widget.callbackFunction,
+                          list: widget.list));
                     },
                     child: Container(
                       child: Icon(
@@ -166,14 +163,9 @@ class _RecipeTypFilterPageState extends State<RecipeTypFilterPage> {
                       ),
                       child: InkWell(
                         onTap: () {
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => Filtern(
-                                  callbackFunction: widget.callbackFunction,
-                                  list: widget.list),
-                            ),
-                          );
+                          context.router.pop(RecipeFilternRoute(
+                              callbackFunction: widget.callbackFunction,
+                              list: widget.list));
                         },
                         child: FilterButton(
                           'Abbrechen',

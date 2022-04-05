@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sample/FirstLogin/weeklygoalSetScreen/GradientButtonSmall.dart';
-import 'package:sample/FirstLogin/weeklygoalSetScreen/WeeklyGoalSetScreenIntro.dart';
+import 'package:sample/FirstLogin/weeklygoalSetScreen/WeeklyGoalSetPage.dart';
 import 'package:sample/utils/Preference.dart';
+import 'package:auto_route/auto_route.dart';
+import 'package:sample/utils/routes/routes.gr.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HeightScreen extends StatefulWidget {
@@ -89,12 +91,7 @@ class _HeightScreenState extends State<HeightScreen> {
               ),
               onPressed: () {
                 Preference.shared.setInt(Preference.height, cmHeight!);
-
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => WeeklyGoalSetScreen()),
-                );
+                context.router.push(WeeklyGoalSetRoute());
               },
             ),
           ),

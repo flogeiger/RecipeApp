@@ -1,21 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:sample/utils/routes/routes.gr.dart';
 import 'FilternCategory.dart';
 import 'package:sample/FavoritePage/Filtern/RecipeTypeFiltern/RecipeTypFilterPage.dart';
 import 'package:sample/FavoritePage/Filtern/caloriesfilter/CaloriesFilterPage.dart';
 import 'package:sample/FavoritePage/Filtern/timefilter/TimeFilterPage.dart';
 import 'ButtonFiltern.dart';
 import 'TopMenuBar.dart';
+import 'package:auto_route/auto_route.dart';
 
-class Filtern extends StatefulWidget {
+class FavFilternPage extends StatefulWidget {
   final Function? callbackFunction;
-  Filtern({
+  FavFilternPage({
     @required this.callbackFunction,
   });
   @override
   _FilternState createState() => _FilternState();
 }
 
-class _FilternState extends State<Filtern> {
+class _FilternState extends State<FavFilternPage> {
   FilternCategory? selectedFiltern;
   List<String>? listFiltern;
   @override
@@ -28,32 +30,18 @@ class _FilternState extends State<Filtern> {
   checkingwhichselected(String filtervalue) {
     switch (filtervalue) {
       case 'Kalorien':
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => CaloriesFilterPage(
-              callbackFunction: widget.callbackFunction,
-            ),
-          ),
+        context.router.push(
+          CaloriesFilterRoute(callbackFunction: widget.callbackFunction),
         );
         break;
       case 'Diättyp':
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => RecipeTypFilterPage(
-              callbackFunction: widget.callbackFunction,
-            ),
-          ),
+        context.router.push(
+          FavRecipeTypFilterRoute(callbackFunction: widget.callbackFunction),
         );
         break;
       case 'Zeit':
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) =>
-                TimeFilterPage(callbackFunction: widget.callbackFunction),
-          ),
+        context.router.push(
+          TimeFilterRoute(callbackFunction: widget.callbackFunction),
         );
         break;
     }

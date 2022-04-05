@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:sample/FavoritePage/Sort/unsortButtonFav.dart';
 import 'package:sample/utils/Preference.dart';
+import 'package:sample/utils/routes/routes.gr.dart';
 import 'Listviewoptions.dart';
+import 'package:auto_route/auto_route.dart';
 
 class FilterButton extends StatefulWidget {
   final Function? callbackFunction;
@@ -64,13 +66,8 @@ class _FilterButtonState extends State<FilterButton> {
             ),
           ),
           onTap: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (_) => Filtern(
-                  callbackFunction: widget.callbackFunction,
-                ),
-              ),
-            );
+            context.router.push(
+                FavFilternRoute(callbackFunction: widget.callbackFunction));
           },
         ),
         isfiltered == false

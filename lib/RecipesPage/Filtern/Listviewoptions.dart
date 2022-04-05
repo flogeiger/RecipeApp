@@ -1,21 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:sample/RecipesPage/Filtern/FilternCategory.dart';
 import 'package:sample/RecipesPage/Filtern/RecipeTypeFiltern/RecipeTypFilterPage.dart';
+import 'package:sample/RecipesPage/Filtern/TimeFilter/TimeFilterPage.dart';
 import 'package:sample/RecipesPage/Filtern/caloriesfilter/CaloriesFilterPage.dart';
-import 'package:sample/RecipesPage/Filtern/timefilter/TimeFilterPage.dart';
 import 'package:sample/models/Recipe.dart';
+import 'package:sample/utils/routes/routes.gr.dart';
 import 'ButtonFiltern.dart';
+import 'package:auto_route/auto_route.dart';
 import 'TopMenuBar.dart';
 
-class Filtern extends StatefulWidget {
+class RecipeFilternPage extends StatefulWidget {
   final List<Recipe>? list;
   final Function? callbackFunction;
-  Filtern({@required this.callbackFunction, @required this.list});
+  RecipeFilternPage({@required this.callbackFunction, @required this.list});
   @override
   _FilternState createState() => _FilternState();
 }
 
-class _FilternState extends State<Filtern> {
+class _FilternState extends State<RecipeFilternPage> {
   FilternCategory? selectedFiltern;
   List<String>? listFiltern;
   @override
@@ -28,31 +30,19 @@ class _FilternState extends State<Filtern> {
   checkingwhichselected(String filtervalue) {
     switch (filtervalue) {
       case 'Kalorien':
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => CaloriesFilterPage(
-                callbackFunction: widget.callbackFunction, list: widget.list),
-          ),
-        );
+        context.router.push(RecipeCaloriesFilterRoute(
+            callbackFunction: widget.callbackFunction, list: widget.list));
+
         break;
       case 'Diättyp':
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => RecipeTypFilterPage(
-                callbackFunction: widget.callbackFunction, list: widget.list),
-          ),
-        );
+        context.router.push(RecipeTypFilterRoute(
+            callbackFunction: widget.callbackFunction, list: widget.list));
+
         break;
       case 'Zeit':
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => TimeFilterPage(
-                callbackFunction: widget.callbackFunction, list: widget.list),
-          ),
-        );
+        context.router.push(RecipeTimeFilterRoute(
+            callbackFunction: widget.callbackFunction, list: widget.list));
+
         break;
     }
   }

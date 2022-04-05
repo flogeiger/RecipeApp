@@ -1,14 +1,16 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:pedometer/pedometer.dart';
 import 'package:sample/ChallengePage/ChallangeTabBar.dart';
 import 'package:sample/ChallengePage/PointHistory.dart';
 import 'package:sample/ChallengePage/RewardPage.dart';
 import 'package:sample/utils/Preference.dart';
+import 'package:sample/utils/routes/routes.gr.dart';
 import 'package:stop_watch_timer/stop_watch_timer.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
-import 'package:intl/intl.dart';
+import 'package:auto_route/auto_route.dart';
 
 import '../Database/Datamodel/PointsData.dart';
 import '../Database/Helper.dart';
@@ -118,6 +120,7 @@ class _ChallengePageState extends State<ChallengePage> {
         resizeToAvoidBottomInset: true,
         backgroundColor: Theme.of(context).canvasColor,
         appBar: AppBar(
+            leading: Container(),
             backgroundColor: Theme.of(context).secondaryHeaderColor,
             title: Center(child: Text('Herausforderung'))),
         body: SizedBox(
@@ -135,9 +138,8 @@ class _ChallengePageState extends State<ChallengePage> {
                       padding: const EdgeInsets.fromLTRB(20, 0, 10, 0),
                       child: InkWell(
                         onTap: () {
-                          //savePoints();
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (_) => PointHistoryPage()));
+                          savePoints();
+                          context.router.push(PointHistoryRoute());
                         },
                         child: Container(
                           height: MediaQuery.of(context).size.height * 0.15,
@@ -181,9 +183,7 @@ class _ChallengePageState extends State<ChallengePage> {
                       padding: const EdgeInsets.fromLTRB(10, 0, 20, 0),
                       child: InkWell(
                         onTap: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                            builder: (_) => RewardPage(),
-                          ));
+                          context.router.push(RewardRoute());
                         },
                         child: Container(
                           height: MediaQuery.of(context).size.height * 0.15,
@@ -450,17 +450,11 @@ class _ChallengePageState extends State<ChallengePage> {
   countStep() {
     _stepCountStream = Pedometer.stepCountStream.listen((value) async {
       if (!mounted) {
-        totalSteps = value.steps;
-        Preference.shared.setInt(Preference.TOTAL_STEPS, totalSteps);
-
         currentStepCount = currentStepCount! + 1;
         Preference.shared
             .setInt(Preference.stepscurrentcount, currentStepCount!);
       } else {
         setState(() {
-          totalSteps = value.steps;
-          Preference.shared.setInt(Preference.TOTAL_STEPS, totalSteps);
-
           currentStepCount = currentStepCount! + 1;
           Preference.shared
               .setInt(Preference.stepscurrentcount, currentStepCount!);
