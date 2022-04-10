@@ -138,7 +138,7 @@ class _WeeklyGoalSetPageState extends State<WeeklyGoalSetPage> {
                   children: [
                     Container(
                       child: Text(
-                        "Die besitzt die Körpergröße:".toUpperCase(),
+                        "Deine Körpergröße:".toUpperCase(),
                         style: TextStyle(
                             fontWeight: FontWeight.w700,
                             color: Colors.white,

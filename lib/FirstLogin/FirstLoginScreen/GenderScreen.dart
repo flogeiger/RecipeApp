@@ -10,7 +10,9 @@ class GenderScreen extends StatefulWidget {
 }
 
 class _GenderScreenState extends State<GenderScreen> {
-  String? gender = 'Männlich';
+  String? gender = '';
+
+  final TextEditingController stepController = new TextEditingController();
 
   @override
   void initState() {
@@ -19,6 +21,37 @@ class _GenderScreenState extends State<GenderScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final stepField = TextFormField(
+      autofocus: false,
+      controller: stepController,
+      keyboardType: TextInputType.number,
+      validator: (value) {
+        if (value!.isEmpty) {
+          return ("Dieses Feld darf nicht Lehr sein, wenn du die Eingabe sichern willst");
+        }
+        if (!RegExp("[a-zA-Z]").hasMatch(value)) {
+          return ("Bitte gib einen Namen an");
+        }
+        return null;
+      },
+      decoration: InputDecoration(
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: Colors.white, width: 2.0),
+          borderRadius: BorderRadius.circular(25.0),
+        ),
+        prefixIcon: Icon(
+          Icons.person,
+          color: Colors.white,
+        ),
+        contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+        hintText: "Schrittelimit",
+        hintStyle: TextStyle(color: Colors.white),
+        border: OutlineInputBorder(
+          borderSide: BorderSide(color: Colors.white, width: 2.0),
+          borderRadius: BorderRadius.circular(25.0),
+        ),
+      ),
+    );
     var fullHeight = MediaQuery.of(context).size.height;
     var fullWidth = MediaQuery.of(context).size.width;
     return Container(
@@ -28,6 +61,17 @@ class _GenderScreenState extends State<GenderScreen> {
       child: Column(
         mainAxisSize: MainAxisSize.max,
         children: [
+          Container(
+            margin: EdgeInsets.only(top: fullHeight * 0.05),
+            child: Text(
+              "Tägliches Schrittziel",
+              style: TextStyle(
+                  fontWeight: FontWeight.w700,
+                  color: Colors.white,
+                  fontSize: 30),
+            ),
+          ),
+          stepField,
           Container(
             margin: EdgeInsets.only(top: fullHeight * 0.05),
             child: Text(
@@ -57,6 +101,8 @@ class _GenderScreenState extends State<GenderScreen> {
               onTap: () {
                 Preference.shared
                     .setString(Preference.gender, gender.toString());
+                Preference.shared
+                    .setString(Preference.stepsgoal, stepController.text);
                 widget.controller!.nextPage(
                     duration: Duration(milliseconds: 100),
                     curve: Curves.easeIn);

@@ -11,7 +11,8 @@ import 'package:sample/FirstLogin/FirstLoginScreen/FirstLoginScreen.dart';
 import 'package:sample/FirstLogin/weeklygoalSetScreen/WeeklyGoalSetPage.dart';
 import 'package:sample/LoginPages/loginPage.dart';
 import 'package:sample/LoginPages/registrationPage.dart';
-import 'package:sample/ProfilePage/OptionPage/AccountDetailsPage.dart';
+import 'package:sample/ProfilePage/OptionPage/AccountDetails/AccountDetailsPage.dart';
+import 'package:sample/ProfilePage/OptionPage/AccountDetails/EditAccountPage.dart';
 import 'package:sample/ProfilePage/OptionPage/NotificationPage.dart';
 import 'package:sample/ProfilePage/OptionPage/OptionsconfigPage.dart';
 import 'package:sample/ProfilePage/OptionPage/SecurityPage.dart';
@@ -52,7 +53,8 @@ import 'package:sample/RecipesPage/RecipeGUI/UnlookedRecipeDetails/RecipeDetails
     MaterialRoute(page: RecipeTypFilterPage),
     MaterialRoute(page: RecipeTimeFilterPage),
     MaterialRoute(page: RecipeDetailslookedPage),
-    MaterialRoute(page: RecipeDetailsunlookedPage)
+    MaterialRoute(page: RecipeDetailsunlookedPage),
+    MaterialRoute(page: EditAccountPage),
   ],
 )
 class $Routes {}

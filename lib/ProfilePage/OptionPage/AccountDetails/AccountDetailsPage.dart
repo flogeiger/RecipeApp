@@ -1,8 +1,10 @@
 import 'dart:io';
 
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:sample/ProfilePage/Helper.dart';
 import 'package:sample/utils/Preference.dart';
+import 'package:sample/utils/routes/routes.gr.dart';
 
 class AccountDetailsPage extends StatefulWidget {
   @override
@@ -10,26 +12,40 @@ class AccountDetailsPage extends StatefulWidget {
 }
 
 class _AccountDetailsPageState extends State<AccountDetailsPage> {
+  String? filename;
+  @override
+  void initState() {
+    filename = Preference.shared.getString(Preference.profileImage) ?? '';
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
         backgroundColor: Colors.white,
-        leading: InkWell(
-          onTap: (() {
-            Navigator.pop(context);
-          }),
-          child: const Icon(
-            Icons.arrow_back,
-            size: 35,
-            color: Colors.blue,
-          ),
-        ),
         title: const Text(
           'Profil',
           style: TextStyle(color: Colors.black),
         ),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(
+              right: 16,
+            ),
+            child: GestureDetector(
+              onTap: () {
+                context.router.push(EditAccountRoute());
+              },
+              child: Icon(
+                Icons.edit,
+                color: Theme.of(context).secondaryHeaderColor,
+                size: MediaQuery.of(context).size.height * 0.04,
+              ),
+            ),
+          )
+        ],
       ),
       body: Padding(
         padding: EdgeInsets.only(
@@ -43,17 +59,14 @@ class _AccountDetailsPageState extends State<AccountDetailsPage> {
             children: [
               CircleAvatar(
                 radius: 60,
-                backgroundColor: Colors.grey,
-                child: Preference.shared
-                            .getString(Preference.profileImage)!
-                            .isEmpty ==
-                        true
+                backgroundColor: Theme.of(context).secondaryHeaderColor,
+                child: filename == ''
                     ? CircleAvatar(
                         radius: 57,
                         backgroundColor: Colors.white,
                         child: Icon(
                           Icons.people_alt_outlined,
-                          color: Theme.of(context).primaryColor,
+                          color: Theme.of(context).secondaryHeaderColor,
                           size: 50,
                         ),
                       )
@@ -128,60 +141,6 @@ class _AccountDetailsPageState extends State<AccountDetailsPage> {
                   ],
                 ),
               ),
-              Container(
-                height: MediaQuery.of(context).size.height * 0.08,
-                decoration: BoxDecoration(
-                  border: Border(
-                      bottom: BorderSide(
-                          color: Color.fromARGB(255, 156, 150, 150), width: 1),
-                      top: BorderSide(
-                          color: Color.fromARGB(255, 156, 150, 150), width: 1)),
-                ),
-                child: Row(
-                  children: <Widget>[
-                    Text(
-                      'Name',
-                      style: TextStyle(
-                          fontSize: 22,
-                          color: Color.fromARGB(255, 156, 150, 150)),
-                    ),
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.2,
-                    ),
-                    Text(
-                      'test',
-                      style: TextStyle(fontSize: 22),
-                    ),
-                  ],
-                ),
-              ),
-              Container(
-                height: MediaQuery.of(context).size.height * 0.08,
-                decoration: BoxDecoration(
-                  border: Border(
-                      bottom: BorderSide(
-                          color: Color.fromARGB(255, 156, 150, 150), width: 1),
-                      top: BorderSide(
-                          color: Color.fromARGB(255, 156, 150, 150), width: 1)),
-                ),
-                child: Row(
-                  children: <Widget>[
-                    Text(
-                      'Name',
-                      style: TextStyle(
-                          fontSize: 22,
-                          color: Color.fromARGB(255, 156, 150, 150)),
-                    ),
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.2,
-                    ),
-                    Text(
-                      'test',
-                      style: TextStyle(fontSize: 22),
-                    ),
-                  ],
-                ),
-              ),
               const Padding(
                 padding: const EdgeInsets.only(top: 15.0, bottom: 15),
                 child: Text(
@@ -204,7 +163,7 @@ class _AccountDetailsPageState extends State<AccountDetailsPage> {
                 child: Row(
                   children: <Widget>[
                     Text(
-                      'Name',
+                      'Schritt-Tagesziel',
                       style: TextStyle(
                           fontSize: 22,
                           color: Color.fromARGB(255, 156, 150, 150)),
@@ -213,7 +172,7 @@ class _AccountDetailsPageState extends State<AccountDetailsPage> {
                       width: MediaQuery.of(context).size.width * 0.2,
                     ),
                     Text(
-                      'test',
+                      '12000',
                       style: TextStyle(fontSize: 22),
                     ),
                   ],
@@ -231,7 +190,7 @@ class _AccountDetailsPageState extends State<AccountDetailsPage> {
                 child: Row(
                   children: <Widget>[
                     Text(
-                      'Name',
+                      'Größe',
                       style: TextStyle(
                           fontSize: 22,
                           color: Color.fromARGB(255, 156, 150, 150)),
@@ -240,7 +199,7 @@ class _AccountDetailsPageState extends State<AccountDetailsPage> {
                       width: MediaQuery.of(context).size.width * 0.2,
                     ),
                     Text(
-                      'test',
+                      '180 cm',
                       style: TextStyle(fontSize: 22),
                     ),
                   ],
@@ -258,7 +217,7 @@ class _AccountDetailsPageState extends State<AccountDetailsPage> {
                 child: Row(
                   children: <Widget>[
                     Text(
-                      'Name',
+                      'Körpergewicht',
                       style: TextStyle(
                           fontSize: 22,
                           color: Color.fromARGB(255, 156, 150, 150)),
@@ -267,34 +226,7 @@ class _AccountDetailsPageState extends State<AccountDetailsPage> {
                       width: MediaQuery.of(context).size.width * 0.2,
                     ),
                     Text(
-                      'test',
-                      style: TextStyle(fontSize: 22),
-                    ),
-                  ],
-                ),
-              ),
-              Container(
-                height: MediaQuery.of(context).size.height * 0.08,
-                decoration: BoxDecoration(
-                  border: Border(
-                      bottom: BorderSide(
-                          color: Color.fromARGB(255, 156, 150, 150), width: 1),
-                      top: BorderSide(
-                          color: Color.fromARGB(255, 156, 150, 150), width: 1)),
-                ),
-                child: Row(
-                  children: <Widget>[
-                    Text(
-                      'Name',
-                      style: TextStyle(
-                          fontSize: 22,
-                          color: Color.fromARGB(255, 156, 150, 150)),
-                    ),
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.2,
-                    ),
-                    Text(
-                      'test',
+                      '100KG',
                       style: TextStyle(fontSize: 22),
                     ),
                   ],

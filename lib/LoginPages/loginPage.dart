@@ -44,32 +44,32 @@ class _LoginScreenState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     final emailField = TextFormField(
-        autofocus: false,
-        controller: emailController,
-        keyboardType: TextInputType.emailAddress,
-        validator: (value) {
-          if (value!.isEmpty) {
-            return ("Please Enter Your Email");
-          }
-          // reg expression for email validation
-          if (!RegExp("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+.[a-z]")
-              .hasMatch(value)) {
-            return ("Please Enter a valid email");
-          }
-          return null;
-        },
-        onSaved: (value) {
-          emailController.text = value!;
-        },
-        textInputAction: TextInputAction.next,
-        decoration: InputDecoration(
-          prefixIcon: Icon(Icons.mail),
-          contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-          hintText: "Email",
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
-        ));
+      autofocus: false,
+      controller: emailController,
+      keyboardType: TextInputType.emailAddress,
+      validator: (value) {
+        if (value!.isEmpty) {
+          return ("Please Enter Your Email");
+        }
+        // reg expression for email validation
+        if (!RegExp("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+.[a-z]").hasMatch(value)) {
+          return ("Please Enter a valid email");
+        }
+        return null;
+      },
+      onSaved: (value) {
+        emailController.text = value!;
+      },
+      textInputAction: TextInputAction.next,
+      decoration: InputDecoration(
+        prefixIcon: Icon(Icons.mail),
+        contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+        hintText: "Email",
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+      ),
+    );
 
     //password field
     final passwordField = TextFormField(
@@ -199,7 +199,7 @@ class _LoginScreenState extends State<LoginPage> {
             .signInWithEmailAndPassword(email: email, password: password)
             .then((uid) {
           Fluttertoast.showToast(msg: "Login Successful");
-
+          Preference.shared.setString(Preference.email, email);
           if (isFirstTimeloggin) {
             context.router.replace(FirstLoginRoute());
           } else {

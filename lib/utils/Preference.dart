@@ -26,9 +26,9 @@ class Preference {
   static const String isfilterd = "filtered";
   static const String height = "height";
   static const String weight = "weight";
-  static const String TOTAL_STEPS = "TOTAL_STEPS";
+  static const String email = "E-mail";
   static const String stepscurrentcount = "currentcountsteps";
-  static const String stepsgoal = "TARGET_STEPS";
+  static const String stepsgoal = "stepsgoal";
   static const String OLD_TIME = "OLD_TIME";
   static const String OLD_DISTANCE = "OLD_DISTANCE";
   static const String OLD_CALORIES = "OLD_CALORIES";

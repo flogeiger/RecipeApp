@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:sample/LoginPages/loginPage.dart';
 import 'package:sample/utils/Preference.dart';
 import 'package:sample/utils/routes/routes.gr.dart';
 
@@ -7,12 +6,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 
-import 'TermsofUsagePage.dart';
 import 'package:auto_route/auto_route.dart';
-
-import 'AccountDetailsPage.dart';
-import 'NotificationPage.dart';
-import 'SecurityPage.dart';
 
 class OptionconfigPage extends StatefulWidget {
   @override
@@ -42,7 +36,8 @@ class _OptionconfigPageState extends State<OptionconfigPage> {
     Widget continueButton = TextButton(
       onPressed: () async {
         await _signOut();
-        context.router.push(LoginRoute());
+        context.router.popUntilRouteWithName('/');
+        context.navigateNamedTo('/');
       },
       child: Text('Abmelden'),
     );
@@ -62,6 +57,13 @@ class _OptionconfigPageState extends State<OptionconfigPage> {
     await FirebaseAuth.instance.signOut();
   }
 
+  String? filename;
+  @override
+  void initState() {
+    filename = Preference.shared.getString(Preference.profileImage) ?? '';
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     const String toLaunchimpressum = 'https://mycarbcrew.com/impressum/';
@@ -73,6 +75,14 @@ class _OptionconfigPageState extends State<OptionconfigPage> {
 
     return SafeArea(
       child: Scaffold(
+        appBar: AppBar(
+          title: Text(
+            'Einstellungen',
+            style: TextStyle(color: Colors.white),
+          ),
+          centerTitle: true,
+          backgroundColor: Theme.of(context).secondaryHeaderColor,
+        ),
         body: Container(
           height: MediaQuery.of(context).size.height,
           child: Padding(
@@ -82,17 +92,14 @@ class _OptionconfigPageState extends State<OptionconfigPage> {
               children: <Widget>[
                 CircleAvatar(
                   radius: 60,
-                  backgroundColor: Colors.grey,
-                  child: Preference.shared
-                              .getString(Preference.profileImage)!
-                              .isEmpty ==
-                          true
+                  backgroundColor: Theme.of(context).secondaryHeaderColor,
+                  child: filename == ''
                       ? CircleAvatar(
                           radius: 57,
                           backgroundColor: Colors.white,
                           child: Icon(
                             Icons.people_alt_outlined,
-                            color: Theme.of(context).primaryColor,
+                            color: Theme.of(context).secondaryHeaderColor,
                             size: 50,
                           ),
                         )

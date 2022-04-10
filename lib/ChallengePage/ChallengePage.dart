@@ -120,7 +120,6 @@ class _ChallengePageState extends State<ChallengePage> {
         resizeToAvoidBottomInset: true,
         backgroundColor: Theme.of(context).canvasColor,
         appBar: AppBar(
-            leading: Container(),
             backgroundColor: Theme.of(context).secondaryHeaderColor,
             title: Center(child: Text('Herausforderung'))),
         body: SizedBox(
@@ -516,8 +515,8 @@ class _ChallengePageState extends State<ChallengePage> {
 
   resetData() {
     setState(() {
-      totalSteps = Preference.shared.getInt(Preference.TOTAL_STEPS)!;
-      oldStepCount = Preference.shared.getInt(Preference.TOTAL_STEPS);
+      // totalSteps = Preference.shared.getInt(Preference.TOTAL_STEPS)!;
+      //ldStepCount = Preference.shared.getInt(Preference.TOTAL_STEPS);
       if (totalSteps != null) {
         currentStepCount = totalSteps - oldStepCount!;
       } else {

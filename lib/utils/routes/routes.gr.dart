@@ -10,8 +10,8 @@
 //
 // ignore_for_file: type=lint
 
-import 'package:auto_route/auto_route.dart' as _i26;
-import 'package:flutter/material.dart' as _i27;
+import 'package:auto_route/auto_route.dart' as _i27;
+import 'package:flutter/material.dart' as _i28;
 
 import '../../AfterLogin/AfterLoginPage.dart' as _i2;
 import '../../ChallengePage/PointHistory.dart' as _i3;
@@ -28,8 +28,11 @@ import '../../FirstLogin/FirstLoginScreen/FirstLoginScreen.dart' as _i12;
 import '../../FirstLogin/weeklygoalSetScreen/WeeklyGoalSetPage.dart' as _i10;
 import '../../LoginPages/loginPage.dart' as _i1;
 import '../../LoginPages/registrationPage.dart' as _i11;
-import '../../models/Recipe.dart' as _i28;
-import '../../ProfilePage/OptionPage/AccountDetailsPage.dart' as _i16;
+import '../../models/Recipe.dart' as _i29;
+import '../../ProfilePage/OptionPage/AccountDetails/AccountDetailsPage.dart'
+    as _i16;
+import '../../ProfilePage/OptionPage/AccountDetails/EditAccountPage.dart'
+    as _i26;
 import '../../ProfilePage/OptionPage/NotificationPage.dart' as _i17;
 import '../../ProfilePage/OptionPage/OptionsconfigPage.dart' as _i13;
 import '../../ProfilePage/OptionPage/SecurityPage.dart' as _i18;
@@ -47,45 +50,45 @@ import '../../RecipesPage/RecipeGUI/LockedRecipeDetails/RecipeDetailslockedPage.
 import '../../RecipesPage/RecipeGUI/UnlookedRecipeDetails/RecipeDetailsunlooked.dart'
     as _i25;
 
-class Routes extends _i26.RootStackRouter {
-  Routes([_i27.GlobalKey<_i27.NavigatorState>? navigatorKey])
+class Routes extends _i27.RootStackRouter {
+  Routes([_i28.GlobalKey<_i28.NavigatorState>? navigatorKey])
       : super(navigatorKey);
 
   @override
-  final Map<String, _i26.PageFactory> pagesMap = {
+  final Map<String, _i27.PageFactory> pagesMap = {
     LoginRoute.name: (routeData) {
-      return _i26.MaterialPageX<dynamic>(
+      return _i27.MaterialPageX<dynamic>(
           routeData: routeData, child: _i1.LoginPage());
     },
     AfterLoginRoute.name: (routeData) {
       final args = routeData.argsAs<AfterLoginRouteArgs>();
-      return _i26.MaterialPageX<dynamic>(
+      return _i27.MaterialPageX<dynamic>(
           routeData: routeData, child: _i2.AfterLoginPage(args.selectedItem));
     },
     PointHistoryRoute.name: (routeData) {
-      return _i26.MaterialPageX<dynamic>(
+      return _i27.MaterialPageX<dynamic>(
           routeData: routeData, child: _i3.PointHistoryPage());
     },
     RewardRoute.name: (routeData) {
-      return _i26.MaterialPageX<dynamic>(
+      return _i27.MaterialPageX<dynamic>(
           routeData: routeData, child: _i4.RewardPage());
     },
     FavRecipeDetailsRoute.name: (routeData) {
       final args = routeData.argsAs<FavRecipeDetailsRouteArgs>();
-      return _i26.MaterialPageX<dynamic>(
+      return _i27.MaterialPageX<dynamic>(
           routeData: routeData, child: _i5.FavRecipeDetailsPage(args.recipe));
     },
     FavFilternRoute.name: (routeData) {
       final args = routeData.argsAs<FavFilternRouteArgs>(
           orElse: () => const FavFilternRouteArgs());
-      return _i26.MaterialPageX<dynamic>(
+      return _i27.MaterialPageX<dynamic>(
           routeData: routeData,
           child: _i6.FavFilternPage(callbackFunction: args.callbackFunction));
     },
     CaloriesFilterRoute.name: (routeData) {
       final args = routeData.argsAs<CaloriesFilterRouteArgs>(
           orElse: () => const CaloriesFilterRouteArgs());
-      return _i26.MaterialPageX<dynamic>(
+      return _i27.MaterialPageX<dynamic>(
           routeData: routeData,
           child:
               _i7.CaloriesFilterPage(callbackFunction: args.callbackFunction));
@@ -93,7 +96,7 @@ class Routes extends _i26.RootStackRouter {
     FavRecipeTypFilterRoute.name: (routeData) {
       final args = routeData.argsAs<FavRecipeTypFilterRouteArgs>(
           orElse: () => const FavRecipeTypFilterRouteArgs());
-      return _i26.MaterialPageX<dynamic>(
+      return _i27.MaterialPageX<dynamic>(
           routeData: routeData,
           child: _i8.FavRecipeTypFilterPage(
               callbackFunction: args.callbackFunction));
@@ -101,54 +104,54 @@ class Routes extends _i26.RootStackRouter {
     TimeFilterRoute.name: (routeData) {
       final args = routeData.argsAs<TimeFilterRouteArgs>(
           orElse: () => const TimeFilterRouteArgs());
-      return _i26.MaterialPageX<dynamic>(
+      return _i27.MaterialPageX<dynamic>(
           routeData: routeData,
           child: _i9.TimeFilterPage(callbackFunction: args.callbackFunction));
     },
     WeeklyGoalSetRoute.name: (routeData) {
-      return _i26.MaterialPageX<dynamic>(
+      return _i27.MaterialPageX<dynamic>(
           routeData: routeData, child: _i10.WeeklyGoalSetPage());
     },
     RegistrationRoute.name: (routeData) {
-      return _i26.MaterialPageX<dynamic>(
+      return _i27.MaterialPageX<dynamic>(
           routeData: routeData, child: _i11.RegistrationPage());
     },
     FirstLoginRoute.name: (routeData) {
-      return _i26.MaterialPageX<dynamic>(
+      return _i27.MaterialPageX<dynamic>(
           routeData: routeData, child: _i12.FirstLoginPage());
     },
     OptionconfigRoute.name: (routeData) {
-      return _i26.MaterialPageX<dynamic>(
+      return _i27.MaterialPageX<dynamic>(
           routeData: routeData, child: _i13.OptionconfigPage());
     },
     TriumphRoute.name: (routeData) {
-      return _i26.MaterialPageX<dynamic>(
+      return _i27.MaterialPageX<dynamic>(
           routeData: routeData, child: _i14.TriumphPage());
     },
     RankingRoute.name: (routeData) {
-      return _i26.MaterialPageX<dynamic>(
+      return _i27.MaterialPageX<dynamic>(
           routeData: routeData, child: _i15.RankingPage());
     },
     AccountDetailsRoute.name: (routeData) {
-      return _i26.MaterialPageX<dynamic>(
+      return _i27.MaterialPageX<dynamic>(
           routeData: routeData, child: _i16.AccountDetailsPage());
     },
     NotificationRoute.name: (routeData) {
-      return _i26.MaterialPageX<dynamic>(
+      return _i27.MaterialPageX<dynamic>(
           routeData: routeData, child: _i17.NotificationPage());
     },
     SecurityRoute.name: (routeData) {
-      return _i26.MaterialPageX<dynamic>(
+      return _i27.MaterialPageX<dynamic>(
           routeData: routeData, child: _i18.SecurityPage());
     },
     TermsofUsageRoute.name: (routeData) {
-      return _i26.MaterialPageX<dynamic>(
+      return _i27.MaterialPageX<dynamic>(
           routeData: routeData, child: _i19.TermsofUsagePage());
     },
     RecipeFilternRoute.name: (routeData) {
       final args = routeData.argsAs<RecipeFilternRouteArgs>(
           orElse: () => const RecipeFilternRouteArgs());
-      return _i26.MaterialPageX<dynamic>(
+      return _i27.MaterialPageX<dynamic>(
           routeData: routeData,
           child: _i20.RecipeFilternPage(
               callbackFunction: args.callbackFunction, list: args.list));
@@ -156,7 +159,7 @@ class Routes extends _i26.RootStackRouter {
     RecipeCaloriesFilterRoute.name: (routeData) {
       final args = routeData.argsAs<RecipeCaloriesFilterRouteArgs>(
           orElse: () => const RecipeCaloriesFilterRouteArgs());
-      return _i26.MaterialPageX<dynamic>(
+      return _i27.MaterialPageX<dynamic>(
           routeData: routeData,
           child: _i21.RecipeCaloriesFilterPage(
               callbackFunction: args.callbackFunction, list: args.list));
@@ -164,7 +167,7 @@ class Routes extends _i26.RootStackRouter {
     RecipeTypFilterRoute.name: (routeData) {
       final args = routeData.argsAs<RecipeTypFilterRouteArgs>(
           orElse: () => const RecipeTypFilterRouteArgs());
-      return _i26.MaterialPageX<dynamic>(
+      return _i27.MaterialPageX<dynamic>(
           routeData: routeData,
           child: _i22.RecipeTypFilterPage(
               callbackFunction: args.callbackFunction, list: args.list));
@@ -172,68 +175,73 @@ class Routes extends _i26.RootStackRouter {
     RecipeTimeFilterRoute.name: (routeData) {
       final args = routeData.argsAs<RecipeTimeFilterRouteArgs>(
           orElse: () => const RecipeTimeFilterRouteArgs());
-      return _i26.MaterialPageX<dynamic>(
+      return _i27.MaterialPageX<dynamic>(
           routeData: routeData,
           child: _i23.RecipeTimeFilterPage(
               callbackFunction: args.callbackFunction, list: args.list));
     },
     RecipeDetailslookedRoute.name: (routeData) {
       final args = routeData.argsAs<RecipeDetailslookedRouteArgs>();
-      return _i26.MaterialPageX<dynamic>(
+      return _i27.MaterialPageX<dynamic>(
           routeData: routeData,
           child: _i24.RecipeDetailslookedPage(args.recipe));
     },
     RecipeDetailsunlookedRoute.name: (routeData) {
       final args = routeData.argsAs<RecipeDetailsunlookedRouteArgs>();
-      return _i26.MaterialPageX<dynamic>(
+      return _i27.MaterialPageX<dynamic>(
           routeData: routeData,
           child: _i25.RecipeDetailsunlookedPage(args.recipe));
+    },
+    EditAccountRoute.name: (routeData) {
+      return _i27.MaterialPageX<dynamic>(
+          routeData: routeData, child: _i26.EditAccountPage());
     }
   };
 
   @override
-  List<_i26.RouteConfig> get routes => [
-        _i26.RouteConfig(LoginRoute.name, path: '/'),
-        _i26.RouteConfig(AfterLoginRoute.name, path: '/after-login-page'),
-        _i26.RouteConfig(PointHistoryRoute.name, path: '/point-history-page'),
-        _i26.RouteConfig(RewardRoute.name, path: '/reward-page'),
-        _i26.RouteConfig(FavRecipeDetailsRoute.name,
+  List<_i27.RouteConfig> get routes => [
+        _i27.RouteConfig(LoginRoute.name, path: '/'),
+        _i27.RouteConfig(AfterLoginRoute.name, path: '/after-login-page'),
+        _i27.RouteConfig(PointHistoryRoute.name, path: '/point-history-page'),
+        _i27.RouteConfig(RewardRoute.name, path: '/reward-page'),
+        _i27.RouteConfig(FavRecipeDetailsRoute.name,
             path: '/fav-recipe-details-page'),
-        _i26.RouteConfig(FavFilternRoute.name, path: '/fav-filtern-page'),
-        _i26.RouteConfig(CaloriesFilterRoute.name,
+        _i27.RouteConfig(FavFilternRoute.name, path: '/fav-filtern-page'),
+        _i27.RouteConfig(CaloriesFilterRoute.name,
             path: '/calories-filter-page'),
-        _i26.RouteConfig(FavRecipeTypFilterRoute.name,
+        _i27.RouteConfig(FavRecipeTypFilterRoute.name,
             path: '/fav-recipe-typ-filter-page'),
-        _i26.RouteConfig(TimeFilterRoute.name, path: '/time-filter-page'),
-        _i26.RouteConfig(WeeklyGoalSetRoute.name,
+        _i27.RouteConfig(TimeFilterRoute.name, path: '/time-filter-page'),
+        _i27.RouteConfig(WeeklyGoalSetRoute.name,
             path: '/weekly-goal-set-page'),
-        _i26.RouteConfig(RegistrationRoute.name, path: '/registration-page'),
-        _i26.RouteConfig(FirstLoginRoute.name, path: '/first-login-page'),
-        _i26.RouteConfig(OptionconfigRoute.name, path: '/optionconfig-page'),
-        _i26.RouteConfig(TriumphRoute.name, path: '/triumph-page'),
-        _i26.RouteConfig(RankingRoute.name, path: '/ranking-page'),
-        _i26.RouteConfig(AccountDetailsRoute.name,
+        _i27.RouteConfig(RegistrationRoute.name, path: '/registration-page'),
+        _i27.RouteConfig(FirstLoginRoute.name, path: '/first-login-page'),
+        _i27.RouteConfig(OptionconfigRoute.name, path: '/optionconfig-page'),
+        _i27.RouteConfig(TriumphRoute.name, path: '/triumph-page'),
+        _i27.RouteConfig(RankingRoute.name, path: '/ranking-page'),
+        _i27.RouteConfig(AccountDetailsRoute.name,
             path: '/account-details-page'),
-        _i26.RouteConfig(NotificationRoute.name, path: '/notification-page'),
-        _i26.RouteConfig(SecurityRoute.name, path: '/security-page'),
-        _i26.RouteConfig(TermsofUsageRoute.name, path: '/termsof-usage-page'),
-        _i26.RouteConfig(RecipeFilternRoute.name, path: '/recipe-filtern-page'),
-        _i26.RouteConfig(RecipeCaloriesFilterRoute.name,
+        _i27.RouteConfig(NotificationRoute.name, path: '/notification-page'),
+        _i27.RouteConfig(SecurityRoute.name, path: '/security-page'),
+        _i27.RouteConfig(TermsofUsageRoute.name, path: '/termsof-usage-page'),
+        _i27.RouteConfig(RecipeFilternRoute.name, path: '/recipe-filtern-page'),
+        _i27.RouteConfig(RecipeCaloriesFilterRoute.name,
             path: '/recipe-calories-filter-page'),
-        _i26.RouteConfig(RecipeTypFilterRoute.name,
+        _i27.RouteConfig(RecipeTypFilterRoute.name,
             path: '/recipe-typ-filter-page'),
-        _i26.RouteConfig(RecipeTimeFilterRoute.name,
+        _i27.RouteConfig(RecipeTimeFilterRoute.name,
             path: '/recipe-time-filter-page'),
-        _i26.RouteConfig(RecipeDetailslookedRoute.name,
+        _i27.RouteConfig(RecipeDetailslookedRoute.name,
             path: '/recipe-detailslooked-page'),
-        _i26.RouteConfig(RecipeDetailsunlookedRoute.name,
-            path: '/recipe-detailsunlooked-page')
+        _i27.RouteConfig(RecipeDetailsunlookedRoute.name,
+            path: '/recipe-detailsunlooked-page'),
+        _i27.RouteConfig(EditAccountRoute.name, path: '/edit-account-page')
       ];
 }
 
 /// generated route for
 /// [_i1.LoginPage]
-class LoginRoute extends _i26.PageRouteInfo<void> {
+class LoginRoute extends _i27.PageRouteInfo<void> {
   const LoginRoute() : super(LoginRoute.name, path: '/');
 
   static const String name = 'LoginRoute';
@@ -241,7 +249,7 @@ class LoginRoute extends _i26.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i2.AfterLoginPage]
-class AfterLoginRoute extends _i26.PageRouteInfo<AfterLoginRouteArgs> {
+class AfterLoginRoute extends _i27.PageRouteInfo<AfterLoginRouteArgs> {
   AfterLoginRoute({required int selectedItem})
       : super(AfterLoginRoute.name,
             path: '/after-login-page',
@@ -263,7 +271,7 @@ class AfterLoginRouteArgs {
 
 /// generated route for
 /// [_i3.PointHistoryPage]
-class PointHistoryRoute extends _i26.PageRouteInfo<void> {
+class PointHistoryRoute extends _i27.PageRouteInfo<void> {
   const PointHistoryRoute()
       : super(PointHistoryRoute.name, path: '/point-history-page');
 
@@ -272,7 +280,7 @@ class PointHistoryRoute extends _i26.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i4.RewardPage]
-class RewardRoute extends _i26.PageRouteInfo<void> {
+class RewardRoute extends _i27.PageRouteInfo<void> {
   const RewardRoute() : super(RewardRoute.name, path: '/reward-page');
 
   static const String name = 'RewardRoute';
@@ -281,8 +289,8 @@ class RewardRoute extends _i26.PageRouteInfo<void> {
 /// generated route for
 /// [_i5.FavRecipeDetailsPage]
 class FavRecipeDetailsRoute
-    extends _i26.PageRouteInfo<FavRecipeDetailsRouteArgs> {
-  FavRecipeDetailsRoute({required _i28.Recipe recipe})
+    extends _i27.PageRouteInfo<FavRecipeDetailsRouteArgs> {
+  FavRecipeDetailsRoute({required _i29.Recipe recipe})
       : super(FavRecipeDetailsRoute.name,
             path: '/fav-recipe-details-page',
             args: FavRecipeDetailsRouteArgs(recipe: recipe));
@@ -293,7 +301,7 @@ class FavRecipeDetailsRoute
 class FavRecipeDetailsRouteArgs {
   const FavRecipeDetailsRouteArgs({required this.recipe});
 
-  final _i28.Recipe recipe;
+  final _i29.Recipe recipe;
 
   @override
   String toString() {
@@ -303,7 +311,7 @@ class FavRecipeDetailsRouteArgs {
 
 /// generated route for
 /// [_i6.FavFilternPage]
-class FavFilternRoute extends _i26.PageRouteInfo<FavFilternRouteArgs> {
+class FavFilternRoute extends _i27.PageRouteInfo<FavFilternRouteArgs> {
   FavFilternRoute({Function? callbackFunction})
       : super(FavFilternRoute.name,
             path: '/fav-filtern-page',
@@ -325,7 +333,7 @@ class FavFilternRouteArgs {
 
 /// generated route for
 /// [_i7.CaloriesFilterPage]
-class CaloriesFilterRoute extends _i26.PageRouteInfo<CaloriesFilterRouteArgs> {
+class CaloriesFilterRoute extends _i27.PageRouteInfo<CaloriesFilterRouteArgs> {
   CaloriesFilterRoute({Function? callbackFunction})
       : super(CaloriesFilterRoute.name,
             path: '/calories-filter-page',
@@ -348,7 +356,7 @@ class CaloriesFilterRouteArgs {
 /// generated route for
 /// [_i8.FavRecipeTypFilterPage]
 class FavRecipeTypFilterRoute
-    extends _i26.PageRouteInfo<FavRecipeTypFilterRouteArgs> {
+    extends _i27.PageRouteInfo<FavRecipeTypFilterRouteArgs> {
   FavRecipeTypFilterRoute({Function? callbackFunction})
       : super(FavRecipeTypFilterRoute.name,
             path: '/fav-recipe-typ-filter-page',
@@ -371,7 +379,7 @@ class FavRecipeTypFilterRouteArgs {
 
 /// generated route for
 /// [_i9.TimeFilterPage]
-class TimeFilterRoute extends _i26.PageRouteInfo<TimeFilterRouteArgs> {
+class TimeFilterRoute extends _i27.PageRouteInfo<TimeFilterRouteArgs> {
   TimeFilterRoute({Function? callbackFunction})
       : super(TimeFilterRoute.name,
             path: '/time-filter-page',
@@ -393,7 +401,7 @@ class TimeFilterRouteArgs {
 
 /// generated route for
 /// [_i10.WeeklyGoalSetPage]
-class WeeklyGoalSetRoute extends _i26.PageRouteInfo<void> {
+class WeeklyGoalSetRoute extends _i27.PageRouteInfo<void> {
   const WeeklyGoalSetRoute()
       : super(WeeklyGoalSetRoute.name, path: '/weekly-goal-set-page');
 
@@ -402,7 +410,7 @@ class WeeklyGoalSetRoute extends _i26.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i11.RegistrationPage]
-class RegistrationRoute extends _i26.PageRouteInfo<void> {
+class RegistrationRoute extends _i27.PageRouteInfo<void> {
   const RegistrationRoute()
       : super(RegistrationRoute.name, path: '/registration-page');
 
@@ -411,7 +419,7 @@ class RegistrationRoute extends _i26.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i12.FirstLoginPage]
-class FirstLoginRoute extends _i26.PageRouteInfo<void> {
+class FirstLoginRoute extends _i27.PageRouteInfo<void> {
   const FirstLoginRoute()
       : super(FirstLoginRoute.name, path: '/first-login-page');
 
@@ -420,7 +428,7 @@ class FirstLoginRoute extends _i26.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i13.OptionconfigPage]
-class OptionconfigRoute extends _i26.PageRouteInfo<void> {
+class OptionconfigRoute extends _i27.PageRouteInfo<void> {
   const OptionconfigRoute()
       : super(OptionconfigRoute.name, path: '/optionconfig-page');
 
@@ -429,7 +437,7 @@ class OptionconfigRoute extends _i26.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i14.TriumphPage]
-class TriumphRoute extends _i26.PageRouteInfo<void> {
+class TriumphRoute extends _i27.PageRouteInfo<void> {
   const TriumphRoute() : super(TriumphRoute.name, path: '/triumph-page');
 
   static const String name = 'TriumphRoute';
@@ -437,7 +445,7 @@ class TriumphRoute extends _i26.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i15.RankingPage]
-class RankingRoute extends _i26.PageRouteInfo<void> {
+class RankingRoute extends _i27.PageRouteInfo<void> {
   const RankingRoute() : super(RankingRoute.name, path: '/ranking-page');
 
   static const String name = 'RankingRoute';
@@ -445,7 +453,7 @@ class RankingRoute extends _i26.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i16.AccountDetailsPage]
-class AccountDetailsRoute extends _i26.PageRouteInfo<void> {
+class AccountDetailsRoute extends _i27.PageRouteInfo<void> {
   const AccountDetailsRoute()
       : super(AccountDetailsRoute.name, path: '/account-details-page');
 
@@ -454,7 +462,7 @@ class AccountDetailsRoute extends _i26.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i17.NotificationPage]
-class NotificationRoute extends _i26.PageRouteInfo<void> {
+class NotificationRoute extends _i27.PageRouteInfo<void> {
   const NotificationRoute()
       : super(NotificationRoute.name, path: '/notification-page');
 
@@ -463,7 +471,7 @@ class NotificationRoute extends _i26.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i18.SecurityPage]
-class SecurityRoute extends _i26.PageRouteInfo<void> {
+class SecurityRoute extends _i27.PageRouteInfo<void> {
   const SecurityRoute() : super(SecurityRoute.name, path: '/security-page');
 
   static const String name = 'SecurityRoute';
@@ -471,7 +479,7 @@ class SecurityRoute extends _i26.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i19.TermsofUsagePage]
-class TermsofUsageRoute extends _i26.PageRouteInfo<void> {
+class TermsofUsageRoute extends _i27.PageRouteInfo<void> {
   const TermsofUsageRoute()
       : super(TermsofUsageRoute.name, path: '/termsof-usage-page');
 
@@ -480,8 +488,8 @@ class TermsofUsageRoute extends _i26.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i20.RecipeFilternPage]
-class RecipeFilternRoute extends _i26.PageRouteInfo<RecipeFilternRouteArgs> {
-  RecipeFilternRoute({Function? callbackFunction, List<_i28.Recipe>? list})
+class RecipeFilternRoute extends _i27.PageRouteInfo<RecipeFilternRouteArgs> {
+  RecipeFilternRoute({Function? callbackFunction, List<_i29.Recipe>? list})
       : super(RecipeFilternRoute.name,
             path: '/recipe-filtern-page',
             args: RecipeFilternRouteArgs(
@@ -495,7 +503,7 @@ class RecipeFilternRouteArgs {
 
   final Function? callbackFunction;
 
-  final List<_i28.Recipe>? list;
+  final List<_i29.Recipe>? list;
 
   @override
   String toString() {
@@ -506,9 +514,9 @@ class RecipeFilternRouteArgs {
 /// generated route for
 /// [_i21.RecipeCaloriesFilterPage]
 class RecipeCaloriesFilterRoute
-    extends _i26.PageRouteInfo<RecipeCaloriesFilterRouteArgs> {
+    extends _i27.PageRouteInfo<RecipeCaloriesFilterRouteArgs> {
   RecipeCaloriesFilterRoute(
-      {Function? callbackFunction, List<_i28.Recipe>? list})
+      {Function? callbackFunction, List<_i29.Recipe>? list})
       : super(RecipeCaloriesFilterRoute.name,
             path: '/recipe-calories-filter-page',
             args: RecipeCaloriesFilterRouteArgs(
@@ -522,7 +530,7 @@ class RecipeCaloriesFilterRouteArgs {
 
   final Function? callbackFunction;
 
-  final List<_i28.Recipe>? list;
+  final List<_i29.Recipe>? list;
 
   @override
   String toString() {
@@ -533,8 +541,8 @@ class RecipeCaloriesFilterRouteArgs {
 /// generated route for
 /// [_i22.RecipeTypFilterPage]
 class RecipeTypFilterRoute
-    extends _i26.PageRouteInfo<RecipeTypFilterRouteArgs> {
-  RecipeTypFilterRoute({Function? callbackFunction, List<_i28.Recipe>? list})
+    extends _i27.PageRouteInfo<RecipeTypFilterRouteArgs> {
+  RecipeTypFilterRoute({Function? callbackFunction, List<_i29.Recipe>? list})
       : super(RecipeTypFilterRoute.name,
             path: '/recipe-typ-filter-page',
             args: RecipeTypFilterRouteArgs(
@@ -548,7 +556,7 @@ class RecipeTypFilterRouteArgs {
 
   final Function? callbackFunction;
 
-  final List<_i28.Recipe>? list;
+  final List<_i29.Recipe>? list;
 
   @override
   String toString() {
@@ -559,8 +567,8 @@ class RecipeTypFilterRouteArgs {
 /// generated route for
 /// [_i23.RecipeTimeFilterPage]
 class RecipeTimeFilterRoute
-    extends _i26.PageRouteInfo<RecipeTimeFilterRouteArgs> {
-  RecipeTimeFilterRoute({Function? callbackFunction, List<_i28.Recipe>? list})
+    extends _i27.PageRouteInfo<RecipeTimeFilterRouteArgs> {
+  RecipeTimeFilterRoute({Function? callbackFunction, List<_i29.Recipe>? list})
       : super(RecipeTimeFilterRoute.name,
             path: '/recipe-time-filter-page',
             args: RecipeTimeFilterRouteArgs(
@@ -574,7 +582,7 @@ class RecipeTimeFilterRouteArgs {
 
   final Function? callbackFunction;
 
-  final List<_i28.Recipe>? list;
+  final List<_i29.Recipe>? list;
 
   @override
   String toString() {
@@ -585,8 +593,8 @@ class RecipeTimeFilterRouteArgs {
 /// generated route for
 /// [_i24.RecipeDetailslookedPage]
 class RecipeDetailslookedRoute
-    extends _i26.PageRouteInfo<RecipeDetailslookedRouteArgs> {
-  RecipeDetailslookedRoute({required _i28.Recipe recipe})
+    extends _i27.PageRouteInfo<RecipeDetailslookedRouteArgs> {
+  RecipeDetailslookedRoute({required _i29.Recipe recipe})
       : super(RecipeDetailslookedRoute.name,
             path: '/recipe-detailslooked-page',
             args: RecipeDetailslookedRouteArgs(recipe: recipe));
@@ -597,7 +605,7 @@ class RecipeDetailslookedRoute
 class RecipeDetailslookedRouteArgs {
   const RecipeDetailslookedRouteArgs({required this.recipe});
 
-  final _i28.Recipe recipe;
+  final _i29.Recipe recipe;
 
   @override
   String toString() {
@@ -608,8 +616,8 @@ class RecipeDetailslookedRouteArgs {
 /// generated route for
 /// [_i25.RecipeDetailsunlookedPage]
 class RecipeDetailsunlookedRoute
-    extends _i26.PageRouteInfo<RecipeDetailsunlookedRouteArgs> {
-  RecipeDetailsunlookedRoute({required _i28.Recipe recipe})
+    extends _i27.PageRouteInfo<RecipeDetailsunlookedRouteArgs> {
+  RecipeDetailsunlookedRoute({required _i29.Recipe recipe})
       : super(RecipeDetailsunlookedRoute.name,
             path: '/recipe-detailsunlooked-page',
             args: RecipeDetailsunlookedRouteArgs(recipe: recipe));
@@ -620,10 +628,19 @@ class RecipeDetailsunlookedRoute
 class RecipeDetailsunlookedRouteArgs {
   const RecipeDetailsunlookedRouteArgs({required this.recipe});
 
-  final _i28.Recipe recipe;
+  final _i29.Recipe recipe;
 
   @override
   String toString() {
     return 'RecipeDetailsunlookedRouteArgs{recipe: $recipe}';
   }
+}
+
+/// generated route for
+/// [_i26.EditAccountPage]
+class EditAccountRoute extends _i27.PageRouteInfo<void> {
+  const EditAccountRoute()
+      : super(EditAccountRoute.name, path: '/edit-account-page');
+
+  static const String name = 'EditAccountRoute';
 }

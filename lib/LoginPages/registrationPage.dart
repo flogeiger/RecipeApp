@@ -248,6 +248,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
             .then((value) => {postDetailsToFirestore()})
             .catchError((e) {
           Fluttertoast.showToast(msg: e.message);
+          Preference.shared.setString(Preference.email, email);
         });
       } on FirebaseAuthException catch (error) {
         switch (error.code) {
