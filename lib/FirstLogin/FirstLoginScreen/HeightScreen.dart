@@ -20,6 +20,8 @@ class _HeightScreenState extends State<HeightScreen> {
   int? cmHeight = 20;
   bool unit = true;
 
+  final TextEditingController stepController = new TextEditingController();
+
   @override
   void initState() {
     super.initState();
@@ -30,6 +32,38 @@ class _HeightScreenState extends State<HeightScreen> {
     var fullHeight = MediaQuery.of(context).size.height;
     var fullWidth = MediaQuery.of(context).size.width;
 
+     final stepField = TextFormField(
+      autofocus: false,
+      controller: stepController,
+      keyboardType: TextInputType.number,
+      validator: (value) {
+        if (value!.isEmpty) {
+          return ("Dieses Feld darf nicht Lehr sein, wenn du die Eingabe sichern willst");
+        }
+        if (!RegExp("[a-zA-Z]").hasMatch(value)) {
+          return ("Bitte gib einen Namen an");
+        }
+        return null;
+      },
+      decoration: InputDecoration(
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: Colors.white, width: 2.0),
+          borderRadius: BorderRadius.circular(25.0),
+        ),
+        prefixIcon: Icon(
+          Icons.person,
+          color: Colors.white,
+        ),
+        contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+        hintText: "Schrittelimit",
+        hintStyle: TextStyle(color: Colors.white),
+        border: OutlineInputBorder(
+          borderSide: BorderSide(color: Colors.white, width: 2.0),
+          borderRadius: BorderRadius.circular(25.0),
+        ),
+      ),
+    );
+
     return Container(
       height: fullHeight,
       width: fullWidth,
@@ -37,6 +71,17 @@ class _HeightScreenState extends State<HeightScreen> {
       child: Column(
         mainAxisSize: MainAxisSize.max,
         children: [
+          Container(
+            margin: EdgeInsets.only(top: fullHeight * 0.05),
+            child: Text(
+              "Tägliches Schrittziel",
+              style: TextStyle(
+                  fontWeight: FontWeight.w700,
+                  color: Colors.white,
+                  fontSize: 30),
+            ),
+          ),
+          stepField,
           Container(
             margin: EdgeInsets.only(top: fullHeight * 0.05),
             child: Text(
@@ -91,6 +136,8 @@ class _HeightScreenState extends State<HeightScreen> {
               ),
               onPressed: () {
                 Preference.shared.setInt(Preference.height, cmHeight!);
+                Preference.shared
+                    .setString(Preference.stepsgoal, stepController.text);
                 context.router.push(WeeklyGoalSetRoute());
               },
             ),

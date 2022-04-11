@@ -13,9 +13,20 @@ class AccountDetailsPage extends StatefulWidget {
 
 class _AccountDetailsPageState extends State<AccountDetailsPage> {
   String? filename;
+  String? height;
+  String? weight;
+  String? email;
+  String? stepLimit;
+  String? name;
   @override
   void initState() {
     filename = Preference.shared.getString(Preference.profileImage) ?? '';
+    filename = Preference.shared.getString(Preference.profileImage) ?? '';
+    height = Preference.shared.getInt(Preference.height)!.toString();
+    weight = Preference.shared.getInt(Preference.weight)!.toString();
+    email = Preference.shared.getString(Preference.email)!;
+    stepLimit = Preference.shared.getString(Preference.stepsgoal)!.toString();
+    name = Preference.shared.getString(Preference.name)!;
     super.initState();
   }
 
@@ -108,7 +119,7 @@ class _AccountDetailsPageState extends State<AccountDetailsPage> {
                       width: MediaQuery.of(context).size.width * 0.2,
                     ),
                     Text(
-                      'test',
+                      name!,
                       style: TextStyle(fontSize: 22),
                     ),
                   ],
@@ -135,7 +146,7 @@ class _AccountDetailsPageState extends State<AccountDetailsPage> {
                       width: MediaQuery.of(context).size.width * 0.2,
                     ),
                     Text(
-                      'test',
+                      email!,
                       style: TextStyle(fontSize: 22),
                     ),
                   ],
@@ -172,7 +183,7 @@ class _AccountDetailsPageState extends State<AccountDetailsPage> {
                       width: MediaQuery.of(context).size.width * 0.2,
                     ),
                     Text(
-                      '12000',
+                      stepLimit!,
                       style: TextStyle(fontSize: 22),
                     ),
                   ],
@@ -199,7 +210,7 @@ class _AccountDetailsPageState extends State<AccountDetailsPage> {
                       width: MediaQuery.of(context).size.width * 0.2,
                     ),
                     Text(
-                      '180 cm',
+                      height!,
                       style: TextStyle(fontSize: 22),
                     ),
                   ],
@@ -226,7 +237,7 @@ class _AccountDetailsPageState extends State<AccountDetailsPage> {
                       width: MediaQuery.of(context).size.width * 0.2,
                     ),
                     Text(
-                      '100KG',
+                      weight!,
                       style: TextStyle(fontSize: 22),
                     ),
                   ],

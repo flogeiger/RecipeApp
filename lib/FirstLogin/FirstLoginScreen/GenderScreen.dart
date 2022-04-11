@@ -12,7 +12,7 @@ class GenderScreen extends StatefulWidget {
 class _GenderScreenState extends State<GenderScreen> {
   String? gender = '';
 
-  final TextEditingController stepController = new TextEditingController();
+  final TextEditingController nameController = new TextEditingController();
 
   @override
   void initState() {
@@ -21,10 +21,10 @@ class _GenderScreenState extends State<GenderScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final stepField = TextFormField(
+    final nameField = TextFormField(
       autofocus: false,
-      controller: stepController,
-      keyboardType: TextInputType.number,
+      controller: nameController,
+      keyboardType: TextInputType.name,
       validator: (value) {
         if (value!.isEmpty) {
           return ("Dieses Feld darf nicht Lehr sein, wenn du die Eingabe sichern willst");
@@ -44,7 +44,7 @@ class _GenderScreenState extends State<GenderScreen> {
           color: Colors.white,
         ),
         contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-        hintText: "Schrittelimit",
+        hintText: "Name",
         hintStyle: TextStyle(color: Colors.white),
         border: OutlineInputBorder(
           borderSide: BorderSide(color: Colors.white, width: 2.0),
@@ -54,55 +54,43 @@ class _GenderScreenState extends State<GenderScreen> {
     );
     var fullHeight = MediaQuery.of(context).size.height;
     var fullWidth = MediaQuery.of(context).size.width;
-    return Container(
-      height: fullHeight,
-      width: fullWidth,
-      color: Theme.of(context).secondaryHeaderColor,
-      child: Column(
-        mainAxisSize: MainAxisSize.max,
-        children: [
-          Container(
-            margin: EdgeInsets.only(top: fullHeight * 0.05),
-            child: Text(
-              "Tägliches Schrittziel",
-              style: TextStyle(
-                  fontWeight: FontWeight.w700,
-                  color: Colors.white,
-                  fontSize: 30),
-            ),
-          ),
-          stepField,
-          Container(
-            margin: EdgeInsets.only(top: fullHeight * 0.05),
-            child: Text(
-              "Was ist dein Geschlecht?",
-              style: TextStyle(
-                  fontWeight: FontWeight.w700,
-                  color: Colors.white,
-                  fontSize: 30),
-            ),
-          ),
-          Container(
-            margin: EdgeInsets.only(top: 20),
-            child: Text(
-              "Kalorien & Schrittlängenberechnung\n brauchen",
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontWeight: FontWeight.w400,
-                color: Colors.white,
-                fontSize: 20,
+    return SingleChildScrollView(
+      child: Container(
+        height: fullHeight,
+        width: fullWidth,
+        color: Theme.of(context).secondaryHeaderColor,
+        child: Column(
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            Container(
+              margin: EdgeInsets.only(top: fullHeight * 0.05),
+              child: Text(
+                "Wie heißt du?",
+                style: TextStyle(
+                    fontWeight: FontWeight.w700,
+                    color: Colors.white,
+                    fontSize: 30),
               ),
             ),
-          ),
-          _maleContanier(fullHeight),
-          _femaleContainer(fullHeight),
-          Expanded(
-            child: InkWell(
+            nameField,
+            Container(
+              margin: EdgeInsets.only(top: fullHeight * 0.05),
+              child: Text(
+                "Was ist dein Geschlecht?",
+                style: TextStyle(
+                    fontWeight: FontWeight.w700,
+                    color: Colors.white,
+                    fontSize: 30),
+              ),
+            ),
+            _maleContanier(fullHeight),
+            _femaleContainer(fullHeight),
+            InkWell(
               onTap: () {
                 Preference.shared
                     .setString(Preference.gender, gender.toString());
                 Preference.shared
-                    .setString(Preference.stepsgoal, stepController.text);
+                    .setString(Preference.name, nameController.text);
                 widget.controller!.nextPage(
                     duration: Duration(milliseconds: 100),
                     curve: Curves.easeIn);
@@ -130,8 +118,8 @@ class _GenderScreenState extends State<GenderScreen> {
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

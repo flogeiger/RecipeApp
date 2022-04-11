@@ -37,13 +37,15 @@ class _ChallangeTabBarState extends State<ChallangeTabBar>
   double _percentindactor(int val) {
     double val =
         Preference.shared.getInt(Preference.stepscurrentcount)!.toDouble();
-    int targetSteps = Preference.shared.getInt(Preference.stepsgoal) ?? 12000;
+    String targetSteps =
+        Preference.shared.getString(Preference.stepsgoal) ?? "12000";
     if (val == 0) {
       Preference.shared.setDouble(Preference.percentageindicatorsteps, val);
       return 0.0;
     } else if (val % 200 == 0) {
       Preference.shared.setDouble(Preference.percentageindicatorsteps, val);
-      double result = val / targetSteps;
+      double result = val / double.parse(targetSteps);
+      ;
       return result;
     } else {
       double? oldval =

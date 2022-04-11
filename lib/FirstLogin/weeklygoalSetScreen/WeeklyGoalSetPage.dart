@@ -85,6 +85,59 @@ class _WeeklyGoalSetPageState extends State<WeeklyGoalSetPage> {
                   children: [
                     Container(
                       child: Text(
+                        "Dein Name lautet:".toUpperCase(),
+                        style: TextStyle(
+                            fontWeight: FontWeight.w700,
+                            color: Colors.white,
+                            fontSize: 20),
+                      ),
+                    ),
+                    Container(
+                      child: Padding(
+                        padding: const EdgeInsets.only(bottom: 8.0, top: 5.0),
+                        child: Text(
+                          Preference.shared
+                              .getString(Preference.name)
+                              .toString(),
+                          style: TextStyle(
+                              fontWeight: FontWeight.w500,
+                              color: Colors.white,
+                              fontSize: 16),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            Container(
+              alignment: Alignment.center,
+              margin: EdgeInsets.symmetric(vertical: 15),
+            ),
+            Row(
+              children: [
+                Container(
+                  height: 50,
+                  width: 50,
+                  margin: EdgeInsets.only(left: 20, right: 20),
+                  decoration: BoxDecoration(
+                      gradient: LinearGradient(colors: [
+                        Color(0xffF9CF45),
+                        Color(0xffEE9B1D),
+                      ], begin: Alignment.topLeft, end: Alignment.bottomRight),
+                      borderRadius: BorderRadius.all(Radius.circular(36))),
+                  child: Container(
+                    height: 1,
+                    width: 1,
+                    child: Image.asset("assets/icons/ic_walk.png",
+                        scale: 3.8, color: Colors.white),
+                  ),
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      child: Text(
                         "Dein Geschlecht ist:".toUpperCase(),
                         style: TextStyle(
                             fontWeight: FontWeight.w700,
@@ -98,6 +151,58 @@ class _WeeklyGoalSetPageState extends State<WeeklyGoalSetPage> {
                         child: Text(
                           Preference.shared
                               .getString(Preference.gender)
+                              .toString(),
+                          style: TextStyle(
+                              fontWeight: FontWeight.w500,
+                              color: Colors.white,
+                              fontSize: 16),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            Container(
+              alignment: Alignment.center,
+              margin: EdgeInsets.symmetric(vertical: 15),
+            ),
+            Row(
+              children: [
+                Container(
+                  height: 50,
+                  width: 50,
+                  margin: EdgeInsets.only(left: 20, right: 20),
+                  decoration: BoxDecoration(
+                      gradient: LinearGradient(colors: [
+                        Color(0xffFF5757),
+                        Color(0xffFF3E3F),
+                      ], begin: Alignment.topLeft, end: Alignment.bottomRight),
+                      borderRadius: BorderRadius.all(Radius.circular(36))),
+                  child: Container(
+                      height: 1,
+                      width: 1,
+                      child: Image.asset("assets/icons/ic_run.png",
+                          scale: 3.8, color: Colors.white)),
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      child: Text(
+                        "Dein Schritttagesziel:".toUpperCase(),
+                        style: TextStyle(
+                            fontWeight: FontWeight.w700,
+                            color: Colors.white,
+                            fontSize: 20),
+                      ),
+                    ),
+                    Container(
+                      child: Padding(
+                        padding: const EdgeInsets.only(bottom: 8.0, top: 5.0),
+                        child: Text(
+                          Preference.shared
+                              .getString(Preference.stepsgoal)
                               .toString(),
                           style: TextStyle(
                               fontWeight: FontWeight.w500,
@@ -254,8 +359,6 @@ class _WeeklyGoalSetPageState extends State<WeeklyGoalSetPage> {
           Preference.shared.setBool(Preference.issorted, false);
           Preference.shared.setBool(Preference.isfilterdFav, false);
           Preference.shared.setBool(Preference.issortedFav, false);
-
-          //Preference.shared.setInt(Preference.DISTANCE, distanceKM);
           context.router.replace(AfterLoginRoute(selectedItem: 0));
         },
       ),

@@ -29,7 +29,7 @@ class Preference {
   static const String email = "E-mail";
   static const String stepscurrentcount = "currentcountsteps";
   static const String stepsgoal = "stepsgoal";
-  static const String OLD_TIME = "OLD_TIME";
+  static const String name = "name";
   static const String OLD_DISTANCE = "OLD_DISTANCE";
   static const String OLD_CALORIES = "OLD_CALORIES";
   static const String DATE = "DATE";

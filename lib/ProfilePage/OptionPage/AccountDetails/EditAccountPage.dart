@@ -34,6 +34,7 @@ class _EditAccountPageState extends State<EditAccountPage> {
     emailController.text = Preference.shared.getString(Preference.email)!;
     stepLimitController.text =
         Preference.shared.getString(Preference.stepsgoal)!.toString();
+    nameController.text = Preference.shared.getString(Preference.name)!;
     super.initState();
   }
 

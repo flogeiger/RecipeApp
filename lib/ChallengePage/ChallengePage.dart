@@ -23,7 +23,7 @@ class ChallengePage extends StatefulWidget {
 class _ChallengePageState extends State<ChallengePage> {
   bool isPause = true;
 
-  int? targetSteps;
+  String? targetSteps;
   TextEditingController targetStepController = TextEditingController();
 
   int totalSteps = 0;
@@ -399,7 +399,7 @@ class _ChallengePageState extends State<ChallengePage> {
           showTicks: false,
           showLabels: false,
           minimum: 0,
-          maximum: targetSteps == null ? 6000 : targetSteps!.toDouble(),
+          maximum: targetSteps == null ? 6000 : double.parse(targetSteps!),
           axisLineStyle: AxisLineStyle(
             thickness: 0.19,
             cornerStyle: CornerStyle.bothCurve,
@@ -470,12 +470,13 @@ class _ChallengePageState extends State<ChallengePage> {
   getTodayStepsPercent() {
     var todayDate = getDate(DateTime.now()).toString();
     if (targetSteps == null) {
-      targetSteps = 6000;
+      targetSteps = "6000";
     }
     for (int i = 0; i < weekDates.length; i++) {
       if (todayDate == weekDates[i]) {
         if (!mounted) {
-          double value = currentStepCount!.toDouble() / targetSteps!.toDouble();
+          double value =
+              currentStepCount!.toDouble() / double.parse(targetSteps!);
           if (value <= 1.0) {
             if (stepsPercentValue.isNotEmpty) {
               stepsPercentValue[i] = value;
@@ -486,7 +487,7 @@ class _ChallengePageState extends State<ChallengePage> {
         } else {
           setState(() {
             double value =
-                currentStepCount!.toDouble() / targetSteps!.toDouble();
+                currentStepCount!.toDouble() / double.parse(targetSteps!);
             if (value <= 1.0) {
               if (stepsPercentValue.isNotEmpty) {
                 stepsPercentValue[i] = value;
@@ -501,10 +502,10 @@ class _ChallengePageState extends State<ChallengePage> {
   }
 
   getPreference() {
-    targetSteps = Preference.shared.getInt(Preference.stepsgoal) ?? 12000;
+    targetSteps = Preference.shared.getString(Preference.stepsgoal) ?? "12000";
     currentStepCount =
         Preference.shared.getInt(Preference.stepscurrentcount) ?? 0;
-    oldTime = Preference.shared.getInt(Preference.OLD_TIME) ?? 0;
+    //oldTime = Preference.shared.getInt(Preference.OLD_TIME) ?? 0;
     duration = Preference.shared.getString(Preference.DURATION) ?? "00h 0";
     distance = Preference.shared.getDouble(Preference.OLD_DISTANCE) ?? 0;
     calories = Preference.shared.getDouble(Preference.OLD_CALORIES) ?? 0;
