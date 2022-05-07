@@ -29,89 +29,97 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.only(
-            bottomRight: Radius.circular(40),
-            bottomLeft: Radius.circular(40),
-          ),
-          color: Theme.of(context).secondaryHeaderColor),
-      margin: EdgeInsets.only(bottom: 200),
-      child: Center(
-        child: Column(
-          children: <Widget>[
-            SizedBox(
-              height: 80,
+    return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        title: Text('Profil'),
+        backgroundColor: Theme.of(context).secondaryHeaderColor,
+        centerTitle: true,
+      ),
+      body: Container(
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.only(
+              bottomRight: Radius.circular(40),
+              bottomLeft: Radius.circular(40),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                GestureDetector(
+            color: Theme.of(context).secondaryHeaderColor),
+        margin: EdgeInsets.only(bottom: 200),
+        child: Center(
+          child: Column(
+            children: <Widget>[
+              SizedBox(
+                height: 80,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  GestureDetector(
+                      onTap: () {
+                        context.router.push(TriumphRoute());
+                      },
+                      child: CostumeOptionPoint(
+                        Icons.military_tech_outlined,
+                        'triumph',
+                        Colors.white,
+                      )),
+                  SizedBox(
+                    width: 20,
+                  ),
+                  InkWell(
+                    onTap: (() async {
+                      await Helper.getFromGallery(profile);
+                      setState(() {});
+                    }),
+                    child: CircleAvatar(
+                      radius: 80,
+                      backgroundColor: Colors.grey,
+                      child: filename == ''
+                          ? CircleAvatar(
+                              radius: 77,
+                              backgroundColor: Colors.white,
+                              child: Icon(
+                                Icons.people_alt_outlined,
+                                color: Theme.of(context).primaryColor,
+                                size: 50,
+                              ),
+                            )
+                          : CircleAvatar(
+                              radius: 77,
+                              backgroundColor: Colors.white,
+                              backgroundImage: FileImage(File(Preference.shared
+                                  .getString(Preference.profileImage)!)),
+                            ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 20,
+                  ),
+                  GestureDetector(
                     onTap: () {
-                      context.router.push(TriumphRoute());
+                      context.router.push(OptionconfigRoute());
                     },
                     child: CostumeOptionPoint(
-                      Icons.military_tech_outlined,
-                      'triumph',
+                      LineAwesomeIcons.cog,
+                      'options',
                       Colors.white,
-                    )),
-                SizedBox(
-                  width: 20,
-                ),
-                InkWell(
-                  onTap: (() async {
-                    await Helper.getFromGallery(profile);
-                    setState(() {});
-                  }),
-                  child: CircleAvatar(
-                    radius: 80,
-                    backgroundColor: Colors.grey,
-                    child: filename == ''
-                        ? CircleAvatar(
-                            radius: 77,
-                            backgroundColor: Colors.white,
-                            child: Icon(
-                              Icons.people_alt_outlined,
-                              color: Theme.of(context).primaryColor,
-                              size: 50,
-                            ),
-                          )
-                        : CircleAvatar(
-                            radius: 77,
-                            backgroundColor: Colors.white,
-                            backgroundImage: FileImage(File(Preference.shared
-                                .getString(Preference.profileImage)!)),
-                          ),
+                    ),
                   ),
-                ),
-                SizedBox(
-                  width: 20,
-                ),
-                GestureDetector(
+                ],
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              GestureDetector(
                   onTap: () {
-                    context.router.push(OptionconfigRoute());
+                    context.router.push(RankingRoute());
                   },
                   child: CostumeOptionPoint(
-                    LineAwesomeIcons.cog,
-                    'options',
+                    LineAwesomeIcons.trophy,
+                    'ranking',
                     Colors.white,
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            GestureDetector(
-                onTap: () {
-                  context.router.push(RankingRoute());
-                },
-                child: CostumeOptionPoint(
-                  LineAwesomeIcons.trophy,
-                  'ranking',
-                  Colors.white,
-                )),
-          ],
+                  )),
+            ],
+          ),
         ),
       ),
     );

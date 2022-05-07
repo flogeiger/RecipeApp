@@ -11,11 +11,38 @@ class WeightScreen extends StatefulWidget {
 }
 
 class _WeightScreenState extends State<WeightScreen> {
-  int? weight = 1;
+  int? weight = 70;
 
   @override
   void initState() {
     super.initState();
+  }
+
+  showAlertDialog(BuildContext ctx) {
+    Widget cancelButton = TextButton(
+      onPressed: () {
+        Navigator.pop(context);
+      },
+      child: Text('Abbrechen'),
+    );
+    Widget continueButton = TextButton(
+      onPressed: () async {
+        widget.controller!.nextPage(
+            duration: Duration(milliseconds: 100), curve: Curves.easeIn);
+        Navigator.pop(context);
+      },
+      child: Text('ok'),
+    );
+    AlertDialog alert = AlertDialog(
+      title: Text('Information'),
+      content: Text('Ist das Gewicht von $weight wirklich richtig?'),
+      actions: [cancelButton, continueButton],
+    );
+    showDialog(
+        context: context,
+        builder: (BuildContext cont) {
+          return alert;
+        });
   }
 
   @override
@@ -57,9 +84,7 @@ class _WeightScreenState extends State<WeightScreen> {
             child: InkWell(
               onTap: () {
                 Preference.shared.setInt(Preference.weight, weight!);
-                widget.controller!.nextPage(
-                    duration: Duration(milliseconds: 100),
-                    curve: Curves.easeIn);
+                showAlertDialog(context);
               },
               child: Container(
                 margin: EdgeInsets.only(
@@ -142,9 +167,9 @@ class _WeightScreenState extends State<WeightScreen> {
                   background: Colors.transparent,
                 ),
                 looping: true,
-                scrollController: FixedExtentScrollController(initialItem: 0),
+                scrollController: FixedExtentScrollController(initialItem: 69),
                 onSelectedItemChanged: (value) {
-                  weight = value;
+                  weight = value + 1;
                   setState(() {
                     Preference.shared.setInt(Preference.weight, weight!);
                   });

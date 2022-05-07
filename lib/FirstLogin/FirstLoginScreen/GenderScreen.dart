@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:sample/FirstLogin/weeklygoalSetScreen/GradientButtonSmall.dart';
 import 'package:sample/utils/Preference.dart';
+import 'CostumeToast.dart';
 
 class GenderScreen extends StatefulWidget {
   final PageController? controller;
@@ -87,13 +89,28 @@ class _GenderScreenState extends State<GenderScreen> {
             _femaleContainer(fullHeight),
             InkWell(
               onTap: () {
-                Preference.shared
-                    .setString(Preference.gender, gender.toString());
-                Preference.shared
-                    .setString(Preference.name, nameController.text);
-                widget.controller!.nextPage(
-                    duration: Duration(milliseconds: 100),
-                    curve: Curves.easeIn);
+                if (gender == "" || nameController.text.isEmpty) {
+                  if (gender == "" && nameController.text.isNotEmpty) {
+                    CostumeToast.buildToast(
+                        'Bitte geben Sie ihr Geschlecht an!',
+                        Theme.of(context).secondaryHeaderColor);
+                  } else if (nameController.text.isEmpty && gender != '') {
+                    CostumeToast.buildToast('Bitte geben Sie ihren Namen an!',
+                        Theme.of(context).secondaryHeaderColor);
+                  } else {
+                    CostumeToast.buildToast(
+                        'Bitte geben Sie ihren Namen und ihr Geschlecht an!',
+                        Theme.of(context).secondaryHeaderColor);
+                  }
+                } else {
+                  Preference.shared
+                      .setString(Preference.gender, gender.toString());
+                  Preference.shared
+                      .setString(Preference.name, nameController.text);
+                  widget.controller!.nextPage(
+                      duration: Duration(milliseconds: 100),
+                      curve: Curves.easeIn);
+                }
               },
               child: Container(
                 margin: EdgeInsets.only(

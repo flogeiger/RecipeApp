@@ -32,6 +32,7 @@ class _HomePageState extends State<HomePage>
     return Scaffold(
       backgroundColor: _backgroundColor,
       appBar: AppBar(
+          automaticallyImplyLeading: false,
           backgroundColor: Theme.of(context).secondaryHeaderColor,
           title: Center(child: Text('Home'))),
       body: SafeArea(

@@ -120,6 +120,7 @@ class _ChallengePageState extends State<ChallengePage> {
         resizeToAvoidBottomInset: true,
         backgroundColor: Theme.of(context).canvasColor,
         appBar: AppBar(
+            automaticallyImplyLeading: false,
             backgroundColor: Theme.of(context).secondaryHeaderColor,
             title: Center(child: Text('Herausforderung'))),
         body: SizedBox(

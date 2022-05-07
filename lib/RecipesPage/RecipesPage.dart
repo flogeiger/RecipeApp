@@ -71,9 +71,11 @@ class _RecipesPageState extends State<RecipesPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
+        centerTitle: true,
         backgroundColor: Theme.of(context).secondaryHeaderColor,
         title: !isSearching
-            ? Center(child: Text('Rezepte'))
+            ? Text('Rezepte')
             : TextField(
                 style: TextStyle(color: Colors.white),
                 onChanged: (String input) {
@@ -113,57 +115,59 @@ class _RecipesPageState extends State<RecipesPage> {
                 ),
         ],
       ),
-      body: FutureBuilder(
-        future: getRecipesfromFirebase(),
-        builder: (BuildContext ctx, AsyncSnapshot snapshot) {
-          switch (snapshot.connectionState) {
-            case ConnectionState.waiting:
-              return Center(child: CircularProgressIndicator());
-            default:
-              if (snapshot.hasError) {
-                return Center(child: Text('Could not load the data!'));
-              } else {
-                return Column(
-                  children: [
-                    Container(
-                      height: MediaQuery.of(context).size.height * 0.08,
-                      width: MediaQuery.of(context).size.width,
-                      child: Row(
-                        children: <Widget>[
-                          Expanded(
-                            child: FilterButton(
-                              callbackFunction: callback,
-                              list: getRecipeList,
-                              firebaselist: firebaseList,
+      body: SingleChildScrollView(
+        child: FutureBuilder(
+          future: getRecipesfromFirebase(),
+          builder: (BuildContext ctx, AsyncSnapshot snapshot) {
+            switch (snapshot.connectionState) {
+              case ConnectionState.waiting:
+                return Center(child: CircularProgressIndicator());
+              default:
+                if (snapshot.hasError) {
+                  return Center(child: Text('Could not load the data!'));
+                } else {
+                  return Column(
+                    children: [
+                      Container(
+                        height: MediaQuery.of(context).size.height * 0.08,
+                        width: MediaQuery.of(context).size.width,
+                        child: Row(
+                          children: <Widget>[
+                            Expanded(
+                              child: FilterButton(
+                                callbackFunction: callback,
+                                list: getRecipeList,
+                                firebaselist: firebaseList,
+                              ),
                             ),
-                          ),
-                          Expanded(
-                            child: SortDropBar(
-                              list: getRecipeList,
-                              callbackFunction: callback,
-                              firebaseList: firebaseList,
+                            Expanded(
+                              child: SortDropBar(
+                                list: getRecipeList,
+                                callbackFunction: callback,
+                                firebaseList: firebaseList,
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                    Container(
-                      color: Colors.white,
-                      height: MediaQuery.of(context).size.height * 0.68,
-                      child: ListView.builder(
-                        physics: BouncingScrollPhysics(),
-                        itemCount: getRecipeList!.length,
-                        itemBuilder: (cxt, index) {
-                          final recipe = getRecipeList![index];
-                          return RecipeInfoSmall(recipe);
-                        },
-                      ),
-                    )
-                  ],
-                );
-              }
-          }
-        },
+                      Container(
+                        color: Colors.white,
+                        height: MediaQuery.of(context).size.height * 0.68,
+                        child: ListView.builder(
+                          physics: BouncingScrollPhysics(),
+                          itemCount: getRecipeList!.length,
+                          itemBuilder: (cxt, index) {
+                            final recipe = getRecipeList![index];
+                            return RecipeInfoSmall(recipe);
+                          },
+                        ),
+                      )
+                    ],
+                  );
+                }
+            }
+          },
+        ),
       ),
     );
   }
