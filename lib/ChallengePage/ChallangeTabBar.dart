@@ -35,8 +35,7 @@ class _ChallangeTabBarState extends State<ChallangeTabBar>
   }
 
   double _percentindactor(int val) {
-    double val =
-        Preference.shared.getInt(Preference.stepscurrentcount)!.toDouble();
+    double val = Preference.shared.getDouble(Preference.stepscurrentcount) ?? 0;
     String targetSteps =
         Preference.shared.getString(Preference.stepsgoal) ?? "12000";
     if (val == 0) {
@@ -405,7 +404,7 @@ class _ChallangeTabBarState extends State<ChallangeTabBar>
                                             width: MediaQuery.of(context)
                                                     .size
                                                     .width *
-                                                0.4,
+                                                0.39,
                                             backgroundColor:
                                                 Theme.of(context).canvasColor,
                                             progressColor:
@@ -414,7 +413,7 @@ class _ChallangeTabBarState extends State<ChallangeTabBar>
                                             lineHeight: 10,
                                             percent: _percentindactor(0),
                                             trailing: Text(
-                                              '10000/10000',
+                                              '1000/10000',
                                               style: TextStyle(
                                                   color: Theme.of(context)
                                                       .canvasColor,

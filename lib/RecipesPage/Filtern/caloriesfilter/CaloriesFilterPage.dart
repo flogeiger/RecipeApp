@@ -148,7 +148,8 @@ class _CaloriesFilterPageState extends State<RecipeCaloriesFilterPage> {
                       ),
                       child: InkWell(
                         onTap: () {
-                          Navigator.pop(context);
+                          context.router
+                              .navigate(AfterLoginRoute(selectedItem: 1));
                         },
                         child: FilterButton(
                           'Anwenden',

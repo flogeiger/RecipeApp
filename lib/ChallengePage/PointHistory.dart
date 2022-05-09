@@ -61,7 +61,9 @@ class PointHistoryPage extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: Text("Tolle SAche"),
+          title: Text("Tolle Sache"),
+          centerTitle: true,
+          backgroundColor: Theme.of(context).secondaryHeaderColor,
         ),
         backgroundColor: Theme.of(context).secondaryHeaderColor,
         body: FutureBuilder(

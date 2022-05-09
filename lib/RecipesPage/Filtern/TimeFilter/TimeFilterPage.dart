@@ -191,7 +191,8 @@ class _TimeFilterPageState extends State<RecipeTimeFilterPage> {
 
                             Preference.shared
                                 .setBool(Preference.isfilterd, true);
-                            Navigator.pop(context);
+                            context.router
+                                .navigate(AfterLoginRoute(selectedItem: 1));
                           }
                         },
                         child: FilterButton(

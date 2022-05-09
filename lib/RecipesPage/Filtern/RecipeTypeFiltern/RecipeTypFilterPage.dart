@@ -198,7 +198,8 @@ class _RecipeTypFilterPageState extends State<RecipeTypFilterPage> {
 
                             Preference.shared
                                 .setBool(Preference.isfilterd, true);
-                            Navigator.pop(context);
+                            context.router
+                                .navigate(AfterLoginRoute(selectedItem: 1));
                           }
                         },
                         child: FilterButton(

@@ -147,7 +147,8 @@ class _TimeFilterPageState extends State<TimeFilterPage> {
                       ),
                       child: InkWell(
                         onTap: () {
-                          Navigator.pop(context);
+                          context.router
+                              .navigate(AfterLoginRoute(selectedItem: 2));
                         },
                         child: FilterButton(
                           'Anwenden',

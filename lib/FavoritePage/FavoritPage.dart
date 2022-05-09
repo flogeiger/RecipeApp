@@ -144,6 +144,7 @@ class _FavoritePageState extends State<FavoritePage> {
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Theme.of(context).secondaryHeaderColor,
+          automaticallyImplyLeading: false,
           title: !isSearching
               ? Center(
                   child: Text('Favoriten'),
