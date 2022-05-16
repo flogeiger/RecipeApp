@@ -6,9 +6,8 @@ import 'package:auto_route/auto_route.dart';
 
 class FavoriteRecipeSmall extends StatefulWidget {
   Recipe recipe;
-  FavoriteRecipeSmall(
-    this.recipe,
-  );
+  Function callBack;
+  FavoriteRecipeSmall(@required this.recipe, @required this.callBack);
   @override
   _FavoritRecipeInfoSmallState createState() => _FavoritRecipeInfoSmallState();
 }
@@ -18,7 +17,8 @@ class _FavoritRecipeInfoSmallState extends State<FavoriteRecipeSmall> {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        context.router.push(FavRecipeDetailsRoute(recipe: widget.recipe));
+        context.router.push(FavRecipeDetailsRoute(
+            recipe: widget.recipe, callBack: widget.callBack));
       },
       child: Container(
         child: Row(

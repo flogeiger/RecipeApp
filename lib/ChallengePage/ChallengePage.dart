@@ -224,7 +224,7 @@ class _ChallengePageState extends State<ChallengePage> {
                   ),
                 ],
               ),
-              ChallangeTabBar(),
+              ChallengeTabBar(),
             ],
           ),
         ),

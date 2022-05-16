@@ -76,7 +76,8 @@ class Routes extends _i27.RootStackRouter {
     FavRecipeDetailsRoute.name: (routeData) {
       final args = routeData.argsAs<FavRecipeDetailsRouteArgs>();
       return _i27.MaterialPageX<dynamic>(
-          routeData: routeData, child: _i5.FavRecipeDetailsPage(args.recipe));
+          routeData: routeData,
+          child: _i5.FavRecipeDetailsPage(args.recipe, args.callBack));
     },
     FavFilternRoute.name: (routeData) {
       final args = routeData.argsAs<FavFilternRouteArgs>(
@@ -290,22 +291,27 @@ class RewardRoute extends _i27.PageRouteInfo<void> {
 /// [_i5.FavRecipeDetailsPage]
 class FavRecipeDetailsRoute
     extends _i27.PageRouteInfo<FavRecipeDetailsRouteArgs> {
-  FavRecipeDetailsRoute({required _i29.Recipe recipe})
+  FavRecipeDetailsRoute(
+      {required _i29.Recipe recipe, required Function callBack})
       : super(FavRecipeDetailsRoute.name,
             path: '/fav-recipe-details-page',
-            args: FavRecipeDetailsRouteArgs(recipe: recipe));
+            args:
+                FavRecipeDetailsRouteArgs(recipe: recipe, callBack: callBack));
 
   static const String name = 'FavRecipeDetailsRoute';
 }
 
 class FavRecipeDetailsRouteArgs {
-  const FavRecipeDetailsRouteArgs({required this.recipe});
+  const FavRecipeDetailsRouteArgs(
+      {required this.recipe, required this.callBack});
 
   final _i29.Recipe recipe;
 
+  final Function callBack;
+
   @override
   String toString() {
-    return 'FavRecipeDetailsRouteArgs{recipe: $recipe}';
+    return 'FavRecipeDetailsRouteArgs{recipe: $recipe, callBack: $callBack}';
   }
 }
 

@@ -3,6 +3,7 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter/material.dart';
 import 'package:sample/models/PagesList.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:sample/utils/Preference.dart';
 
 class AfterLoginPage extends StatefulWidget {
   int _selectedItem;
@@ -17,6 +18,11 @@ class _AfterLoginPageState extends State<AfterLoginPage> {
   @override
   void initState() {
     _pageController = PageController(initialPage: widget._selectedItem);
+    Preference.shared.setInt("dailylogin", 1);
+    int i = Preference.shared.getInt("logincountmonth") ?? 0;
+    int a = Preference.shared.getInt("dailylogin")!;
+    int sum = i + a;
+    Preference.shared.setInt("logincountmonth", sum);
     super.initState();
   }
 

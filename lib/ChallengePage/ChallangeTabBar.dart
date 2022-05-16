@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:sample/utils/Preference.dart';
 
-class ChallangeTabBar extends StatefulWidget {
+class ChallengeTabBar extends StatefulWidget {
   @override
-  _ChallangeTabBarState createState() => _ChallangeTabBarState();
+  _ChallengeTabBarState createState() => _ChallengeTabBarState();
 }
 
-class _ChallangeTabBarState extends State<ChallangeTabBar>
+class _ChallengeTabBarState extends State<ChallengeTabBar>
     with TickerProviderStateMixin {
   TabController? _tabController;
   @override
@@ -16,6 +16,7 @@ class _ChallangeTabBarState extends State<ChallangeTabBar>
     _tabController = new TabController(vsync: this, length: 2);
     _tabController!.addListener(_handleTabSelection);
     Preference.shared.setInt(Preference.checkChallengePage, 1);
+    Preference.shared.setInt("checkChallange", 1);
   }
 
   @override
@@ -35,14 +36,16 @@ class _ChallangeTabBarState extends State<ChallangeTabBar>
   }
 
   double _percentindactor(int val) {
-    double val = Preference.shared.getDouble(Preference.stepscurrentcount) ?? 0;
+    int val = Preference.shared.getInt(Preference.stepscurrentcount) ?? 0;
     String targetSteps =
         Preference.shared.getString(Preference.stepsgoal) ?? "12000";
     if (val == 0) {
-      Preference.shared.setDouble(Preference.percentageindicatorsteps, val);
+      Preference.shared
+          .setDouble(Preference.percentageindicatorsteps, val.toDouble());
       return 0.0;
     } else if (val % 200 == 0) {
-      Preference.shared.setDouble(Preference.percentageindicatorsteps, val);
+      Preference.shared
+          .setDouble(Preference.percentageindicatorsteps, val.toDouble());
       double result = val / double.parse(targetSteps);
       ;
       return result;
@@ -127,96 +130,209 @@ class _ChallangeTabBarState extends State<ChallangeTabBar>
                                   topRight: Radius.circular(10),
                                 ),
                               ),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Padding(
-                                    padding:
-                                        EdgeInsets.only(left: 15, right: 15),
-                                    child: CircleAvatar(
-                                      child: Center(
-                                        child: Icon(
-                                          Icons.receipt_long_outlined,
-                                          color: Theme.of(context)
-                                              .secondaryHeaderColor,
-                                          size: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              0.11,
-                                        ),
-                                      ),
-                                      radius:
-                                          MediaQuery.of(context).size.height *
-                                              0.05,
-                                      backgroundColor:
-                                          Theme.of(context).canvasColor,
-                                    ),
-                                  ),
-                                  Flexible(
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: <Widget>[
+                              child: Preference.shared
+                                          .getInt("checkChallange") !=
+                                      1
+                                  ? Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
                                         Padding(
-                                          padding: const EdgeInsets.only(
-                                            top: 17,
-                                            left: 3,
-                                          ),
-                                          child: Text(
-                                            'Aufgaben',
-                                            style: TextStyle(
-                                              color:
-                                                  Theme.of(context).canvasColor,
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: MediaQuery.of(context)
-                                                      .size
-                                                      .height *
-                                                  0.03,
+                                          padding: EdgeInsets.only(
+                                              left: 15, right: 15),
+                                          child: CircleAvatar(
+                                            child: Center(
+                                              child: Icon(
+                                                Icons.receipt_long_outlined,
+                                                color: Theme.of(context)
+                                                    .secondaryHeaderColor,
+                                                size: MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    0.11,
+                                              ),
                                             ),
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                            top: 5,
-                                            left: 3,
-                                          ),
-                                          child: Text(
-                                            'Überprüfe den Aufgabenstatus',
-                                            style: TextStyle(
-                                              color:
-                                                  Theme.of(context).canvasColor,
-                                            ),
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                              right: 10, top: 5),
-                                          child: LinearPercentIndicator(
-                                            animation: true,
-                                            width: MediaQuery.of(context)
+                                            radius: MediaQuery.of(context)
                                                     .size
-                                                    .width *
-                                                0.4,
+                                                    .height *
+                                                0.05,
                                             backgroundColor:
                                                 Theme.of(context).canvasColor,
-                                            progressColor:
-                                                Theme.of(context).primaryColor,
-                                            animationDuration: 100,
-                                            lineHeight: 10,
-                                            percent: 0.4,
-                                            trailing: Text(
-                                              '0/1',
-                                              style: TextStyle(
-                                                  color: Theme.of(context)
-                                                      .canvasColor),
+                                          ),
+                                        ),
+                                        Flexible(
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: <Widget>[
+                                              Padding(
+                                                padding: const EdgeInsets.only(
+                                                  top: 17,
+                                                  left: 3,
+                                                ),
+                                                child: Text(
+                                                  'Aufgaben',
+                                                  style: TextStyle(
+                                                    color: Theme.of(context)
+                                                        .canvasColor,
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .height *
+                                                            0.03,
+                                                  ),
+                                                ),
+                                              ),
+                                              Padding(
+                                                padding: const EdgeInsets.only(
+                                                  top: 5,
+                                                  left: 3,
+                                                ),
+                                                child: Text(
+                                                  'Überprüfe den Aufgabenstatus',
+                                                  style: TextStyle(
+                                                    color: Theme.of(context)
+                                                        .canvasColor,
+                                                  ),
+                                                ),
+                                              ),
+                                              Padding(
+                                                padding: const EdgeInsets.only(
+                                                    right: 10, top: 5),
+                                                child: LinearPercentIndicator(
+                                                  animation: true,
+                                                  width: MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.4,
+                                                  backgroundColor:
+                                                      Theme.of(context)
+                                                          .canvasColor,
+                                                  progressColor:
+                                                      Theme.of(context)
+                                                          .primaryColor,
+                                                  animationDuration: 100,
+                                                  lineHeight: 10,
+                                                  percent: 0.4,
+                                                  trailing: Text(
+                                                    '0/1',
+                                                    style: TextStyle(
+                                                        color: Theme.of(context)
+                                                            .canvasColor),
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    )
+                                  : Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Padding(
+                                          padding: EdgeInsets.only(
+                                              left: 15, right: 15),
+                                          child: CircleAvatar(
+                                            child: Center(
+                                              child: Icon(
+                                                Icons.receipt_long_outlined,
+                                                color: Theme.of(context)
+                                                    .secondaryHeaderColor,
+                                                size: MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    0.11,
+                                              ),
                                             ),
+                                            radius: MediaQuery.of(context)
+                                                    .size
+                                                    .height *
+                                                0.05,
+                                            backgroundColor:
+                                                Theme.of(context).canvasColor,
+                                          ),
+                                        ),
+                                        Flexible(
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: <Widget>[
+                                              Padding(
+                                                padding: const EdgeInsets.only(
+                                                  top: 17,
+                                                  left: 3,
+                                                ),
+                                                child: Text(
+                                                  'Aufgaben',
+                                                  style: TextStyle(
+                                                    color: Theme.of(context)
+                                                        .canvasColor,
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .height *
+                                                            0.03,
+                                                  ),
+                                                ),
+                                              ),
+                                              Padding(
+                                                padding: const EdgeInsets.only(
+                                                  top: 5,
+                                                  left: 3,
+                                                ),
+                                                child: Text(
+                                                  'Überprüfe den Aufgabenstatus',
+                                                  style: TextStyle(
+                                                    color: Theme.of(context)
+                                                        .canvasColor,
+                                                  ),
+                                                ),
+                                              ),
+                                              Padding(
+                                                padding: const EdgeInsets.only(
+                                                    top: 8, left: 3),
+                                                child: Row(
+                                                  children: [
+                                                    Text(
+                                                      'erledigt!',
+                                                      style: TextStyle(
+                                                          color:
+                                                              Theme.of(context)
+                                                                  .canvasColor),
+                                                    ),
+                                                    CircleAvatar(
+                                                      child: Center(
+                                                        child: Icon(
+                                                          Icons.check,
+                                                          color: Theme.of(
+                                                                  context)
+                                                              .secondaryHeaderColor,
+                                                          size: MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .width *
+                                                              0.04,
+                                                        ),
+                                                      ),
+                                                      radius:
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .height *
+                                                              0.009,
+                                                      backgroundColor:
+                                                          Theme.of(context)
+                                                              .canvasColor,
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ],
                                           ),
                                         ),
                                       ],
                                     ),
-                                  ),
-                                ],
-                              ),
                             ),
                             SizedBox(
                               height: 2,
@@ -535,7 +651,10 @@ class _ChallangeTabBarState extends State<ChallangeTabBar>
                                             lineHeight: 10,
                                             percent: 0.4,
                                             trailing: Text(
-                                              '0/25',
+                                              Preference.shared
+                                                      .getInt("logincountmonth")
+                                                      .toString() +
+                                                  '/25',
                                               style: TextStyle(
                                                   color: Theme.of(context)
                                                       .canvasColor),

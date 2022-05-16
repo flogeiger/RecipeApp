@@ -30,6 +30,9 @@ class Preference {
   static const String stepscurrentcount = "currentcountsteps";
   static const String stepsgoal = "stepsgoal";
   static const String name = "name";
+  static const String checkChallange = "checkChallange";
+  static const String dailylogincount = "logincountmonth";
+  static const String dailylogin = "dailylogin";
   static const String OLD_DISTANCE = "OLD_DISTANCE";
   static const String OLD_CALORIES = "OLD_CALORIES";
   static const String DATE = "DATE";

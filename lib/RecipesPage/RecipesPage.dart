@@ -13,19 +13,22 @@ class RecipesPage extends StatefulWidget {
 class _RecipesPageState extends State<RecipesPage> {
   Future<List<Recipe>> getRecipesfromFirebase() async {
     if (getRecipeList!.isEmpty) {
-      CollectionReference _collectionRef =
-          FirebaseFirestore.instance.collection('Recipes');
+      if (isSearching == false || searchingWord == "") {
+        CollectionReference _collectionRef =
+            FirebaseFirestore.instance.collection('Recipes');
 
-      // Get docs from collection reference
-      QuerySnapshot querySnapshot = await _collectionRef.get();
+        // Get docs from collection reference
+        QuerySnapshot querySnapshot = await _collectionRef.get();
 
-      // Get data from docs and convert map to List
-      final allData = querySnapshot.docs
-          .map((doc) => Recipe.fromJson(doc.data() as Map<String, dynamic>));
-      getRecipeList!.clear();
-      for (var item in allData) {
-        getRecipeList!.add(item);
-        firebaseList!.add(item);
+        // Get data from docs and convert map to List
+        final allData = querySnapshot.docs
+            .map((doc) => Recipe.fromJson(doc.data() as Map<String, dynamic>));
+        firebaseList!.clear();
+        getRecipeList!.clear();
+        for (var item in allData) {
+          getRecipeList!.add(item);
+          firebaseList!.add(item);
+        }
       }
       return getRecipeList!;
     } else {
@@ -41,14 +44,30 @@ class _RecipesPageState extends State<RecipesPage> {
   List<Recipe>? firebaseList = [];
   List<Recipe>? getRecipeList = [];
   bool isSearching = false;
+  String searchingWord = "";
 
   void checksifinputexist(String inp) {
     if (inp == "") {
+      searchingWord = inp;
       getRecipeList!.clear();
       getRecipesfromFirebase();
-    } else {
+    } else if (inp.length > searchingWord.length) {
+      searchingWord = inp;
       getfilterItems(inp);
+    } else if (inp.length < searchingWord.length) {
+      searchingWord = inp;
+      getfilterItemsbackward(inp);
     }
+  }
+
+  void getfilterItemsbackward(String inp) {
+    firebaseList!.forEach((element) {
+      if (element.name!.toLowerCase().contains(inp.toLowerCase())) {
+        if (getRecipeList!.contains(element) == false) {
+          getRecipeList!.add(element);
+        }
+      }
+    });
   }
 
   void getfilterItems(String inp) {
@@ -101,7 +120,6 @@ class _RecipesPageState extends State<RecipesPage> {
                     setState(() {
                       this.isSearching = !this.isSearching;
                       getRecipeList!.clear();
-                      getRecipesfromFirebase();
                     });
                   },
                 )

@@ -46,6 +46,12 @@ class _FavoritePageState extends State<FavoritePage> {
     });
   }
 
+  setStatecallback() async {
+    await getDatafromlokalDatabase(
+        favRecipe(Helper.selectAllDataFromFavtable()));
+    setState(() {});
+  }
+
   Widget buildRecipes(
     BuildContext context,
     Recipe transaction,
@@ -60,7 +66,7 @@ class _FavoritePageState extends State<FavoritePage> {
         right: 20,
       ),
       child: Dismissible(
-        child: FavoriteRecipeSmall(transaction),
+        child: FavoriteRecipeSmall(transaction, setStatecallback),
         direction: DismissDirection.endToStart,
         key: UniqueKey(),
         onDismissed: (direction) {

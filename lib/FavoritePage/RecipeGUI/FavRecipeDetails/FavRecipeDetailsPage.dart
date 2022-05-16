@@ -13,7 +13,8 @@ import 'package:auto_route/auto_route.dart';
 
 class FavRecipeDetailsPage extends StatefulWidget {
   Recipe recipe;
-  FavRecipeDetailsPage(this.recipe);
+  Function callBack;
+  FavRecipeDetailsPage(this.recipe, this.callBack);
   @override
   _RecipeDetailsState createState() => _RecipeDetailsState();
 }
@@ -97,14 +98,15 @@ class _RecipeDetailsState extends State<FavRecipeDetailsPage> {
                           ),
                         ),
                         GestureDetector(
-                          onTap: () {
-                            deleteFavData();
+                          onTap: () async {
+                            await deleteFavData();
                             Fluttertoast.showToast(
                               msg: "Rezept wurde aus den Favoriten entfernt!",
                             );
                             context.router.pop(
                               AfterLoginRoute(selectedItem: 2),
                             );
+                            widget.callBack();
                           },
                           child: Container(
                             child: Icon(
