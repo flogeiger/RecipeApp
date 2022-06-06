@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -17,6 +18,19 @@ class Preference {
   static const String DAILY_REMINDER_TIME = "DAILY_REMINDER_TIME";
   static const String DAILY_REMINDER_REPEAT_DAY = "DAILY_REMINDER_REPEAT_DAY";
   static const String IS_DAILY_REMINDER_ON = "IS_DAILY_REMINDER_ON";
+
+  //challengePage
+
+  static const String checkTodayschallengePage = "challengePageischecked";
+  static const String checkTodayscooking = "didusercookedsomthingtoday";
+  static const String checkTodayskm = "didUserarchivetodayskmgoal";
+  static const String checkchallengePagevisitedcount = "challPagecheckcount";
+  static const String challengePagevisitedcount = "challPagecount";
+  static const String checkcookingcount = "didUserarchiveCookingcount";
+  static const String cookingcount = "cookingrecipescount";
+  static const String kmcount = "kmcount";
+  static const String checkkm = "didUserarchivekmgoal";
+
   static const String profileImage = "imageofProfile";
 
   static const String gender = "gender";
@@ -30,7 +44,6 @@ class Preference {
   static const String stepscurrentcount = "currentcountsteps";
   static const String stepsgoal = "stepsgoal";
   static const String name = "name";
-  static const String checkChallange = "checkChallange";
   static const String dailylogincount = "logincountmonth";
   static const String dailylogin = "dailylogin";
   static const String OLD_DISTANCE = "OLD_DISTANCE";

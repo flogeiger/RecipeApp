@@ -3,9 +3,12 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:pedometer/pedometer.dart';
+import 'package:provider/provider.dart';
 import 'package:sample/ChallengePage/ChallangeTabBar.dart';
 import 'package:sample/ChallengePage/PointHistory.dart';
 import 'package:sample/ChallengePage/RewardPage.dart';
+import 'package:sample/Provider/stepAmountProvider.dart';
+import 'package:sample/services/SavePoints.dart';
 import 'package:sample/utils/Preference.dart';
 import 'package:sample/utils/routes/routes.gr.dart';
 import 'package:stop_watch_timer/stop_watch_timer.dart';
@@ -59,24 +62,14 @@ class _ChallengePageState extends State<ChallengePage> {
   @override
   void initState() {
     getPreference();
-    getisPauseFromPrefs();
     setTime();
     calculateDistance();
-    super.initState();
-  }
-
-  getisPauseFromPrefs() {
-    isPause = Preference.shared.getBool(Preference.IS_PAUSE) ?? true;
-
-    if (isPause == true) {
-      if (currentStepCount! > 0) {
-        currentStepCount = currentStepCount! - 1;
-      } else {
-        currentStepCount = 0;
-      }
-      _stopWatchTimer.onExecute.add(StopWatchExecute.start);
-      countStep();
+    if (Preference.shared.getBool(Preference.checkTodayschallengePage) ==
+        false) {
+      SavePoints.savePoints(10, 'Aufgabenbereich wurde überprüft');
     }
+    Preference.shared.setBool(Preference.checkTodayschallengePage, true);
+    super.initState();
   }
 
   DateTime currentDate = DateTime.now();
@@ -87,28 +80,6 @@ class _ChallengePageState extends State<ChallengePage> {
   Map<String, int> map = {};
 
   List<double> stepsPercentValue = [];
-
-//only for testing
-
-  savingDateinFavRecip() {
-    var date = new DateTime.now().toString();
-
-    var dateParse = DateTime.parse(date);
-
-    var formattedDate = "${dateParse.day}-${dateParse.month}-${dateParse.year}";
-    return formattedDate;
-  }
-
-  savePoints() async {
-    await Helper.insertPoints(
-      PointsData(
-        id: null,
-        pointsAmount: 50,
-        pointusetype: '10000 KM gelaufen',
-        time: savingDateinFavRecip(),
-      ),
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -138,7 +109,6 @@ class _ChallengePageState extends State<ChallengePage> {
                       padding: const EdgeInsets.fromLTRB(20, 0, 10, 0),
                       child: InkWell(
                         onTap: () {
-                          savePoints();
                           context.router.push(PointHistoryRoute());
                         },
                         child: Container(
@@ -350,7 +320,7 @@ class _ChallengePageState extends State<ChallengePage> {
                     currentStepCount = 0;
                   }
                   _stopWatchTimer.onExecute.add(StopWatchExecute.start);
-                  countStep();
+                  countStep(context);
                 } else {
                   _stopWatchTimer.onExecute.add(StopWatchExecute.stop);
                   _stepCountStream!.cancel();
@@ -447,17 +417,21 @@ class _ChallengePageState extends State<ChallengePage> {
     ]);
   }
 
-  countStep() {
+  countStep(BuildContext context) {
     _stepCountStream = Pedometer.stepCountStream.listen((value) async {
       if (!mounted) {
         currentStepCount = currentStepCount! + 1;
         Preference.shared
             .setInt(Preference.stepscurrentcount, currentStepCount!);
+        Provider.of<StepAmountProvider>(context, listen: false)
+            .changeStepCount(currentStepCount!);
       } else {
         setState(() {
           currentStepCount = currentStepCount! + 1;
           Preference.shared
               .setInt(Preference.stepscurrentcount, currentStepCount!);
+          Provider.of<StepAmountProvider>(context, listen: false)
+              .changeStepCount(currentStepCount!);
         });
       }
       calculateDistance();

@@ -359,6 +359,7 @@ class _WeeklyGoalSetPageState extends State<WeeklyGoalSetPage> {
           Preference.shared.setBool(Preference.issorted, false);
           Preference.shared.setBool(Preference.isfilterdFav, false);
           Preference.shared.setBool(Preference.issortedFav, false);
+          Preference.shared.setBool(Preference.checkTodayscooking, false);
           context.router.replace(AfterLoginRoute(selectedItem: 0));
         },
       ),

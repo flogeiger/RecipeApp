@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
+import 'package:provider/provider.dart';
+import 'package:sample/Provider/stepAmountProvider.dart';
 import 'package:sample/utils/Preference.dart';
 
 class ChallengeTabBar extends StatefulWidget {
@@ -15,8 +17,6 @@ class _ChallengeTabBarState extends State<ChallengeTabBar>
     super.initState();
     _tabController = new TabController(vsync: this, length: 2);
     _tabController!.addListener(_handleTabSelection);
-    Preference.shared.setInt(Preference.checkChallengePage, 1);
-    Preference.shared.setInt("checkChallange", 1);
   }
 
   @override
@@ -57,6 +57,7 @@ class _ChallengeTabBarState extends State<ChallengeTabBar>
   }
 
   Widget build(BuildContext context) {
+    int stepcount = Provider.of<StepAmountProvider>(context).stepcount;
     return Column(
       children: [
         SizedBox(
@@ -130,9 +131,9 @@ class _ChallengeTabBarState extends State<ChallengeTabBar>
                                   topRight: Radius.circular(10),
                                 ),
                               ),
-                              child: Preference.shared
-                                          .getInt("checkChallange") !=
-                                      1
+                              child: Preference.shared.getBool(Preference
+                                          .checkTodayschallengePage) ==
+                                      false
                                   ? Row(
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
@@ -345,96 +346,208 @@ class _ChallengeTabBarState extends State<ChallengeTabBar>
                               decoration: BoxDecoration(
                                 color: Theme.of(context).secondaryHeaderColor,
                               ),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Padding(
-                                    padding:
-                                        EdgeInsets.only(left: 15, right: 15),
-                                    child: CircleAvatar(
-                                      child: Center(
-                                        child: Icon(
-                                          Icons.receipt_long_outlined,
-                                          color: Theme.of(context)
-                                              .secondaryHeaderColor,
-                                          size: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              0.11,
-                                        ),
-                                      ),
-                                      radius:
-                                          MediaQuery.of(context).size.height *
-                                              0.05,
-                                      backgroundColor:
-                                          Theme.of(context).canvasColor,
-                                    ),
-                                  ),
-                                  Flexible(
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: <Widget>[
+                              child: Preference.shared.getBool(
+                                          Preference.checkTodayscooking) ==
+                                      false
+                                  ? Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
                                         Padding(
-                                          padding: const EdgeInsets.only(
-                                            top: 17,
-                                            left: 3,
-                                          ),
-                                          child: Text(
-                                            'Rezept',
-                                            style: TextStyle(
-                                              color:
-                                                  Theme.of(context).canvasColor,
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: MediaQuery.of(context)
-                                                      .size
-                                                      .height *
-                                                  0.03,
+                                          padding: EdgeInsets.only(
+                                              left: 15, right: 15),
+                                          child: CircleAvatar(
+                                            child: Center(
+                                              child: Icon(
+                                                Icons.receipt_long_outlined,
+                                                color: Theme.of(context)
+                                                    .secondaryHeaderColor,
+                                                size: MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    0.11,
+                                              ),
                                             ),
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                            top: 5,
-                                            left: 3,
-                                          ),
-                                          child: Text(
-                                            'Koche ein Gericht nach Anleitung',
-                                            style: TextStyle(
-                                              color:
-                                                  Theme.of(context).canvasColor,
-                                            ),
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                              right: 10, top: 5),
-                                          child: LinearPercentIndicator(
-                                            animation: true,
-                                            width: MediaQuery.of(context)
+                                            radius: MediaQuery.of(context)
                                                     .size
-                                                    .width *
-                                                0.4,
+                                                    .height *
+                                                0.05,
                                             backgroundColor:
                                                 Theme.of(context).canvasColor,
-                                            progressColor:
-                                                Theme.of(context).primaryColor,
-                                            animationDuration: 100,
-                                            lineHeight: 10,
-                                            percent: 0.4,
-                                            trailing: Text(
-                                              '0/1',
-                                              style: TextStyle(
-                                                  color: Theme.of(context)
-                                                      .canvasColor),
+                                          ),
+                                        ),
+                                        Flexible(
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: <Widget>[
+                                              Padding(
+                                                padding: const EdgeInsets.only(
+                                                  top: 17,
+                                                  left: 3,
+                                                ),
+                                                child: Text(
+                                                  'Rezept',
+                                                  style: TextStyle(
+                                                    color: Theme.of(context)
+                                                        .canvasColor,
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .height *
+                                                            0.03,
+                                                  ),
+                                                ),
+                                              ),
+                                              Padding(
+                                                padding: const EdgeInsets.only(
+                                                  top: 5,
+                                                  left: 3,
+                                                ),
+                                                child: Text(
+                                                  'Koche ein Gericht nach Anleitung',
+                                                  style: TextStyle(
+                                                    color: Theme.of(context)
+                                                        .canvasColor,
+                                                  ),
+                                                ),
+                                              ),
+                                              Padding(
+                                                padding: const EdgeInsets.only(
+                                                    right: 10, top: 5),
+                                                child: LinearPercentIndicator(
+                                                  animation: true,
+                                                  width: MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.4,
+                                                  backgroundColor:
+                                                      Theme.of(context)
+                                                          .canvasColor,
+                                                  progressColor:
+                                                      Theme.of(context)
+                                                          .primaryColor,
+                                                  animationDuration: 100,
+                                                  lineHeight: 10,
+                                                  trailing: Text(
+                                                    '0/1',
+                                                    style: TextStyle(
+                                                        color: Theme.of(context)
+                                                            .canvasColor),
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    )
+                                  : Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Padding(
+                                          padding: EdgeInsets.only(
+                                              left: 15, right: 15),
+                                          child: CircleAvatar(
+                                            child: Center(
+                                              child: Icon(
+                                                Icons.receipt_long_outlined,
+                                                color: Theme.of(context)
+                                                    .secondaryHeaderColor,
+                                                size: MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    0.11,
+                                              ),
                                             ),
+                                            radius: MediaQuery.of(context)
+                                                    .size
+                                                    .height *
+                                                0.05,
+                                            backgroundColor:
+                                                Theme.of(context).canvasColor,
+                                          ),
+                                        ),
+                                        Flexible(
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: <Widget>[
+                                              Padding(
+                                                padding: const EdgeInsets.only(
+                                                  top: 17,
+                                                  left: 3,
+                                                ),
+                                                child: Text(
+                                                  'Aufgaben',
+                                                  style: TextStyle(
+                                                    color: Theme.of(context)
+                                                        .canvasColor,
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .height *
+                                                            0.03,
+                                                  ),
+                                                ),
+                                              ),
+                                              Padding(
+                                                padding: const EdgeInsets.only(
+                                                  top: 5,
+                                                  left: 3,
+                                                ),
+                                                child: Text(
+                                                  'Koche ein Rezept',
+                                                  style: TextStyle(
+                                                    color: Theme.of(context)
+                                                        .canvasColor,
+                                                  ),
+                                                ),
+                                              ),
+                                              Padding(
+                                                padding: const EdgeInsets.only(
+                                                    top: 8, left: 3),
+                                                child: Row(
+                                                  children: [
+                                                    Text(
+                                                      'erledigt!',
+                                                      style: TextStyle(
+                                                          color:
+                                                              Theme.of(context)
+                                                                  .canvasColor),
+                                                    ),
+                                                    CircleAvatar(
+                                                      child: Center(
+                                                        child: Icon(
+                                                          Icons.check,
+                                                          color: Theme.of(
+                                                                  context)
+                                                              .secondaryHeaderColor,
+                                                          size: MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .width *
+                                                              0.04,
+                                                        ),
+                                                      ),
+                                                      radius:
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .height *
+                                                              0.009,
+                                                      backgroundColor:
+                                                          Theme.of(context)
+                                                              .canvasColor,
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ],
                                           ),
                                         ),
                                       ],
                                     ),
-                                  ),
-                                ],
-                              ),
                             ),
                             SizedBox(
                               height: 2,
@@ -505,7 +618,7 @@ class _ChallengeTabBarState extends State<ChallengeTabBar>
                                             left: 3,
                                           ),
                                           child: Text(
-                                            'Gehe 10.000 Schritte an einem Tag',
+                                            'Gehe ${Preference.shared.getString(Preference.stepsgoal)} Schritte an einem Tag',
                                             style: TextStyle(
                                               color:
                                                   Theme.of(context).canvasColor,
@@ -529,7 +642,7 @@ class _ChallengeTabBarState extends State<ChallengeTabBar>
                                             lineHeight: 10,
                                             percent: _percentindactor(0),
                                             trailing: Text(
-                                              '1000/10000',
+                                              '$stepcount/${Preference.shared.getString(Preference.stepsgoal)}',
                                               style: TextStyle(
                                                   color: Theme.of(context)
                                                       .canvasColor,

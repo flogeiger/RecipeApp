@@ -75,7 +75,9 @@ class _AfterLoginPageState extends State<AfterLoginPage> {
               ],
               currentIndex: widget._selectedItem,
               onTap: (int index) {
-                this._pageController!.jumpToPage(index);
+                setState(() {
+                  this._pageController!.jumpToPage(index);
+                });
               },
               type: BottomNavigationBarType.fixed,
               selectedItemColor: Theme.of(context).secondaryHeaderColor,

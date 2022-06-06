@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:sample/models/Recipe.dart';
+import 'package:sample/services/SavePoints.dart';
+
+import '../../../../utils/Preference.dart';
 
 class CostumeStepper extends StatefulWidget {
   Recipe recipe;
@@ -22,11 +25,48 @@ class _CostumeStepperState extends State<CostumeStepper> {
   List<Step>? stepList() {
     _steps = <Step>[];
     for (var i = 0; i < widget.recipe.preparationsteps!.length; i++) {
-      Step step = new Step(
-          title: Text('Zubereitungsschritt: ' + (i + 1).toString()),
-          content: Text(widget.recipe.preparationsteps![i]),
-          isActive: i <= _current ? true : false,
-          state: StepState.complete);
+      Step? step;
+      if (widget.recipe.preparationsteps!.length - 1 == i) {
+        step = new Step(
+            title: Text('Der Letzte Schritt'),
+            content: Column(
+              children: [
+                Text(
+                  widget.recipe.preparationsteps![i],
+                ),
+                InkWell(
+                  onTap: () {
+                    SavePoints.savePoints(30, 'Gericht wurde zubereitet');
+
+                    setState(() {
+                      Preference.shared.setInt(Preference.cookingcount, 1);
+                      Preference.shared
+                          .setBool(Preference.checkTodayscooking, true);
+                    });
+                  },
+                  child: Container(
+                    color: Colors.black,
+                    height: 40,
+                    width: 100,
+                    child: Center(
+                      child: Text(
+                        "finish",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
+                  ),
+                )
+              ],
+            ),
+            isActive: i <= _current ? true : false,
+            state: StepState.complete);
+      } else {
+        step = new Step(
+            title: Text('Zubereitungsschritt: ' + (i + 1).toString()),
+            content: Text(widget.recipe.preparationsteps![i]),
+            isActive: i <= _current ? true : false,
+            state: StepState.complete);
+      }
 
       _steps!.add(step);
     }

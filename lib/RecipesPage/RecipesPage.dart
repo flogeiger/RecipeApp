@@ -171,14 +171,21 @@ class _RecipesPageState extends State<RecipesPage> {
                       Container(
                         color: Colors.white,
                         height: MediaQuery.of(context).size.height * 0.68,
-                        child: ListView.builder(
-                          physics: BouncingScrollPhysics(),
-                          itemCount: getRecipeList!.length,
-                          itemBuilder: (cxt, index) {
-                            final recipe = getRecipeList![index];
-                            return RecipeInfoSmall(recipe);
-                          },
-                        ),
+                        child: getRecipeList!.length != 0
+                            ? ListView.builder(
+                                physics: BouncingScrollPhysics(),
+                                itemCount: getRecipeList!.length,
+                                itemBuilder: (cxt, index) {
+                                  final recipe = getRecipeList![index];
+                                  return RecipeInfoSmall(recipe);
+                                },
+                              )
+                            : Container(
+                                child: Center(
+                                  child: Text(
+                                      'Text und Icon muss noch erstellt werden'),
+                                ),
+                              ),
                       )
                     ],
                   );
