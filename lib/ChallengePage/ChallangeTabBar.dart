@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:provider/provider.dart';
+import 'package:sample/Provider/CookingRecipesMonthAmountProvider.dart';
+import 'package:sample/Provider/StepMonthAmountProvider.dart';
+import 'package:sample/Provider/loginmonthAmountProvider.dart';
 import 'package:sample/Provider/stepAmountProvider.dart';
 import 'package:sample/utils/Preference.dart';
 
@@ -37,8 +40,7 @@ class _ChallengeTabBarState extends State<ChallengeTabBar>
 
   double _percentindactor(int val) {
     int val = Preference.shared.getInt(Preference.stepscurrentcount) ?? 0;
-    String targetSteps =
-        Preference.shared.getString(Preference.stepsgoal) ?? "12000";
+    String targetSteps = Preference.shared.getString(Preference.stepsgoal)!;
     if (val == 0) {
       Preference.shared
           .setDouble(Preference.percentageindicatorsteps, val.toDouble());
@@ -56,8 +58,70 @@ class _ChallengeTabBarState extends State<ChallengeTabBar>
     }
   }
 
+  int checkifStepcountzero(int stepcount) {
+    int currentstep =
+        Preference.shared.getInt(Preference.stepscurrentcount) ?? 0;
+    if (stepcount == 0) {
+      if (currentstep == 0) {
+        return 0;
+      } else {
+        return currentstep;
+      }
+    } else {
+      return stepcount;
+    }
+  }
+
+  int checkifLogincountzero(int logincount) {
+    int currentlogincount =
+        Preference.shared.getInt(Preference.logincount) ?? 0;
+    if (logincount == 0) {
+      if (currentlogincount == 0) {
+        return 0;
+      } else {
+        return currentlogincount;
+      }
+    } else {
+      return logincount;
+    }
+  }
+
+  int checkifCookingRecipecountzero(int recipeMonthCount) {
+    int currentCookingRecipecount =
+        Preference.shared.getInt(Preference.cookingcount) ?? 0;
+    if (recipeMonthCount == 0) {
+      if (currentCookingRecipecount == 0) {
+        return 0;
+      } else {
+        return currentCookingRecipecount;
+      }
+    } else {
+      return recipeMonthCount;
+    }
+  }
+
+  int checkifStepMonthcountzero(int stepMonthcount) {
+    int currentstepMonthcount =
+        Preference.shared.getInt(Preference.stepMonthcount) ?? 0;
+    if (stepMonthcount == 0) {
+      if (currentstepMonthcount == 0) {
+        return 0;
+      } else {
+        return currentstepMonthcount;
+      }
+    } else {
+      return stepMonthcount;
+    }
+  }
+
   Widget build(BuildContext context) {
     int stepcount = Provider.of<StepAmountProvider>(context).stepcount;
+    int stepMonthcount =
+        Provider.of<StepMonthAmountProvider>(context).stepcount;
+    int loginMonthcount =
+        Provider.of<LoginMonthAmountProvider>(context).logincount;
+    int recipeMonthCount =
+        Provider.of<CookingRecipesMonthAmountProvider>(context).cookingcount;
     return Column(
       children: [
         SizedBox(
@@ -131,8 +195,8 @@ class _ChallengeTabBarState extends State<ChallengeTabBar>
                                   topRight: Radius.circular(10),
                                 ),
                               ),
-                              child: Preference.shared.getBool(Preference
-                                          .checkTodayschallengePage) ==
+                              child: Preference.shared.getBool(
+                                          Preference.checkTodayslogin) ==
                                       false
                                   ? Row(
                                       mainAxisSize: MainAxisSize.min,
@@ -642,7 +706,7 @@ class _ChallengeTabBarState extends State<ChallengeTabBar>
                                             lineHeight: 10,
                                             percent: _percentindactor(0),
                                             trailing: Text(
-                                              '$stepcount/${Preference.shared.getString(Preference.stepsgoal)}',
+                                              '${checkifStepcountzero(stepcount)}/${Preference.shared.getString(Preference.stepsgoal)}',
                                               style: TextStyle(
                                                   color: Theme.of(context)
                                                       .canvasColor,
@@ -762,12 +826,9 @@ class _ChallengeTabBarState extends State<ChallengeTabBar>
                                                 Theme.of(context).primaryColor,
                                             animationDuration: 100,
                                             lineHeight: 10,
-                                            percent: 0.4,
+                                            percent: 0.1,
                                             trailing: Text(
-                                              Preference.shared
-                                                      .getInt("logincountmonth")
-                                                      .toString() +
-                                                  '/25',
+                                              '${checkifLogincountzero(loginMonthcount)} /25',
                                               style: TextStyle(
                                                   color: Theme.of(context)
                                                       .canvasColor),
@@ -845,7 +906,7 @@ class _ChallengeTabBarState extends State<ChallengeTabBar>
                                             left: 3,
                                           ),
                                           child: Text(
-                                            'Koche 20 Gerichte nach Anleitung',
+                                            'Koche 40 Gerichte nach Anleitung',
                                             style: TextStyle(
                                               color:
                                                   Theme.of(context).canvasColor,
@@ -869,7 +930,7 @@ class _ChallengeTabBarState extends State<ChallengeTabBar>
                                             lineHeight: 10,
                                             percent: 0.4,
                                             trailing: Text(
-                                              '0/20',
+                                              '${checkifCookingRecipecountzero(recipeMonthCount)}/20',
                                               style: TextStyle(
                                                   color: Theme.of(context)
                                                       .canvasColor),
@@ -975,7 +1036,7 @@ class _ChallengeTabBarState extends State<ChallengeTabBar>
                                             lineHeight: 10,
                                             percent: 0.4,
                                             trailing: Text(
-                                              '0/500000',
+                                              '${checkifStepMonthcountzero(stepMonthcount)}/500000',
                                               style: TextStyle(
                                                   color: Theme.of(context)
                                                       .canvasColor),

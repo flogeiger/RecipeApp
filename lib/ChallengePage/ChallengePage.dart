@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:sample/ChallengePage/ChallangeTabBar.dart';
 import 'package:sample/ChallengePage/PointHistory.dart';
 import 'package:sample/ChallengePage/RewardPage.dart';
+import 'package:sample/Provider/StepMonthAmountProvider.dart';
 import 'package:sample/Provider/stepAmountProvider.dart';
 import 'package:sample/services/SavePoints.dart';
 import 'package:sample/utils/Preference.dart';
@@ -64,11 +65,6 @@ class _ChallengePageState extends State<ChallengePage> {
     getPreference();
     setTime();
     calculateDistance();
-    if (Preference.shared.getBool(Preference.checkTodayschallengePage) ==
-        false) {
-      SavePoints.savePoints(10, 'Aufgabenbereich wurde überprüft');
-    }
-    Preference.shared.setBool(Preference.checkTodayschallengePage, true);
     super.initState();
   }
 
@@ -425,12 +421,22 @@ class _ChallengePageState extends State<ChallengePage> {
             .setInt(Preference.stepscurrentcount, currentStepCount!);
         Provider.of<StepAmountProvider>(context, listen: false)
             .changeStepCount(currentStepCount!);
+        int monthcount =
+            Preference.shared.getInt(Preference.stepMonthcount) ?? 0;
+        monthcount += 1;
+        Preference.shared.setInt(Preference.stepMonthcount, monthcount);
+        Provider.of<StepMonthAmountProvider>(context, listen: false)
+            .changeStepCount(monthcount);
       } else {
         setState(() {
           currentStepCount = currentStepCount! + 1;
           Preference.shared
               .setInt(Preference.stepscurrentcount, currentStepCount!);
           Provider.of<StepAmountProvider>(context, listen: false)
+              .changeStepCount(currentStepCount!);
+          Preference.shared
+              .setInt(Preference.stepMonthcount, currentStepCount!);
+          Provider.of<StepMonthAmountProvider>(context, listen: false)
               .changeStepCount(currentStepCount!);
         });
       }

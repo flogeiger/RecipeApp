@@ -5,6 +5,9 @@ import 'package:sample/Database/Helper.dart';
 import 'package:sample/LoginPages/loginPage.dart';
 import 'package:firebase_core/firebase_core.dart' as _firebasecore;
 import 'package:path_provider/path_provider.dart';
+import 'package:sample/Provider/CookingRecipesMonthAmountProvider.dart';
+import 'package:sample/Provider/StepMonthAmountProvider.dart';
+import 'package:sample/Provider/loginmonthAmountProvider.dart';
 import 'package:sample/Provider/stepAmountProvider.dart';
 import 'package:sample/utils/routes/routes.gr.dart';
 import 'utils/Preference.dart';
@@ -59,6 +62,15 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       providers: [
         ChangeNotifierProvider(
           create: (context) => StepAmountProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => LoginMonthAmountProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => CookingRecipesMonthAmountProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => StepMonthAmountProvider(),
         ),
       ],
       child: MaterialApp.router(

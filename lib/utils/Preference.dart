@@ -21,14 +21,14 @@ class Preference {
 
   //challengePage
 
-  static const String checkTodayschallengePage = "challengePageischecked";
+  static const String checkTodayslogin = "challengePageischecked";
   static const String checkTodayscooking = "didusercookedsomthingtoday";
   static const String checkTodayskm = "didUserarchivetodayskmgoal";
-  static const String checkchallengePagevisitedcount = "challPagecheckcount";
-  static const String challengePagevisitedcount = "challPagecount";
+  static const String checklogincount = "challPagecheckcount";
+  static const String logincount = "logincount";
   static const String checkcookingcount = "didUserarchiveCookingcount";
   static const String cookingcount = "cookingrecipescount";
-  static const String kmcount = "kmcount";
+  static const String stepMonthcount = "stepMonthcount";
   static const String checkkm = "didUserarchivekmgoal";
 
   static const String profileImage = "imageofProfile";

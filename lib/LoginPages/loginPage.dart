@@ -11,6 +11,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:auto_route/auto_route.dart';
 
+import '../services/SavePoints.dart';
+
 class LoginPage extends StatefulWidget {
   @override
   _LoginScreenState createState() => _LoginScreenState();
@@ -200,6 +202,15 @@ class _LoginScreenState extends State<LoginPage> {
             .then((uid) {
           Fluttertoast.showToast(msg: "Login Successful");
           Preference.shared.setString(Preference.email, email);
+          //challangePage
+          if (Preference.shared.getBool(Preference.checkTodayslogin) == false) {
+            SavePoints.savePoints(10, 'Aufgabenbereich wurde überprüft');
+          }
+          Preference.shared.setBool(Preference.checkTodayslogin, true);
+          int count = Preference.shared.getInt(Preference.logincount) ?? 0;
+          count += 1;
+          Preference.shared.setInt(Preference.logincount, count);
+          //
           if (isFirstTimeloggin) {
             context.router.replace(FirstLoginRoute());
           } else {

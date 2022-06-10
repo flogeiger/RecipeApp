@@ -39,7 +39,11 @@ class _CostumeStepperState extends State<CostumeStepper> {
                     SavePoints.savePoints(30, 'Gericht wurde zubereitet');
 
                     setState(() {
-                      Preference.shared.setInt(Preference.cookingcount, 1);
+                      int count =
+                          Preference.shared.getInt(Preference.cookingcount) ??
+                              0;
+                      count += 1;
+                      Preference.shared.setInt(Preference.cookingcount, count);
                       Preference.shared
                           .setBool(Preference.checkTodayscooking, true);
                     });

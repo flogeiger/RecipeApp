@@ -1,58 +1,51 @@
 {
-  "project_info": {
-    "project_number": "699130171062",
-    "firebase_url": "https://flutter-recipes-38d12-default-rtdb.europe-west1.firebasedatabase.app",
-    "project_id": "flutter-recipes-38d12",
-    "storage_bucket": "flutter-recipes-38d12.appspot.com"
-  },
-  "client": [
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:699130171062:android:49b137a4a49c9dd0d6e017",
-        "android_client_info": {
-          "package_name": "com.example.database_connector"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "699130171062-4i2m81sj5us8ds1k4254htvgfd51mafm.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.database_connector",
-            "certificate_hash": "8f13c739176addd666fa02617608926e4128d3eb"
-          }
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyBWBwFSBU_Bxj9S-weqNeGJJwRrEFGAJfM"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": []
-        }
-      }
+    "project_info": {
+        "project_number": "699130171062",
+        "firebase_url": "https://flutter-recipes-38d12-default-rtdb.europe-west1.firebasedatabase.app",
+        "project_id": "flutter-recipes-38d12",
+        "storage_bucket": "flutter-recipes-38d12.appspot.com"
     },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:699130171062:android:d210476caad4ff4cd6e017",
-        "android_client_info": {
-          "package_name": "com.example.sample"
-        }
-      },
-      "oauth_client": [],
-      "api_key": [
+    "client": [{
+            "client_info": {
+                "mobilesdk_app_id": "1:699130171062:android:49b137a4a49c9dd0d6e017",
+                "android_client_info": {
+                    "package_name": "com.example.database_connector"
+                }
+            },
+            "oauth_client": [{
+                "client_id": "699130171062-4i2m81sj5us8ds1k4254htvgfd51mafm.apps.googleusercontent.com",
+                "client_type": 1,
+                "android_info": {
+                    "package_name": "com.example.database_connector",
+                    "certificate_hash": "8f13c739176addd666fa02617608926e4128d3eb"
+                }
+            }],
+            "api_key": [{
+                "current_key": "AIzaSyBWBwFSBU_Bxj9S-weqNeGJJwRrEFGAJfM"
+            }],
+            "services": {
+                "appinvite_service": {
+                    "other_platform_oauth_client": []
+                }
+            }
+        },
         {
-          "current_key": "AIzaSyBWBwFSBU_Bxj9S-weqNeGJJwRrEFGAJfM"
+            "client_info": {
+                "mobilesdk_app_id": "1:699130171062:android:d210476caad4ff4cd6e017",
+                "android_client_info": {
+                    "package_name": "com.example.sample"
+                }
+            },
+            "oauth_client": [],
+            "api_key": [{
+                "current_key": "AIzaSyBWBwFSBU_Bxj9S-weqNeGJJwRrEFGAJfM"
+            }],
+            "services": {
+                "appinvite_service": {
+                    "other_platform_oauth_client": []
+                }
+            }
         }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": []
-        }
-      }
-    }
-  ],
-  "configuration_version": "1"
+    ],
+    "configuration_version": "1"
 }
